@@ -6,118 +6,127 @@
 <title>识字 · Ôn tập từ vựng HSK1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.7/dist/hanzi-writer.min.js"></script>
 <style>
   :root{
-    --paper: #ede5d3;
-    --paper-2: #e4dac4;
-    --ink: #24211d;
-    --ink-soft: #565149;
-    --grid-line: #b7ab8e;
-    --seal: #a3392c;
-    --seal-dark: #7e2a20;
-    --jade: #3f6b5c;
-    --jade-dark: #2c4d42;
-    --gold: #b7912f;
-    --card-bg: #f6f1e4;
-    --shadow: rgba(36,33,29,0.18);
-    --correct: #3f6b5c;
-    --wrong: #a3392c;
+    --bg: #f2f6fc;
+    --bg-soft: #e8f0fb;
+    --surface: #ffffff;
+    --surface-soft: #eef4fd;
+    --ink: #263248;
+    --ink-soft: #74809b;
+    --line: #dde6f5;
+    --primary: #5b8def;
+    --primary-dark: #4270d1;
+    --accent: #ff9494;
+    --accent-dark: #ef7272;
+    --amber: #ffb648;
+    --success: #2fb380;
+    --danger: #f2635f;
+    --shadow: rgba(91,141,239,0.16);
+    --shadow-soft: rgba(38,50,72,0.08);
+    --card-bg: #ffffff;
+    --correct: #2fb380;
+    --wrong: #f2635f;
   }
 
   *{ box-sizing: border-box; }
-  html,body{ margin:0; padding:0; }
+  html,body{ margin:0; padding:0; scroll-behavior: smooth; }
   body{
     background:
-      radial-gradient(circle at 10% 8%, rgba(163,57,44,0.05), transparent 45%),
-      radial-gradient(circle at 90% 85%, rgba(63,107,92,0.06), transparent 45%),
-      var(--paper);
+      radial-gradient(circle at 8% 6%, rgba(91,141,239,0.10), transparent 40%),
+      radial-gradient(circle at 95% 12%, rgba(255,148,148,0.10), transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(255,182,72,0.08), transparent 50%),
+      var(--bg);
     color: var(--ink);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     padding-bottom: 60px;
   }
 
-  .paper-texture{
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 22px 22px;
-    opacity: 0.08;
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-  }
-
   .wrap{
-    max-width: 880px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 28px 20px 10px;
+    padding: 30px 20px 10px;
     position: relative;
     z-index: 1;
   }
 
   header.top{
     display:flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 16px;
-    border-bottom: 3px double var(--ink);
-    padding-bottom: 14px;
+    padding: 16px 22px;
     margin-bottom: 22px;
     flex-wrap: wrap;
+    background: var(--surface);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-soft);
   }
-  header.top .title-block{ display:flex; align-items:baseline; gap:14px; flex-wrap: wrap; }
+  header.top .title-block{ display:flex; align-items:center; gap:14px; flex-wrap: wrap; }
+  header.top .logo-mark{
+    width: 46px; height:46px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--primary), #7fa8ff);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Noto Sans SC', sans-serif; font-weight:900; font-size:1.4rem; color:#fff;
+    box-shadow: 0 6px 16px var(--shadow);
+    flex-shrink:0;
+  }
   header.top h1{
-    font-family: 'Ma Shan Zheng', cursive;
-    font-size: 2.6rem;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
     margin: 0;
     color: var(--ink);
-    line-height: 1;
+    line-height: 1.1;
   }
   header.top .subtitle{
-    font-size: 0.92rem;
+    font-size: 0.86rem;
     color: var(--ink-soft);
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
   }
   header.top .stamp{
-    font-family: 'Noto Serif SC', serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 700;
     color: #fff;
-    background: var(--seal);
-    border: 2px solid var(--seal-dark);
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 0.78rem;
-    transform: rotate(-4deg);
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 0.76rem;
     white-space: nowrap;
+    box-shadow: 0 6px 14px rgba(255,148,148,0.35);
   }
 
   /* Tabs */
   nav.tabs{
     display:flex;
-    gap: 6px;
+    gap: 4px;
     margin-bottom: 18px;
     flex-wrap: wrap;
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 6px;
+    box-shadow: 0 6px 20px var(--shadow-soft);
   }
   nav.tabs button{
     font-family: 'Inter', sans-serif;
     font-weight: 600;
-    font-size: 0.92rem;
+    font-size: 0.88rem;
     background: transparent;
     border: none;
-    border-bottom: 3px solid transparent;
-    padding: 10px 16px 8px;
+    border-radius: 12px;
+    padding: 10px 16px;
     color: var(--ink-soft);
     cursor: pointer;
-    transition: color .15s ease, border-color .15s ease;
+    transition: all .18s ease;
   }
-  nav.tabs button:hover{ color: var(--ink); }
+  nav.tabs button:hover{ color: var(--primary-dark); background: var(--surface-soft); }
   nav.tabs button.active{
-    color: var(--ink);
-    border-bottom-color: var(--seal);
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    box-shadow: 0 6px 14px var(--shadow);
   }
 
   /* Lesson filter */
@@ -129,160 +138,201 @@
     margin-bottom: 6px;
   }
   .lesson-bar::-webkit-scrollbar{ height: 6px; }
-  .lesson-bar::-webkit-scrollbar-thumb{ background: var(--grid-line); border-radius: 4px; }
+  .lesson-bar::-webkit-scrollbar-thumb{ background: var(--line); border-radius: 4px; }
   .chip{
     flex: 0 0 auto;
-    background: var(--card-bg);
-    border: 1.5px solid var(--grid-line);
+    background: var(--surface);
+    border: 1.5px solid var(--line);
     color: var(--ink-soft);
-    font-size: 0.82rem;
-    font-weight: 500;
-    padding: 7px 13px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 8px 14px;
     border-radius: 999px;
     cursor: pointer;
     white-space: nowrap;
     transition: all .15s ease;
   }
-  .chip:hover{ border-color: var(--jade); color: var(--jade-dark); }
+  .chip:hover{ border-color: var(--primary); color: var(--primary-dark); }
   .chip.active{
-    background: var(--jade);
-    border-color: var(--jade-dark);
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-color: transparent;
     color: #fff;
+    box-shadow: 0 6px 14px var(--shadow);
   }
 
   section.view{ display:none; }
-  section.view.active{ display:block; animation: fadein .25s ease; }
-  @keyframes fadein{ from{ opacity:0; transform: translateY(6px);} to{opacity:1; transform:none;} }
+  section.view.active{ display:block; animation: fadein .3s ease; }
+  @keyframes fadein{ from{ opacity:0; transform: translateY(8px);} to{opacity:1; transform:none;} }
 
   /* ---------- FLASHCARD ---------- */
   .fc-status{
     display:flex; justify-content: space-between; align-items:center;
-    font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 10px;
+    font-size: 0.84rem; color: var(--ink-soft); margin-bottom: 14px;
   }
   .fc-progress-track{
-    height: 4px; background: var(--grid-line); opacity:.4; border-radius: 4px; overflow: hidden; flex:1; margin: 0 14px;
+    height: 6px; background: var(--line); border-radius: 6px; overflow: hidden; flex:1; margin: 0 14px;
   }
-  .fc-progress-fill{ height:100%; background: var(--seal); width:0%; transition: width .2s ease; }
+  .fc-progress-fill{ height:100%; background: linear-gradient(90deg, var(--primary), var(--accent)); width:0%; transition: width .25s ease; border-radius:6px; }
 
   .flashcard-stage{
-    perspective: 1400px;
-    max-width: 480px;
-    margin: 0 auto 18px;
+    perspective: 1600px;
+    max-width: 460px;
+    margin: 0 auto 20px;
   }
   .flashcard{
     position: relative;
     width: 100%;
     aspect-ratio: 4/5;
-    max-height: 460px;
+    max-height: 480px;
     cursor: pointer;
     transform-style: preserve-3d;
-    transition: transform .5s cubic-bezier(.2,.8,.3,1);
+    transition: transform .55s cubic-bezier(.2,.8,.3,1);
   }
   .flashcard.flipped{ transform: rotateY(180deg); }
   .fc-face{
     position:absolute; inset:0;
-    border-radius: 10px;
-    border: 1.5px solid var(--ink);
-    background:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-      var(--card-bg);
-    background-size: 20px 20px, 20px 20px, cover;
-    background-position: center;
-    box-shadow: 5px 5px 0 var(--shadow);
+    border-radius: 26px;
+    border: none;
+    background: linear-gradient(165deg, #ffffff 0%, var(--surface-soft) 100%);
+    box-shadow: 0 20px 45px var(--shadow);
     backface-visibility: hidden;
     display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding: 26px;
+    padding: 30px;
     text-align:center;
+    overflow: hidden;
   }
-  .fc-face.back{ transform: rotateY(180deg); background-image:none; background:var(--card-bg); }
+  .fc-face::before{
+    content:"";
+    position:absolute; top:-60px; right:-60px; width:180px; height:180px; border-radius:50%;
+    background: radial-gradient(circle, rgba(91,141,239,0.14), transparent 70%);
+  }
+  .fc-face::after{
+    content:"";
+    position:absolute; bottom:-70px; left:-50px; width:200px; height:200px; border-radius:50%;
+    background: radial-gradient(circle, rgba(255,148,148,0.12), transparent 70%);
+  }
+  .fc-face.back{ transform: rotateY(180deg); }
   .fc-lesson-tag{
-    position:absolute; top:14px; left:16px;
-    font-size:0.7rem; color: var(--ink-soft); letter-spacing:.03em;
+    position:absolute; top:18px; left:20px;
+    font-size:0.68rem; font-weight:600; color: var(--primary-dark);
+    background: var(--surface-soft); padding: 4px 10px; border-radius: 999px;
+    z-index:2;
   }
   .fc-audio-btn{
-    position:absolute; top:12px; right:12px;
-    width:38px; height:38px; border-radius:50%;
-    background: var(--jade); color:#fff; border:none;
-    font-size: 1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
-    box-shadow: 2px 2px 0 var(--shadow);
+    position:absolute; top:14px; right:14px;
+    width:40px; height:40px; border-radius:14px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff; border:none;
+    font-size: 1.15rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 8px 18px var(--shadow);
+    z-index:2;
+    transition: transform .12s ease;
   }
-  .fc-audio-btn:active{ transform: scale(.92); }
+  .fc-audio-btn:hover{ transform: scale(1.06); }
+  .fc-audio-btn:active{ transform: scale(.94); }
   .fc-hanzi{
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 700;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 800;
     font-size: 5rem;
     color: var(--ink);
     line-height:1;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
+    z-index:1;
   }
   .fc-pinyin{
-    font-size: 1.35rem;
-    color: var(--jade-dark);
-    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--primary-dark);
+    font-weight: 700;
     letter-spacing: .02em;
+    z-index:1;
   }
   .fc-hint{
-    position:absolute; bottom:14px; font-size:0.72rem; color: var(--ink-soft); opacity:.7;
+    position:absolute; bottom:18px; font-size:0.74rem; color: var(--ink-soft);
+    background: var(--surface-soft); padding: 5px 14px; border-radius:999px;
+    z-index:1;
   }
   .fc-pos{
     display:inline-block;
-    font-size:0.72rem; color: #fff; background: var(--seal);
-    padding: 3px 10px; border-radius: 4px; margin-bottom: 12px;
+    font-size:0.72rem; font-weight:700; color: #fff;
+    background: linear-gradient(135deg, var(--amber), #ffa020);
+    padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+    z-index:1;
   }
   .fc-meaning{
-    font-size: 1.5rem; font-weight: 700; color: var(--ink); margin-bottom: 14px;
+    font-size: 1.6rem; font-weight: 800; color: var(--ink); margin-bottom: 16px;
+    z-index:1;
+  }
+  .fc-example-box{
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 14px 16px;
+    max-width: 340px;
+    box-shadow: 0 6px 16px var(--shadow-soft);
+    z-index:1;
+    position:relative;
+  }
+  .fc-example-label{
+    font-size:0.68rem; font-weight:700; color: var(--ink-soft); text-transform:none;
+    display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;
   }
   .fc-example{
-    font-size: 0.95rem; color: var(--ink-soft); line-height:1.5; max-width: 360px;
+    font-size: 0.98rem; color: var(--ink); line-height:1.6; text-align:left;
+  }
+  .ex-cn{ font-family:'Noto Sans SC', sans-serif; font-weight:600; color: var(--ink); }
+  .ex-vi{ color: var(--ink-soft); font-size: 0.88rem; }
+  .ex-audio-btn{
+    background: var(--surface-soft); border:none; color: var(--primary-dark);
+    width:24px; height:24px; border-radius:50%; cursor:pointer; font-size:0.75rem;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
 
   .fc-controls{
-    display:flex; align-items:center; justify-content:center; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+    display:flex; align-items:center; justify-content:center; gap: 10px; margin-top: 14px; flex-wrap: wrap;
   }
   .btn{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:0.88rem;
-    border: 1.5px solid var(--ink); background: var(--card-bg); color: var(--ink);
-    padding: 10px 18px; border-radius: 7px; cursor:pointer;
-    box-shadow: 3px 3px 0 var(--shadow);
-    transition: transform .1s ease;
+    font-family:'Inter',sans-serif; font-weight:700; font-size:0.86rem;
+    border: none; background: var(--surface); color: var(--ink);
+    padding: 11px 20px; border-radius: 14px; cursor:pointer;
+    box-shadow: 0 6px 16px var(--shadow-soft);
+    transition: transform .12s ease, box-shadow .12s ease;
   }
-  .btn:hover{ transform: translate(-1px,-1px); }
-  .btn:active{ transform: translate(1px,1px); box-shadow: 1px 1px 0 var(--shadow); }
-  .btn.primary{ background: var(--jade); border-color: var(--jade-dark); color:#fff; }
-  .btn.ghost{ background: transparent; }
-  .btn:disabled{ opacity:.4; cursor:not-allowed; }
-  .btn.small{ padding: 7px 12px; font-size: 0.8rem; }
+  .btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 20px var(--shadow-soft); }
+  .btn:active{ transform: translateY(0); }
+  .btn.primary{ background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff; box-shadow: 0 8px 18px var(--shadow); }
+  .btn.ghost{ background: transparent; box-shadow:none; color: var(--ink-soft); }
+  .btn.ghost:hover{ background: var(--surface-soft); }
+  .btn:disabled{ opacity:.4; cursor:not-allowed; transform:none; }
+  .btn.small{ padding: 8px 14px; font-size: 0.8rem; border-radius: 12px; }
 
   /* ---------- QUIZ ---------- */
   .quiz-top{ display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px; flex-wrap:wrap; gap:10px;}
-  .quiz-score{ font-size:0.88rem; color: var(--ink-soft); }
-  .quiz-score b{ color: var(--seal); }
-  .mode-toggle{ display:flex; gap:6px; }
+  .quiz-score{ font-size:0.88rem; color: var(--ink-soft); background:var(--surface); padding:8px 16px; border-radius:12px; box-shadow:0 6px 14px var(--shadow-soft);}
+  .quiz-score b{ color: var(--primary-dark); }
+  .mode-toggle{ display:flex; gap:6px; background:var(--surface); padding:5px; border-radius:12px; box-shadow:0 6px 14px var(--shadow-soft); }
   .mode-toggle button{
-    font-size:0.78rem; font-weight:600; padding: 6px 12px; border-radius: 999px;
-    border: 1.5px solid var(--grid-line); background: var(--card-bg); color: var(--ink-soft); cursor:pointer;
+    font-size:0.78rem; font-weight:700; padding: 7px 13px; border-radius: 9px;
+    border: none; background: transparent; color: var(--ink-soft); cursor:pointer; transition: all .15s ease;
   }
-  .mode-toggle button.active{ background: var(--seal); border-color: var(--seal-dark); color:#fff; }
+  .mode-toggle button.active{ background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff; }
 
   .quiz-card{
-    background: var(--card-bg);
-    border: 1.5px solid var(--ink);
-    border-radius: 10px;
-    box-shadow: 5px 5px 0 var(--shadow);
-    padding: 30px 24px;
+    background: linear-gradient(165deg, #ffffff 0%, var(--surface-soft) 100%);
+    border-radius: 24px;
+    box-shadow: 0 16px 36px var(--shadow);
+    padding: 34px 26px;
     text-align: center;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow:hidden;
   }
   .quiz-q-hanzi{
-    font-family:'Noto Serif SC', serif; font-weight:700; font-size: 3.6rem; margin-bottom:6px;
+    font-family:'Noto Sans SC', sans-serif; font-weight:800; font-size: 3.8rem; margin-bottom:8px;
   }
-  .quiz-q-pinyin{ color: var(--jade-dark); font-weight:600; font-size:1.1rem; margin-bottom: 8px;}
-  .quiz-q-meaning{ font-size: 1.6rem; font-weight:700; }
+  .quiz-q-pinyin{ color: var(--primary-dark); font-weight:700; font-size:1.15rem; margin-bottom: 10px;}
+  .quiz-q-meaning{ font-size: 1.7rem; font-weight:800; }
   .quiz-audio{
     display:inline-flex; align-items:center; justify-content:center;
-    width:36px;height:36px;border-radius:50%; background:var(--jade); color:#fff; border:none;
-    cursor:pointer; margin-top:8px;
+    width:40px;height:40px;border-radius:14px; background:linear-gradient(135deg, var(--primary), var(--primary-dark)); color:#fff; border:none;
+    cursor:pointer; margin-top:10px; box-shadow: 0 8px 18px var(--shadow);
   }
   .quiz-options{
     display:grid; grid-template-columns: 1fr 1fr; gap: 12px;
@@ -291,19 +341,19 @@
   .opt-btn{
     font-family:'Inter',sans-serif;
     text-align:left;
-    background: var(--card-bg);
-    border: 1.5px solid var(--grid-line);
-    border-radius: 8px;
-    padding: 14px 16px;
+    background: var(--surface);
+    border: 2px solid var(--line);
+    border-radius: 16px;
+    padding: 15px 18px;
     font-size: 1rem;
     cursor:pointer;
     transition: all .12s ease;
   }
-  .opt-btn .opt-hanzi{ font-family:'Noto Serif SC', serif; font-weight:700; font-size:1.5rem; display:block; }
+  .opt-btn .opt-hanzi{ font-family:'Noto Sans SC', sans-serif; font-weight:800; font-size:1.5rem; display:block; }
   .opt-btn .opt-pinyin{ font-size:0.8rem; color:var(--ink-soft); }
-  .opt-btn:hover{ border-color: var(--jade); }
-  .opt-btn.correct{ background: rgba(63,107,92,0.18); border-color: var(--correct); }
-  .opt-btn.wrong{ background: rgba(163,57,44,0.15); border-color: var(--wrong); }
+  .opt-btn:hover{ border-color: var(--primary); transform: translateY(-2px); }
+  .opt-btn.correct{ background: rgba(47,179,128,0.12); border-color: var(--correct); }
+  .opt-btn.wrong{ background: rgba(242,99,95,0.12); border-color: var(--wrong); }
   .opt-btn:disabled{ cursor:default; }
 
   .quiz-next-row{ display:flex; justify-content:center; }
@@ -311,70 +361,137 @@
   .quiz-feedback.correct{ color: var(--correct); }
   .quiz-feedback.wrong{ color: var(--wrong); }
 
-  .quiz-empty{ text-align:center; padding: 50px 10px; color: var(--ink-soft); }
+  .quiz-empty{ text-align:center; padding: 50px 10px; color: var(--ink-soft); background:var(--surface); border-radius:20px; }
 
   /* ---------- HANDWRITING ---------- */
   .hw-layout{ display:flex; gap: 24px; flex-wrap: wrap; align-items:flex-start; justify-content:center; }
-  .hw-target-wrap{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+  .hw-target-wrap{ display:flex; flex-direction:column; align-items:center; gap:14px; background:var(--surface); padding:22px; border-radius:24px; box-shadow: 0 16px 36px var(--shadow-soft); }
   #hw-target{
-    background:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
-      var(--card-bg);
-    background-size: 100% 100%, 100% 100%, cover;
-    border: 2px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 5px 5px 0 var(--shadow);
-  }
-  .hw-diag{
-    position: relative;
-  }
-  .hw-diag::before, .hw-diag::after{
-    content:"";
-    position:absolute; inset:0;
-    pointer-events:none;
+    background: var(--surface-soft);
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 2px var(--line);
   }
   .hw-info{ text-align:center; }
-  .hw-info .fc-hanzi{ font-size: 2.2rem; margin-bottom:2px; }
+  .hw-info .fc-hanzi{ font-size: 2.3rem; margin-bottom:2px; }
   .hw-word-list{
     max-width: 260px;
-    max-height: 420px;
+    max-height: 440px;
     overflow-y:auto;
-    border: 1.5px solid var(--grid-line);
-    border-radius: 8px;
-    background: var(--card-bg);
+    border-radius: 20px;
+    background: var(--surface);
+    box-shadow: 0 16px 36px var(--shadow-soft);
+    padding: 8px;
   }
   .hw-word-list::-webkit-scrollbar{ width:6px; }
-  .hw-word-list::-webkit-scrollbar-thumb{ background:var(--grid-line); border-radius:4px; }
+  .hw-word-list::-webkit-scrollbar-thumb{ background:var(--line); border-radius:4px; }
   .hw-word-item{
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--grid-line);
+    padding: 11px 14px;
+    border-radius: 14px;
     cursor:pointer;
     display:flex; align-items:center; justify-content:space-between;
     font-size: 0.92rem;
+    transition: background .12s ease;
   }
-  .hw-word-item .h{ font-family:'Noto Serif SC', serif; font-weight:700; font-size:1.3rem; }
-  .hw-word-item:hover{ background: rgba(63,107,92,0.08); }
-  .hw-word-item.active{ background: rgba(163,57,44,0.12); font-weight:700; }
+  .hw-word-item .h{ font-family:'Noto Sans SC', sans-serif; font-weight:700; font-size:1.3rem; }
+  .hw-word-item:hover{ background: var(--surface-soft); }
+  .hw-word-item.active{ background: linear-gradient(135deg, rgba(91,141,239,0.14), rgba(255,148,148,0.1)); font-weight:700; }
   .hw-controls{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
 
-  footer.credit{
-    text-align:center; color: var(--ink-soft); font-size: 0.75rem; margin-top: 40px; opacity: .7;
+  /* ---------- LIST ---------- */
+  .list-lesson-title{
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:1.15rem;
+    margin-bottom:12px; color: var(--ink); display:flex; align-items:center; gap:10px;
+  }
+  .list-lesson-title .badge{
+    background: var(--surface-soft); color: var(--primary-dark); font-size:0.72rem; font-weight:700;
+    padding: 4px 10px; border-radius: 999px;
+  }
+  .list-card{
+    background: var(--surface); border-radius:18px; padding:14px 16px;
+    box-shadow: 0 8px 20px var(--shadow-soft);
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .list-card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .list-card .lc-hanzi{ font-family:'Noto Sans SC', sans-serif; font-weight:800; font-size:1.5rem; }
+  .list-card .lc-pinyin{ font-size:0.85rem; color: var(--primary-dark); font-weight:700; }
+  .list-card .lc-meaning{ font-size:0.88rem; color: var(--ink-soft); }
+  .list-card .lc-example{ font-size:0.8rem; color: var(--ink-soft); border-top:1px solid var(--line); padding-top:8px; margin-top:4px; line-height:1.5; }
+
+  /* ---------- ABOUT ---------- */
+  .about-hero{
+    background: linear-gradient(135deg, var(--primary), #7fa8ff);
+    border-radius: 28px;
+    padding: 40px 32px;
+    color: #fff;
+    margin-bottom: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-hero::before{
+    content:"识"; position:absolute; right:10px; bottom:-40px; font-family:'Noto Sans SC',sans-serif;
+    font-size: 12rem; font-weight:900; opacity:.12; line-height:1;
+  }
+  .about-hero h2{ font-family:'Quicksand',sans-serif; font-size:1.7rem; margin:0 0 12px; position:relative; z-index:1;}
+  .about-hero p{ font-size:0.98rem; line-height:1.7; max-width:560px; opacity:.96; position:relative; z-index:1; margin:0;}
+
+  .about-grid{ display:grid; grid-template-columns: 1.2fr 1fr; gap: 18px; }
+  @media (max-width: 640px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  .about-card{
+    background: var(--surface); border-radius:22px; padding: 26px 24px;
+    box-shadow: 0 12px 30px var(--shadow-soft);
+  }
+  .about-card h3{ font-family:'Quicksand',sans-serif; font-size:1.1rem; margin:0 0 14px; color: var(--ink); }
+  .about-mission-item{ display:flex; gap:12px; align-items:flex-start; margin-bottom:14px; }
+  .about-mission-item:last-child{ margin-bottom:0; }
+  .about-mission-icon{
+    width:38px; height:38px; border-radius:12px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center; font-size:1.1rem;
+    background: var(--surface-soft);
+  }
+  .about-mission-text{ font-size:0.9rem; color: var(--ink-soft); line-height:1.55; }
+  .about-mission-text b{ color: var(--ink); }
+
+  .founder-card{ text-align:center; }
+  .founder-avatar{
+    width:76px; height:76px; border-radius:50%; margin: 0 auto 14px;
+    background: linear-gradient(135deg, var(--accent), var(--amber));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Quicksand',sans-serif; font-weight:700; font-size:1.5rem; color:#fff;
+    box-shadow: 0 10px 22px rgba(255,148,148,0.35);
+  }
+  .founder-name{ font-family:'Quicksand',sans-serif; font-weight:700; font-size:1.15rem; color: var(--ink); }
+  .founder-role{ font-size:0.82rem; color: var(--ink-soft); margin-bottom:18px; }
+  .contact-row{
+    display:flex; align-items:center; gap:12px; justify-content:center;
+    background: var(--surface-soft); border-radius:14px; padding:12px 16px; font-size:0.92rem; font-weight:600;
+    color: var(--ink);
+  }
+  .contact-row a{ color: var(--primary-dark); text-decoration:none; }
+  .contact-icon{
+    width:32px; height:32px; border-radius:10px; background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:0.9rem; flex-shrink:0;
   }
 
-  ::selection{ background: var(--seal); color:#fff; }
+  footer.credit{
+    text-align:center; color: var(--ink-soft); font-size: 0.76rem; margin-top: 40px; opacity: .8;
+  }
+
+  ::selection{ background: var(--primary); color:#fff; }
 </style>
 </head>
 <body>
-<div class="paper-texture"></div>
 <div class="wrap">
 
   <header class="top">
     <div class="title-block">
-      <h1>识字</h1>
-      <div class="subtitle">Ôn tập từ vựng HSK1 · 170 từ · 15 bài</div>
+      <div class="logo-mark">识</div>
+      <div>
+        <h1>识字 · HSK1</h1>
+        <div class="subtitle">Ôn tập từ vựng tiếng Trung · 170 từ · 15 bài</div>
+      </div>
     </div>
-    <div class="stamp">初级 HSK1</div>
+    <div class="stamp">初级 · Sơ cấp</div>
   </header>
 
   <nav class="tabs">
@@ -382,6 +499,7 @@
     <button data-view="quiz">Trắc nghiệm</button>
     <button data-view="hanzi">Tập viết nét</button>
     <button data-view="list">Danh sách</button>
+    <button data-view="about">Giới thiệu</button>
   </nav>
 
   <div class="lesson-bar" id="lesson-bar"></div>
@@ -401,13 +519,19 @@
           <button class="fc-audio-btn" id="fc-audio-front" title="Phát âm">🔊</button>
           <div class="fc-hanzi" id="fc-hanzi"></div>
           <div class="fc-pinyin" id="fc-pinyin"></div>
-          <span class="fc-hint">Chạm để xem nghĩa</span>
+          <span class="fc-hint">👆 Chạm để xem nghĩa</span>
         </div>
         <div class="fc-face back">
           <button class="fc-audio-btn" id="fc-audio-back" title="Phát âm">🔊</button>
           <span class="fc-pos" id="fc-pos"></span>
           <div class="fc-meaning" id="fc-meaning"></div>
-          <div class="fc-example" id="fc-example"></div>
+          <div class="fc-example-box">
+            <div class="fc-example-label">
+              <span>Ví dụ minh họa</span>
+              <button class="ex-audio-btn" id="fc-example-audio" title="Nghe câu ví dụ">🔊</button>
+            </div>
+            <div class="fc-example" id="fc-example"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -439,7 +563,7 @@
         <div class="hw-info">
           <div class="fc-hanzi" id="hw-current-hanzi">你</div>
           <div class="fc-pinyin" id="hw-current-pinyin">nǐ</div>
-          <div style="color:var(--ink-soft); font-size:0.9rem; margin-top:2px;" id="hw-current-meaning">bạn</div>
+          <div style="color:var(--ink-soft); font-size:0.9rem; margin-top:4px;" id="hw-current-meaning">bạn</div>
         </div>
         <div id="hw-target"></div>
         <div class="hw-controls">
@@ -456,6 +580,46 @@
   <!-- LIST VIEW -->
   <section class="view" id="view-list">
     <div id="list-body"></div>
+  </section>
+
+  <!-- ABOUT VIEW -->
+  <section class="view" id="view-about">
+    <div class="about-hero">
+      <h2>Về 识字 · HSK1</h2>
+      <p>Website được xây dựng nhằm giúp người học tiếng Trung ôn tập từ vựng, ngữ pháp và tìm hiểu thêm về văn hóa Trung Quốc, thông qua các phương pháp học trực quan, sinh động: thẻ ghi nhớ, trắc nghiệm, phát âm và luyện viết nét chữ Hán.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Sứ mệnh của chúng tôi</h3>
+        <div class="about-mission-item">
+          <div class="about-mission-icon">📖</div>
+          <div class="about-mission-text"><b>Ôn tập từ vựng</b> theo từng bài học HSK, dễ nhớ và dễ tra cứu lại bất cứ lúc nào.</div>
+        </div>
+        <div class="about-mission-item">
+          <div class="about-mission-icon">🧩</div>
+          <div class="about-mission-text"><b>Củng cố ngữ pháp</b> qua các câu ví dụ minh họa gắn liền với ngữ cảnh sử dụng thực tế.</div>
+        </div>
+        <div class="about-mission-item">
+          <div class="about-mission-icon">🏮</div>
+          <div class="about-mission-text"><b>Khám phá văn hóa Trung Quốc</b> song song với việc học ngôn ngữ, giúp việc học trở nên gần gũi và thú vị hơn.</div>
+        </div>
+        <div class="about-mission-item">
+          <div class="about-mission-icon">🔊</div>
+          <div class="about-mission-text"><b>Luyện phát âm và nét chữ</b> với công cụ nghe - nói - viết tích hợp ngay trên trang web.</div>
+        </div>
+      </div>
+
+      <div class="about-card founder-card">
+        <div class="founder-avatar">JH</div>
+        <div class="founder-name">Jasmine Ho Hoa</div>
+        <div class="founder-role">Người sáng lập</div>
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <a href="tel:+84368466376">+84 368 466 376</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer class="credit">Được tạo cho việc tự học HSK1 · Dữ liệu từ file "Từ vựng HSK1 ôn tập"</footer>
@@ -489,6 +653,25 @@ function shuffleArr(arr){
     [a[i],a[j]] = [a[j],a[i]];
   }
   return a;
+}
+
+/* Splits an example string into Chinese runs and Vietnamese/other runs,
+   wrapping each in a styled span so the sentence and its translation
+   are visually distinct without altering the original text. */
+const CJK_RE = /([\u4e00-\u9fff\u3000-\u303f]+)/;
+function formatExample(text){
+  if(!text) return '';
+  return text.split(CJK_RE).filter(Boolean).map(part => {
+    if(/[\u4e00-\u9fff]/.test(part)){
+      return `<span class="ex-cn">${part}</span>`;
+    }
+    return `<span class="ex-vi">${part}</span>`;
+  }).join('');
+}
+function extractChinese(text){
+  if(!text) return '';
+  const matches = text.match(/[\u4e00-\u9fff\u3000-\u303f]+/g);
+  return matches ? matches.join('') : text;
 }
 
 /* ---------------- Lesson bar ---------------- */
@@ -549,7 +732,7 @@ function renderFlashcard(){
   fcPinyin.textContent = item.pinyin;
   fcPos.textContent = item.pos || '';
   fcMeaning.textContent = item.meaning;
-  fcExample.textContent = item.example;
+  fcExample.innerHTML = formatExample(item.example);
   fcLessonTagF.textContent = item.lesson.replace(/：/g,': ');
   fcCount.textContent = `${fcIndex+1} / ${fcDeck.length}`;
   fcLessonLabel.textContent = activeLesson === 'ALL' ? 'Tất cả các bài' : '';
@@ -559,13 +742,14 @@ function renderFlashcard(){
 }
 
 flashcardEl.addEventListener('click', (e) => {
-  if(e.target.closest('.fc-audio-btn')) return;
+  if(e.target.closest('.fc-audio-btn') || e.target.closest('.ex-audio-btn')) return;
   fcFlipped = !fcFlipped;
   flashcardEl.classList.toggle('flipped', fcFlipped);
 });
 
 document.getElementById('fc-audio-front').onclick = (e) => { e.stopPropagation(); speak(fcDeck[fcIndex].hanzi); };
 document.getElementById('fc-audio-back').onclick = (e) => { e.stopPropagation(); speak(fcDeck[fcIndex].hanzi); };
+document.getElementById('fc-example-audio').onclick = (e) => { e.stopPropagation(); speak(extractChinese(fcDeck[fcIndex].example)); };
 
 document.getElementById('fc-next').onclick = () => { fcIndex++; renderFlashcard(); };
 document.getElementById('fc-prev').onclick = () => { fcIndex--; renderFlashcard(); };
@@ -711,9 +895,9 @@ function loadHwCharacter(item){
         width: hwTargetSize,
         height: hwTargetSize,
         padding: 14,
-        strokeColor: '#24211d',
-        radicalColor: '#a3392c',
-        outlineColor: '#c9bfa4',
+        strokeColor: '#263248',
+        radicalColor: '#ff9494',
+        outlineColor: '#dde6f5',
         showOutline: true,
         strokeAnimationSpeed: 1,
         delayBetweenStrokes: 220
@@ -735,7 +919,6 @@ document.getElementById('hw-quiz').onclick = () => {
 };
 document.getElementById('hw-reset').onclick = () => {
   if(!hwWriter) return;
-  hwWriter.forEach(w => { w.hideCharacter(); w.showCharacter({ duration: 0 }); w.hideCharacter(); });
   const currentHanzi = document.getElementById('hw-current-hanzi').textContent;
   const item = VOCAB.find(v => v.hanzi === currentHanzi);
   if(item) loadHwCharacter(item);
@@ -767,16 +950,19 @@ function renderList(){
   pool.forEach(v => { (byLesson[v.lesson] = byLesson[v.lesson] || []).push(v); });
 
   body.innerHTML = Object.keys(byLesson).map(lesson => `
-    <div style="margin-bottom:22px;">
-      <h3 style="font-family:'Noto Serif SC',serif; border-bottom:1.5px solid var(--ink); padding-bottom:6px; margin-bottom:10px;">${lesson.replace(/：/g,': ')}</h3>
-      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:10px;">
+    <div style="margin-bottom:26px;">
+      <div class="list-lesson-title">${lesson.replace(/：/g,': ')} <span class="badge">${byLesson[lesson].length} từ</span></div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:12px;">
         ${byLesson[lesson].map(v => `
-          <div style="background:var(--card-bg); border:1.5px solid var(--grid-line); border-radius:8px; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; gap:10px;">
-            <div>
-              <div style="font-family:'Noto Serif SC',serif; font-weight:700; font-size:1.4rem;">${v.hanzi} <span style="font-size:0.85rem; color:var(--jade-dark); font-weight:600;">${v.pinyin}</span></div>
-              <div style="font-size:0.85rem; color:var(--ink-soft);">${v.meaning}</div>
+          <div class="list-card">
+            <div class="list-card-top">
+              <div>
+                <div class="lc-hanzi">${v.hanzi} <span class="lc-pinyin">${v.pinyin}</span></div>
+                <div class="lc-meaning">${v.meaning}</div>
+              </div>
+              <button class="fc-audio-btn" style="position:static; width:34px; height:34px; font-size:0.9rem; flex-shrink:0; border-radius:10px;" onclick="speak('${v.hanzi}')">🔊</button>
             </div>
-            <button class="fc-audio-btn" style="position:static; width:32px; height:32px; font-size:0.9rem; flex-shrink:0;" onclick="speak('${v.hanzi}')">🔊</button>
+            <div class="lc-example">${formatExample(v.example)}</div>
           </div>
         `).join('')}
       </div>
