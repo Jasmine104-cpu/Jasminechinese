@@ -277,6 +277,7 @@
       <h2 class="text-2xl font-bold">Thư viện Từ vựng & HSK</h2>
       <p class="text-sm text-gray-500">Chọn cấp độ HSK 1-6 hoặc chủ đề giao tiếp. Bấm thẻ để lật xem nghĩa, bấm lại để lật về mặt trước, nghe phát âm & luyện viết.</p>
     </div>
+    <input id="vocab-search" oninput="renderVocabGrid(currentVocabTab)" type="text" placeholder="Tra cứu nhanh Trung - Việt trong chủ đề này (Hán tự, pinyin hoặc nghĩa)..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
     <div id="vocab-tabs" class="flex gap-2 overflow-x-auto pb-2"></div>
     <div id="vocab-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </section>
@@ -521,11 +522,16 @@
     <div class="p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl space-y-4">
       <h2 class="text-2xl font-bold text-amber-800 dark:text-amber-400">Trang quản trị Admin (bảo mật)</h2>
       <p class="text-sm text-gray-600 dark:text-gray-300">Quyền truy cập dành riêng cho Admin: <code class="font-bold text-red-600">hothihoa1042004@gmail.com</code> · SĐT liên hệ: 0368 466 376</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
         <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-          <h4 class="font-bold text-sm">Tài khoản hiện tại (thiết bị này)</h4>
+          <h4 class="font-bold text-sm">Tổng số tài khoản đăng ký</h4>
           <p id="admin-account-count" class="text-2xl font-black text-red-600 mt-1">0</p>
-          <p class="text-xs text-gray-500 mt-1">Lưu cục bộ trên trình duyệt (chưa có server)</p>
+          <p class="text-xs text-gray-500 mt-1">Ghi nhận trên thiết bị này</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+          <h4 class="font-bold text-sm">Học viên đang học hôm nay</h4>
+          <p id="admin-active-today" class="text-2xl font-black text-red-600 mt-1">0</p>
+          <p class="text-xs text-gray-500 mt-1">Đã truy cập & học trong ngày</p>
         </div>
         <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
           <h4 class="font-bold text-sm">Tổng từ vựng trong hệ thống</h4>
@@ -538,26 +544,73 @@
         </div>
       </div>
       <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+        <h4 class="font-bold text-sm mb-2">Thống kê học tập theo học viên</h4>
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs text-left">
+            <thead>
+              <tr class="text-gray-500 border-b border-gray-200 dark:border-gray-700">
+                <th class="py-1.5 pr-3">Học viên</th>
+                <th class="py-1.5 pr-3">Gmail</th>
+                <th class="py-1.5 pr-3">Từ đã học</th>
+                <th class="py-1.5 pr-3">Streak</th>
+                <th class="py-1.5 pr-3">Phút học tích lũy</th>
+                <th class="py-1.5 pr-3">Học hôm nay?</th>
+                <th class="py-1.5">Đăng nhập gần nhất</th>
+              </tr>
+            </thead>
+            <tbody id="admin-students-table"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
         <h4 class="font-bold text-sm mb-2">Danh sách góp ý gần đây</h4>
         <div id="admin-feedback-list" class="text-xs text-gray-600 dark:text-gray-300 space-y-2 max-h-56 overflow-y-auto"></div>
       </div>
-      <p class="text-xs text-gray-500">Ghi chú kỹ thuật: Trang tĩnh trên GitHub Pages không có backend/database, nên dữ liệu quản trị hiển thị theo trình duyệt hiện tại. Kho từ điển HSK 1-6 (hàng nghìn từ) được nạp trực tiếp trong mã nguồn <code>index.html</code> (biến <code>DICTIONARY_DATA</code>), loại từ được phân loại tự động bằng quy tắc — admin có thể chỉnh sửa trực tiếp trong file khi cần độ chính xác cao hơn.</p>
+      <p class="text-xs text-gray-500">Ghi chú kỹ thuật: Trang tĩnh trên GitHub Pages không có backend/database, nên số liệu quản trị được tổng hợp từ dữ liệu học tập lưu trên trình duyệt/thiết bị này (localStorage) — chính xác cho các tài khoản đã từng đăng nhập trên máy này, nhưng không tổng hợp được số liệu từ thiết bị khác. Kho từ điển HSK 1-6 (hàng nghìn từ) được nạp trực tiếp trong mã nguồn <code>index.html</code> (biến <code>DICTIONARY_DATA</code>), loại từ được phân loại tự động bằng quy tắc. Mật khẩu quản trị không được lưu trong mã nguồn vì lý do bảo mật — hãy đặt/xác thực mật khẩu qua Firebase Authentication (Console hoặc màn hình Đăng ký với đúng Gmail admin).</p>
     </div>
   </section>
 
 </main>
 
 <!-- ============ FOOTER ============ -->
-<footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 mt-12 py-8 transition-colors">
-  <div class="max-w-7xl mx-auto px-4 text-center space-y-4">
-    <div class="flex items-center justify-center gap-2">
-      <div class="w-6 h-6 rounded-full bg-red-600 flex items-center justify-center text-white font-black text-xs">J</div>
-      <span class="font-bold text-gray-900 dark:text-white">JASMINE CHINESE</span>
+<footer class="bg-gray-900 text-gray-300 mt-12 pt-12 pb-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div class="space-y-3">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-black">J</div>
+        <span class="font-bold text-white text-lg">Jasmine Chinese</span>
+      </div>
+      <p class="text-sm text-gray-400">Tiếng Trung mỗi ngày cùng Jasmine. "Hành trình vạn dặm bắt đầu từ một bước chân".</p>
+      <p class="text-xs text-gray-500">Giáo viên: Hồ Hoa · HSK 6 · HSKK Cao cấp</p>
     </div>
-    <p class="text-xs text-gray-500">Tiếng Trung mỗi ngày cùng Jasmine • "Hành trình vạn dặm bắt đầu từ một bước chân"</p>
     <div>
-      <button onclick="openFeedbackModal()" class="px-4 py-2 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-xs font-semibold rounded-lg transition">💬 Đánh giá & Góp ý</button>
+      <h4 class="text-white font-bold mb-3 text-xs uppercase tracking-wider">Tính năng</h4>
+      <ul class="space-y-2 text-sm">
+        <li><button onclick="showSection('vocab')" class="hover:text-red-400 transition text-left">Thư viện Từ vựng & Flashcard HSK 1-6</button></li>
+        <li><button onclick="showSection('vocab')" class="hover:text-red-400 transition text-left">Luyện viết chữ Hán</button></li>
+        <li><button onclick="showSection('shadowing')" class="hover:text-red-400 transition text-left">Luyện Phát âm (Shadowing)</button></li>
+        <li><button onclick="showSection('reflex')" class="hover:text-red-400 transition text-left">Luyện Phản xạ Nghe - Nói</button></li>
+        <li><button onclick="showSection('practice')" class="hover:text-red-400 transition text-left">Ngân hàng Bài tập & Giải thích ngữ pháp</button></li>
+        <li><button onclick="showSection('games')" class="hover:text-red-400 transition text-left">Game học từ vựng</button></li>
+        <li><button onclick="showSection('dictionary')" class="hover:text-red-400 transition text-left">Tra cứu từ vựng Trung - Việt</button></li>
+        <li><button onclick="showSection('profile')" class="hover:text-red-400 transition text-left">Phân tích lộ trình học tập</button></li>
+      </ul>
     </div>
+    <div>
+      <h4 class="text-white font-bold mb-3 text-xs uppercase tracking-wider">Liên hệ & Mạng xã hội</h4>
+      <p class="text-sm mb-3">Zalo / Hotline: <span class="font-mono font-bold text-white">0368 466 376</span></p>
+      <div class="flex flex-wrap gap-2">
+        <a href="https://zalo.me/0368466376" target="_blank" rel="noopener" class="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-bold transition">💬 Zalo</a>
+        <a href="https://www.facebook.com/hohoa24/" target="_blank" rel="noopener" class="px-3 py-1.5 bg-[#1877F2] hover:opacity-90 text-white rounded-md text-xs font-bold transition">📘 Facebook</a>
+      </div>
+    </div>
+    <div>
+      <h4 class="text-white font-bold mb-3 text-xs uppercase tracking-wider">Góp ý</h4>
+      <button onclick="openFeedbackModal()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-xs font-semibold rounded-lg transition">💬 Đánh giá & Góp ý</button>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-gray-800 text-xs text-gray-500 text-center">
+    © Jasmine Chinese · Giáo viên Hồ Hoa
   </div>
 </footer>
 
@@ -1489,7 +1542,7 @@ function setGoals(g){ saveJSON(uidKey('jc_goals'), g); }
 
 function getProgress(){
   return loadJSON(uidKey('jc_progress'), {
-    streak: 0, lastStudyDate: '', wordsToday: 0, minutesToday: 0,
+    streak: 0, lastStudyDate: '', wordsToday: 0, minutesToday: 0, totalMinutes: 0,
     totalWordsLearned: 0, learnedWordSet: [],
     quiz: { correct: 0, wrong: 0, byLevel: {} },
     shadowing: [], reflex: [], history: []
@@ -1545,7 +1598,10 @@ function recordShadowingScore(level, score){
 }
 
 /* ===================== NAVIGATION & AUTH GATE ===================== */
-const PROTECTED_SECTIONS = ['vocab','dictionary','shadowing','reflex','practice','games','profile'];
+/* Guests may freely BROWSE every section (view vocab, exercise UI, game intro, sample sentences).
+   Only actual INTERACTIONS (flip card, write Hanzi, answer a question, record audio, play a game)
+   require login. Only the personal Profile page (and Admin) are gated at the section level. */
+const PROTECTED_SECTIONS = ['profile'];
 function requireAuth(id){
   if (PROTECTED_SECTIONS.includes(id) && !currentUser) {
     document.getElementById('authgate-modal').classList.remove('hidden');
@@ -1554,6 +1610,15 @@ function requireAuth(id){
   return true;
 }
 function closeAuthGateModal(){ document.getElementById('authgate-modal').classList.add('hidden'); }
+// Call at the top of any interactive handler (flip, write, answer, record, play).
+// Returns true (and shows the login modal) when the action must be blocked.
+function gateInteraction(){
+  if (!currentUser) {
+    document.getElementById('authgate-modal').classList.remove('hidden');
+    return true;
+  }
+  return false;
+}
 
 function showSection(id){
   if (id === 'admin' && (!currentUser || currentUser.email !== ADMIN_EMAIL)) { id = 'home'; }
@@ -1650,7 +1715,9 @@ function typeColor(t){
 }
 function renderVocabGrid(key){
   const grid = document.getElementById('vocab-grid');
-  const words = VOCAB_DATA[key].words;
+  const query = (document.getElementById('vocab-search').value || '').trim().toLowerCase();
+  const words = VOCAB_DATA[key].words.filter(w => !query || w.h.includes(query) || w.p.toLowerCase().includes(query) || w.m.toLowerCase().includes(query));
+  if (!words.length) { grid.innerHTML = '<p class="text-sm text-gray-400 col-span-full text-center py-8">Không tìm thấy từ phù hợp trong chủ đề này.</p>'; return; }
   grid.innerHTML = words.map((w, i) => {
     const color = typeColor(w.t);
     return `
@@ -1686,11 +1753,12 @@ function renderVocabGrid(key){
     </div>`;
   }).join('');
 }
-function flipCard(id){ document.getElementById(id).classList.toggle('flipped'); }
-function markWordLearned(hanzi){ recordWordLearned(hanzi); }
+function flipCard(id){ if (gateInteraction()) return; document.getElementById(id).classList.toggle('flipped'); }
+function markWordLearned(hanzi){ if (gateInteraction()) return; recordWordLearned(hanzi); }
 
 let hanziInstances = [];
 function openHanziWriterModal(word){
+  if (gateInteraction()) return;
   document.getElementById('hanzi-modal').classList.remove('hidden');
   const list = document.getElementById('hanzi-writer-list');
   list.innerHTML = '';
@@ -1841,6 +1909,7 @@ function nextShadowSentence(){
 }
 function speakCurrentShadow(){ speakText(SHADOW_BANK[currentShadowLevel][currentShadowIndex][0], 0.8); }
 function toggleShadowRecording(){
+  if (gateInteraction()) return;
   if (!SpeechRec) { alert('Trình duyệt không hỗ trợ nhận diện giọng nói. Vui lòng dùng Chrome.'); return; }
   const btn = document.getElementById('shadow-record-btn');
   if (shadowRecording) { shadowRecognition && shadowRecognition.stop(); return; }
@@ -1905,6 +1974,7 @@ function pickNewReflexQuestion(){
 function speakCurrentReflex(){ if (currentReflexItem) speakText(currentReflexItem.q, 0.8); }
 function toggleReflexSub(){ document.getElementById('reflex-sub').classList.toggle('hidden'); }
 function toggleReflexRecording(){
+  if (gateInteraction()) return;
   if (!SpeechRec) { alert('Trình duyệt không hỗ trợ nhận diện giọng nói. Vui lòng dùng Chrome.'); return; }
   const btn = document.getElementById('reflex-record-btn');
   if (reflexRecording) { reflexRecognition && reflexRecognition.stop(); return; }
@@ -2042,6 +2112,7 @@ function renderOrderPools(){
   document.getElementById('order-pool').innerHTML = quizState.pool.map((w,i) => `<button onclick="pickOrderWord(${i})" class="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg text-sm font-bold">${w}</button>`).join('');
 }
 function pickOrderWord(i){
+  if (gateInteraction()) return;
   if (quizState.answered) return;
   quizState.picked.push(quizState.pool[i]);
   quizState.pool.splice(i,1);
@@ -2071,6 +2142,7 @@ function submitOrder(){
 }
 
 function answerFill(i){
+  if (gateInteraction()) return;
   if (quizState.answered) return;
   quizState.answered = true;
   const q = quizState.questions[quizState.index];
@@ -2092,6 +2164,7 @@ function answerFill(i){
 }
 
 function answerSynonym(i){
+  if (gateInteraction()) return;
   if (quizState.answered) return;
   quizState.answered = true;
   const q = quizState.questions[quizState.index];
@@ -2110,6 +2183,7 @@ function answerSynonym(i){
 }
 
 function answerMeaning(i){
+  if (gateInteraction()) return;
   if (quizState.answered) return;
   quizState.answered = true;
   const q = quizState.questions[quizState.index];
@@ -2129,6 +2203,7 @@ function answerMeaning(i){
 }
 
 function submitWriting(){
+  if (gateInteraction()) return;
   if (quizState.answered) return;
   const q = quizState.questions[quizState.index];
   const input = document.getElementById('writing-input').value.trim();
@@ -2238,6 +2313,7 @@ function setupMemoryGame(level){
   document.getElementById('memory-grid').innerHTML = cards.map((c,idx) => `<button onclick="flipMemoryCard(${idx})" id="mem-card-${idx}" class="h-20 sm:h-24 rounded-xl bg-red-600 text-white font-bold text-sm sm:text-base flex items-center justify-center shadow transition">?</button>`).join('');
 }
 function flipMemoryCard(idx){
+  if (gateInteraction()) return;
   if (memoryState.busy) return;
   if (memoryState.flipped.includes(idx) || memoryState.matched.includes(idx)) return;
   const el = document.getElementById('mem-card-'+idx);
@@ -2297,6 +2373,7 @@ function setupMatchGame(level){
   document.getElementById('match-col-meaning').innerHTML = meaningList.map(c => `<button onclick="selectMatchItem('meaning',${c.key},this)" class="match-item w-full py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 font-semibold text-sm">${c.text}</button>`).join('');
 }
 function selectMatchItem(col, key, el){
+  if (gateInteraction()) return;
   if (matchState.locked) return;
   if (col === 'hanzi') {
     if (matchState.selHanzi) matchState.selHanzi.el.classList.remove('border-amber-500');
@@ -2346,6 +2423,7 @@ function selectDashLevel(lvl){
   });
 }
 function startDashGame(){
+  if (gateInteraction()) return;
   document.getElementById('dash-start-screen').classList.add('hidden');
   document.getElementById('dash-end-screen').classList.add('hidden');
   document.getElementById('dash-game-screen').classList.remove('hidden');
@@ -2632,7 +2710,9 @@ function executeLogout(){
   closeLogoutModal();
   if (currentUser) {
     const p = touchDailyActivity();
-    p.minutesToday = (p.minutesToday || 0) + sessionMinutesElapsed();
+    const mins = sessionMinutesElapsed();
+    p.minutesToday = (p.minutesToday || 0) + mins;
+    p.totalMinutes = (p.totalMinutes || 0) + mins;
     setProgress(p);
   }
   sessionStartMs = null;
@@ -2649,6 +2729,16 @@ window.addEventListener('beforeunload', function(e){
     return e.returnValue;
   }
 });
+// Autosave accumulated study minutes every 60s so time isn't lost if the tab is closed without logging out.
+setInterval(() => {
+  if (currentUser && sessionStartMs) {
+    const p = touchDailyActivity();
+    p.minutesToday = (p.minutesToday || 0) + 1;
+    p.totalMinutes = (p.totalMinutes || 0) + 1;
+    setProgress(p);
+    sessionStartMs = Date.now();
+  }
+}, 60000);
 
 /* ===================== TEACHER AVATAR ===================== */
 const DEFAULT_AVATAR_SVG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23DC2626'/%3E%3Ccircle cx='50' cy='38' r='18' fill='white'/%3E%3Cellipse cx='50' cy='88' rx='32' ry='24' fill='white'/%3E%3C/svg%3E";
@@ -2687,10 +2777,45 @@ function submitFeedback(){
 /* ===================== ADMIN ===================== */
 function renderAdmin(){
   const users = loadJSON('jc_all_users', {});
-  document.getElementById('admin-account-count').textContent = Object.keys(users).length;
+  const uids = Object.keys(users);
+  document.getElementById('admin-account-count').textContent = uids.length;
+
   const curatedTotal = TAB_ORDER.reduce((sum,k) => sum + VOCAB_DATA[k].words.length, 0);
   const dictTotal = HSK_LEVELS.reduce((s,l) => s + (window.DICTIONARY_DATA[l]||[]).length, 0);
   document.getElementById('admin-vocab-count').textContent = (curatedTotal + dictTotal).toLocaleString('vi-VN');
+
+  const today = todayStr();
+  const rows = uids.map(uid => {
+    const u = users[uid];
+    const p = loadJSON('jc_progress_' + uid, null);
+    const loggedInToday = u.lastLogin && u.lastLogin.slice(0,10) === today;
+    const studiedToday = (p && p.lastStudyDate === today) || loggedInToday;
+    return {
+      uid,
+      name: u.displayName || (u.email||'').split('@')[0],
+      email: u.email || '',
+      wordsLearned: p ? (p.totalWordsLearned||0) : 0,
+      streak: p ? (p.streak||0) : 0,
+      totalMinutes: p ? (p.totalMinutes||0) : 0,
+      studiedToday,
+      lastLogin: u.lastLogin ? new Date(u.lastLogin).toLocaleString('vi-VN') : '—'
+    };
+  }).sort((a,b) => b.totalMinutes - a.totalMinutes);
+
+  document.getElementById('admin-active-today').textContent = rows.filter(r => r.studiedToday).length;
+
+  document.getElementById('admin-students-table').innerHTML = rows.length
+    ? rows.map(r => `<tr class="border-b border-gray-100 dark:border-gray-800">
+        <td class="py-1.5 pr-3 font-semibold">${r.name}</td>
+        <td class="py-1.5 pr-3 text-gray-500">${r.email}</td>
+        <td class="py-1.5 pr-3">${r.wordsLearned}</td>
+        <td class="py-1.5 pr-3">${r.streak} 🔥</td>
+        <td class="py-1.5 pr-3">${Math.floor(r.totalMinutes/60)}h${String(r.totalMinutes%60).padStart(2,'0')}p</td>
+        <td class="py-1.5 pr-3">${r.studiedToday ? '<span class="text-green-600 font-bold">Có</span>' : '<span class="text-gray-400">Chưa</span>'}</td>
+        <td class="py-1.5 text-gray-500">${r.lastLogin}</td>
+      </tr>`).join('')
+    : '<tr><td colspan="7" class="py-4 text-center text-gray-400">Chưa có học viên nào đăng nhập trên thiết bị này.</td></tr>';
+
   const feedback = loadJSON('jc_feedback', []);
   document.getElementById('admin-feedback-count').textContent = feedback.length;
   document.getElementById('admin-feedback-list').innerHTML = feedback.length
