@@ -761,6 +761,15 @@
 
   window.__FIREBASE_READY__ = false;
   try {
+const firebaseConfig = {
+    apiKey: "AIzaSyDwd8fy12f1Qz_GUTc9XAKlZkoriFnmNck",
+    authDomain: "jasmine-chinese.firebaseapp.com",
+    projectId: "jasmine-chinese",
+    storageBucket: "jasmine-chinese.firebasestorage.app",
+    messagingSenderId: "894019891668",
+    appId: "1:894019891668:web:a158877e75b2b873022641",
+    measurementId: "G-TZ9XZKSK0S"
+};
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     window.firebaseAuth = auth;
