@@ -277,9 +277,14 @@
       <h2 class="text-2xl font-bold">Thư viện Từ vựng & HSK</h2>
       <p class="text-sm text-gray-500">Chọn cấp độ HSK 1-6 hoặc chủ đề giao tiếp. Bấm thẻ để lật xem nghĩa, bấm lại để lật về mặt trước, nghe phát âm & luyện viết.</p>
     </div>
-    <input id="vocab-search" oninput="renderVocabGrid(currentVocabTab)" type="text" placeholder="Tra cứu nhanh Trung - Việt trong chủ đề này (Hán tự, pinyin hoặc nghĩa)..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
+    <input id="vocab-search" oninput="vocabSearchInput()" type="text" placeholder="Tra cứu nhanh Trung - Việt trong chủ đề này (Hán tự, pinyin hoặc nghĩa)..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
     <div id="vocab-tabs" class="flex gap-2 overflow-x-auto pb-2"></div>
     <div id="vocab-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="vocab-pagination" class="hidden justify-center items-center gap-3 text-sm">
+      <button onclick="vocabPage(-1)" class="px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 font-semibold">← Trang trước</button>
+      <span id="vocab-page-label" class="font-semibold">Trang 1/1</span>
+      <button onclick="vocabPage(1)" class="px-3 py-1.5 rounded-lg bg-gray-200 dark:bg-gray-700 font-semibold">Trang tiếp theo →</button>
+    </div>
   </section>
 
   <!-- ============ 2b. DICTIONARY ============ -->
@@ -378,28 +383,25 @@
         <button onclick="startExercise('meaning')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">📚 Nghĩa từ vựng<div class="text-xs font-normal opacity-80 mt-1">Chọn nghĩa đúng của từ</div></button>
         <button onclick="startExercise('order')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">🔀 Sắp xếp câu<div class="text-xs font-normal opacity-80 mt-1">Ghép từ thành câu đúng</div></button>
         <button onclick="startExercise('fill')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">✏️ Điền từ vào chỗ trống<div class="text-xs font-normal opacity-80 mt-1">Chọn từ phù hợp nhất</div></button>
-        <button onclick="startExercise('synonym')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">🔁 Đồng nghĩa - Trái nghĩa<div class="text-xs font-normal opacity-80 mt-1">Tìm từ liên quan</div></button>
-        <button onclick="startExercise('writing')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left sm:col-span-2">🖊️ Đặt câu với từ cho sẵn<div class="text-xs font-normal opacity-80 mt-1">Tự đặt câu, hệ thống chấm & gợi ý</div></button>
+        <button onclick="startExercise('synonym')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left sm:col-span-2">🔁 Đồng nghĩa - Trái nghĩa<div class="text-xs font-normal opacity-80 mt-1">Tìm từ liên quan</div></button>
       </div>
     </div>
 
     <div id="practice-quiz" class="hidden max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-md space-y-6">
-      <div class="flex justify-between items-center border-b pb-4 border-gray-200 dark:border-gray-700">
-        <button onclick="quizBack()" class="flex items-center gap-1 text-sm font-semibold text-gray-500 hover:text-red-600">← Lùi lại</button>
+      <div class="flex justify-between items-center border-b pb-4 border-gray-200 dark:border-gray-700 gap-2 flex-wrap">
+        <div class="flex items-center gap-2">
+          <button onclick="backToTypeMenu()" class="flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-500 hover:text-red-600">← Quay lại danh mục</button>
+          <button id="quiz-prev-btn" onclick="quizPrevQuestion()" class="hidden flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-500 hover:text-red-600">‹ Câu trước</button>
+        </div>
         <span id="quiz-progress-label" class="text-xs font-bold bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Câu 1/8</span>
       </div>
+      <div id="quiz-batch-toast" class="hidden text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2 text-center"></div>
       <div id="quiz-body"></div>
       <div id="quiz-explanation" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-xl space-y-2 text-sm">
         <div id="quiz-correct-line" class="font-bold text-red-600"></div>
         <div class="text-gray-700 dark:text-gray-300 space-y-1" id="quiz-explain-body"></div>
         <button onclick="quizNext()" class="mt-2 px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">Câu tiếp theo →</button>
       </div>
-    </div>
-    <div id="practice-done" class="hidden max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl p-8 text-center space-y-4 border border-gray-100 dark:border-gray-700 shadow-md">
-      <div class="text-4xl">🎉</div>
-      <h3 class="text-xl font-bold">Hoàn thành bài tập!</h3>
-      <p id="practice-score-line" class="text-sm text-gray-500"></p>
-      <button onclick="backToTypeMenu()" class="px-5 py-2.5 bg-red-600 text-white font-bold rounded-xl text-sm">Chọn dạng bài khác</button>
     </div>
   </section>
 
@@ -428,7 +430,7 @@
       <div class="flex justify-center gap-2 flex-wrap" id="match-level-tabs"></div>
       <div class="flex justify-between items-center max-w-3xl mx-auto text-sm">
         <span id="match-status">Số cặp đã nối: 0/6</span>
-        <button onclick="setupMatchGame(currentMatchLevel)" class="text-red-600 font-bold hover:underline">Chơi lại</button>
+        <button onclick="restartMatchGame()" class="text-red-600 font-bold hover:underline">Chơi lại từ đầu</button>
       </div>
       <div class="max-w-3xl mx-auto grid grid-cols-2 gap-6">
         <div id="match-col-hanzi" class="space-y-2"></div>
@@ -450,13 +452,14 @@
         <div class="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
           <div id="dash-timer-bar" class="bg-amber-500 h-full w-full transition-all duration-100"></div>
         </div>
+        <p id="dash-progress-note" class="text-[11px] text-gray-400"></p>
         <div id="dash-word" class="text-4xl font-extrabold py-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700"></div>
         <div id="dash-options" class="grid grid-cols-2 gap-3"></div>
       </div>
       <div id="dash-end-screen" class="hidden space-y-4">
         <div class="text-4xl">🏆</div>
-        <p class="text-lg font-bold">Điểm số của bạn: <span id="dash-final-score">0</span></p>
-        <button onclick="startDashGame()" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl">Chơi lại</button>
+        <p class="text-lg font-bold">Kết quả: <span id="dash-final-score">0</span></p>
+        <button onclick="restartDashGame()" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl">Chơi lại từ đầu</button>
       </div>
     </div>
   </section>
@@ -520,13 +523,18 @@
   <!-- ============ 8. ADMIN ============ -->
   <section id="sec-admin" class="hidden space-y-6">
     <div class="p-6 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl space-y-4">
-      <h2 class="text-2xl font-bold text-amber-800 dark:text-amber-400">Trang quản trị Admin (bảo mật)</h2>
-      <p class="text-sm text-gray-600 dark:text-gray-300">Quyền truy cập dành riêng cho Admin: <code class="font-bold text-red-600">hothihoa1042004@gmail.com</code> · SĐT liên hệ: 0368 466 376</p>
+      <div class="flex justify-between items-start gap-3 flex-wrap">
+        <div>
+          <h2 class="text-2xl font-bold text-amber-800 dark:text-amber-400">Trang quản trị Admin (bảo mật)</h2>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Quyền truy cập dành riêng cho Admin: <code class="font-bold text-red-600">hothihoa1042004@gmail.com</code> · SĐT liên hệ: 0368 466 376</p>
+        </div>
+        <button onclick="renderAdmin()" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold rounded-xl whitespace-nowrap">🔄 Tải lại số liệu</button>
+      </div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
         <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-          <h4 class="font-bold text-sm">Tổng số tài khoản đăng ký</h4>
+          <h4 class="font-bold text-sm">Tổng số học viên đăng ký</h4>
           <p id="admin-account-count" class="text-2xl font-black text-red-600 mt-1">0</p>
-          <p class="text-xs text-gray-500 mt-1">Ghi nhận trên thiết bị này</p>
+          <p class="text-xs text-gray-500 mt-1">Toàn hệ thống (mọi thiết bị)</p>
         </div>
         <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
           <h4 class="font-bold text-sm">Học viên đang học hôm nay</h4>
@@ -755,7 +763,8 @@
     signOut,
     onAuthStateChanged,
     GoogleAuthProvider,
-    signInWithPopup
+    signInWithPopup,
+    sendEmailVerification
   } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
   import {
     getFirestore,
@@ -795,14 +804,24 @@
     // Dashboard can aggregate real numbers from every device, not just this browser's localStorage.
     window.fsStudents = {
       save: (uid, data) => setDoc(doc(db, 'students', uid), data, { merge: true }),
+      load: (uid) => getDoc(doc(db, 'students', uid)).then(snap => snap.exists() ? snap.data() : null),
       getAll: () => getDocs(collection(db, 'students')),
       serverTimestamp
     };
 
     window.__FIREBASE_READY__ = true;
 
+    // Học viên đăng ký bằng Email/Mật khẩu BẮT BUỘC phải xác thực Gmail thật trước khi vào học.
+    // Đăng nhập Google không cần bước này vì Google đã tự xác thực Gmail khi đăng nhập.
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        const isPasswordAccount = user.providerData.some(p => p.providerId === 'password');
+        if (isPasswordAccount && !user.emailVerified) {
+          sendEmailVerification(user).catch(() => {});
+          const email = user.email;
+          signOut(auth).then(() => window.handleUnverifiedEmail(email));
+          return;
+        }
         window.handleAuthLogin({
           uid: user.uid,
           email: user.email,
@@ -1246,85 +1265,111 @@ const TAB_ORDER = ['hsk1','hsk2','hsk3','hsk4','hsk5','hsk6','t_greeting','t_fam
 const HSK_LEVELS = ['hsk1','hsk2','hsk3','hsk4','hsk5','hsk6'];
 
 /* ===================== CURATED EXERCISE BANK (Sắp xếp câu / Điền từ / Đồng-Trái nghĩa) ===================== */
-const EXERCISE_BANK = {
-  order: {
-    hsk1: [
-      { words:['我','是','学生'], correct:['我','是','学生'], alts:[], grammar:'Cấu trúc cơ bản: Chủ ngữ + 是 + Danh từ.', translation:'Tôi là học sinh.' },
-      { words:['你','好','吗'], correct:['你','好','吗'], alts:[], grammar:'Câu hỏi với trợ từ 吗 luôn đứng cuối câu.', translation:'Bạn khỏe không?' }
-    ],
-    hsk2: [
-      { words:['他','已经','回家','了'], correct:['他','已经','回家','了'], alts:[], grammar:'Cấu trúc 已经...了 diễn tả hành động đã hoàn thành.', translation:'Anh ấy đã về nhà rồi.' },
-      { words:['这个','问题','很','简单'], correct:['这个','问题','很','简单'], alts:[], grammar:'Chủ ngữ (cụm danh từ) + 很 + Tính từ.', translation:'Vấn đề này rất đơn giản.' }
-    ],
-    hsk3: [
-      { words:['我们','应该','保护','环境'], correct:['我们','应该','保护','环境'], alts:[], grammar:'Chủ ngữ + động từ năng nguyện 应该 + động từ + tân ngữ.', translation:'Chúng ta nên bảo vệ môi trường.' },
-      { words:['他','每天','都','去','学校'], correct:['他','每天','都','去','学校'], alts:[['每天','他','都','去','学校']], grammar:'Trạng từ chỉ thời gian (每天) có thể đứng trước hoặc sau chủ ngữ, đều hợp lệ.', translation:'Anh ấy ngày nào cũng đến trường.' }
-    ],
-    hsk4: [
-      { words:['尽管','很','累','他','还','坚持','工作'], correct:['尽管','很','累','他','还','坚持','工作'], alts:[], grammar:'Cấu trúc nhượng bộ 尽管...还/也... : dù A nhưng vẫn B.', translation:'Mặc dù rất mệt, anh ấy vẫn kiên trì làm việc.' },
-      { words:['这次','合作','非常','成功'], correct:['这次','合作','非常','成功'], alts:[], grammar:'Chủ ngữ + 非常 + Tính từ.', translation:'Lần hợp tác này rất thành công.' }
-    ],
-    hsk5: [
-      { words:['做','决定','的时候','要','谨慎'], correct:['做','决定','的时候','要','谨慎'], alts:[], grammar:'Cụm 的时候 (khi...) làm trạng ngữ thời gian cho mệnh đề sau.', translation:'Khi đưa ra quyết định cần phải thận trọng.' },
-      { words:['每个','孩子','都','有','自己的','潜力'], correct:['每个','孩子','都','有','自己的','潜力'], alts:[], grammar:'每个 + danh từ + 都 nhấn mạnh tính phổ quát "mỗi... đều".', translation:'Mỗi đứa trẻ đều có tiềm năng riêng của mình.' }
-    ],
-    hsk6: [
-      { words:['经验','需要','时间','来','沉淀'], correct:['经验','需要','时间','来','沉淀'], alts:[], grammar:'Cấu trúc 需要...来... : cần (điều gì) để (làm gì).', translation:'Kinh nghiệm cần có thời gian để lắng đọng.' },
-      { words:['员工','应该','恪守','公司','规定'], correct:['员工','应该','恪守','公司','规定'], alts:[], grammar:'Chủ ngữ + động từ năng nguyện + động từ + tân ngữ (định ngữ 公司 bổ nghĩa cho 规定).', translation:'Nhân viên nên tuân thủ nghiêm ngặt quy định công ty.' }
-    ]
-  },
-  fill: {
-    hsk1: [
-      { sentence:'我___学汉语。', options:['很','喜欢','猫','昨天'], correct:'喜欢', why:['很 chỉ đứng trước tính từ, không đứng trước cụm động từ như ở đây.','猫 (con mèo) là danh từ, không hợp về nghĩa và ngữ pháp trong câu này.','昨天 là trạng từ chỉ thời gian, phải đứng ở đầu câu, không đứng ở vị trí này.'], translation:'Tôi thích học tiếng Trung.' },
-      { sentence:'他___北京人。', options:['是','在','和','很'], correct:'是', why:['在 dùng để chỉ vị trí, cần đi kèm địa điểm cụ thể, không hợp trong câu định danh này.','和 là liên từ dùng để nối hai danh từ, không hợp ở vị trí vị ngữ.','很 chỉ đứng trước tính từ, mà "北京人" là danh từ nên không thể dùng 很.'], translation:'Anh ấy là người Bắc Kinh.' }
-    ],
-    hsk2: [
-      { sentence:'这个问题___简单。', options:['很','是','在','把'], correct:'很', why:['是 cần theo sau là cụm danh từ, mà "简单" là tính từ nên không dùng 是 trực tiếp.','在 dùng để chỉ vị trí, không phù hợp trong câu miêu tả tính chất.','把 cần cấu trúc "把 + tân ngữ + động từ", không phù hợp với câu này.'], translation:'Vấn đề này rất đơn giản.' },
-      { sentence:'我___吃完饭了。', options:['已经','还','不','别'], correct:'已经', why:['还 (vẫn/còn) mâu thuẫn với 了 chỉ sự hoàn thành trong câu.','不 là phó từ phủ định, không thể đi cùng 了 chỉ hoàn thành theo cách này.','别 dùng để ra lệnh cấm đoán, không phù hợp với câu trần thuật này.'], translation:'Tôi đã ăn xong cơm rồi.' }
-    ],
-    hsk3: [
-      { sentence:'这次旅行___了我很多经验。', options:['给','让','把','被'], correct:'给', why:['让 (khiến/để) cần theo sau là chủ ngữ + động từ khác, cấu trúc không khớp.','把 cần cấu trúc "把 + tân ngữ + động từ", không khớp với câu này.','被 dùng trong câu bị động, không phù hợp với ngữ cảnh chủ động ở đây.'], translation:'Chuyến du lịch này đã cho tôi nhiều kinh nghiệm.' },
-      { sentence:'他工作很___，所以经理很信任他。', options:['认真','马虎','轻松','着急'], correct:'认真', why:['马虎 (cẩu thả) mang nghĩa trái ngược, không tạo được lý do để được tin tưởng.','轻松 (nhẹ nhàng) không liên quan đến việc được tin tưởng trong công việc.','着急 (vội vàng, lo lắng) không phải là lý do khiến người khác tin tưởng.'], translation:'Anh ấy làm việc rất nghiêm túc nên quản lý rất tin tưởng anh ấy.' }
-    ],
-    hsk4: [
-      { sentence:'___他很累，他还是坚持完成了任务。', options:['尽管','因为','如果','而且'], correct:'尽管', why:['因为 (vì) diễn tả nguyên nhân thông thường, không tạo được ý nghĩa nhượng bộ cần hô ứng với 还是.','如果 (nếu) mang nghĩa giả định, không phù hợp vì sự việc đã thực sự xảy ra.','而且 (hơn nữa) chỉ dùng để bổ sung ý, không tạo được ý nghĩa nhượng bộ - trái ngược.'], translation:'Mặc dù anh ấy rất mệt, anh ấy vẫn kiên trì hoàn thành nhiệm vụ.' },
-      { sentence:'公司决定和那家企业___。', options:['合作','竞争','挑战','合适'], correct:'合作', why:['竞争 (cạnh tranh) mang nghĩa trái ngược với mong muốn hợp tác trong câu.','挑战 (thử thách) thường đi với giới từ "向", không phù hợp cấu trúc "和...挑战".','合适 (phù hợp) là tính từ, không thể làm động từ chính sau "和...".'], translation:'Công ty quyết định hợp tác với doanh nghiệp đó.' }
-    ],
-    hsk5: [
-      { sentence:'这个项目很有___，公司决定继续投资。', options:['潜力','隐私','战略','谨慎'], correct:'潜力', why:['隐私 (sự riêng tư) không liên quan đến quyết định đầu tư.','战略 (chiến lược) không tự nhiên khi dùng với cấu trúc "有...", khác với cụm cố định "有潜力".','谨慎 là tính từ, không thể đứng sau 有 như một danh từ.'], translation:'Dự án này rất có tiềm năng nên công ty quyết định tiếp tục đầu tư.' },
-      { sentence:'在原则问题上，我们不能___。', options:['妥协','疲惫','潜力','战略'], correct:'妥协', why:['疲惫 (mệt mỏi) là tính từ, không hợp về nghĩa và ngữ pháp ở vị trí vị ngữ chính này.','潜力 và 战略 đều là danh từ, không thể đứng sau 不能 (cần động từ).','（tham khảo thêm giải thích ở trên）'], translation:'Về vấn đề nguyên tắc, chúng ta không thể thỏa hiệp.' }
-    ],
-    hsk6: [
-      { sentence:'他一直___自己的承诺，从不食言。', options:['恪守','颠覆','匮乏','沉淀'], correct:'恪守', why:['颠覆 (lật đổ, đảo lộn) mang nghĩa trái ngược hoàn toàn với việc giữ lời hứa.','匮乏 (thiếu thốn) là tính từ, không phù hợp làm động từ trong câu này.','沉淀 (lắng đọng) không phù hợp về nghĩa với tân ngữ "lời hứa".'], translation:'Anh ấy luôn tuân thủ nghiêm ngặt lời hứa của mình, chưa bao giờ thất hứa.' },
-      { sentence:'这个理论看似矛盾，其实是一个逻辑___。', options:['悖论','韧性','恪守','颠覆'], correct:'悖论', why:['韧性 (tính bền bỉ) là danh từ đúng nhưng sai về nghĩa trong ngữ cảnh logic học.','恪守 là động từ, không thể đứng sau lượng từ "一个" như một danh từ.','颠覆 cũng là động từ, không phù hợp vị trí ngữ pháp danh từ ở đây.'], translation:'Lý thuyết này trông có vẻ mâu thuẫn, thực ra là một nghịch lý logic.' }
-    ]
-  },
-  synonym: {
-    hsk1: [
-      { type:'antonym', word:'漂亮', options:['丑','老师','谢谢','喜欢'], correct:'丑', explain:'"漂亮" (xinh đẹp) trái nghĩa với "丑" (xấu). Các từ còn lại không liên quan về nghĩa.' },
-      { type:'synonym', word:'喜欢', options:['爱','老师','中国','漂亮'], correct:'爱', explain:'"爱" và "喜欢" đều diễn tả sự yêu thích, có thể thay thế cho nhau trong nhiều ngữ cảnh. Các từ còn lại không cùng nhóm nghĩa.' }
-    ],
-    hsk2: [
-      { type:'antonym', word:'简单', options:['复杂','已经','机场','高兴'], correct:'复杂', explain:'"简单" (đơn giản) trái nghĩa với "复杂" (phức tạp).' },
-      { type:'synonym', word:'高兴', options:['开心','机场','简单','已经'], correct:'开心', explain:'"高兴" và "开心" đều mang nghĩa vui vẻ, có thể thay thế cho nhau.' }
-    ],
-    hsk3: [
-      { type:'antonym', word:'保护', options:['破坏','联系','经验','提高'], correct:'破坏', explain:'"保护" (bảo vệ) trái nghĩa với "破坏" (phá hoại).' },
-      { type:'synonym', word:'提高', options:['提升','广告','一般','联系'], correct:'提升', explain:'"提高" và "提升" đều mang nghĩa nâng cao, nâng lên, có thể thay thế cho nhau trong nhiều ngữ cảnh.' }
-    ],
-    hsk4: [
-      { type:'antonym', word:'合作', options:['竞争','幽默','效率','挑战'], correct:'竞争', explain:'"合作" (hợp tác) trái nghĩa với "竞争" (cạnh tranh).' },
-      { type:'synonym', word:'挑战', options:['难题','幽默','合作','效率'], correct:'难题', explain:'"挑战" (thử thách) và "难题" (vấn đề khó) đều chỉ những khó khăn cần vượt qua, gần nghĩa với nhau.' }
-    ],
-    hsk5: [
-      { type:'antonym', word:'谨慎', options:['草率','疲惫','潜力','妥协'], correct:'草率', explain:'"谨慎" (thận trọng) trái nghĩa với "草率" (khinh suất, hấp tấp).' },
-      { type:'synonym', word:'疲惫', options:['疲劳','谨慎','隐私','战略'], correct:'疲劳', explain:'"疲惫" và "疲劳" đều diễn tả trạng thái mệt mỏi, có thể thay thế cho nhau.' }
-    ],
-    hsk6: [
-      { type:'antonym', word:'匮乏', options:['充裕','沉淀','颠覆','恪守'], correct:'充裕', explain:'"匮乏" (thiếu thốn) trái nghĩa với "充裕" (dồi dào, đầy đủ).' },
-      { type:'synonym', word:'恪守', options:['遵守','颠覆','匮乏','悖论'], correct:'遵守', explain:'"恪守" và "遵守" đều mang nghĩa tuân thủ nghiêm túc, có thể thay thế cho nhau.' }
-    ]
-  }
+/* Mẫu câu theo cấp độ: mỗi mẫu có 1 vị trí trống (slot) được lấp bằng một từ thật lấy ngẫu nhiên
+   từ DICTIONARY_DATA (đúng loại từ), nhờ đó sinh ra được rất nhiều câu "Sắp xếp câu" / "Điền từ"
+   duy nhất mà không lặp lại, thay vì chỉ có vài câu cố định. Dấu câu luôn là 1 thẻ riêng biệt. */
+const SENTENCE_TEMPLATES = {
+  hsk1: [
+    { parts:['我','是','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 是 + Danh từ + 。', trans:m=>`Tôi là ${m}.` },
+    { parts:['我','喜欢','{s}','。'], slotType:'động từ', grammar:'Cấu trúc: Chủ ngữ + 喜欢 + Động từ + 。', trans:m=>`Tôi thích ${m}.` },
+    { parts:['我','的','{s}','很','漂亮','。'], slotType:'danh từ', grammar:'Cấu trúc: 我的 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} của tôi rất đẹp.` },
+    { parts:['他','很','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: Chủ ngữ + 很 + Tính từ + 。', trans:m=>`Anh ấy rất ${m}.` }
+  ],
+  hsk2: [
+    { parts:['我','已经','{s}','了','。'], slotType:'động từ', grammar:'Cấu trúc 已经...了: diễn tả hành động đã hoàn thành.', trans:m=>`Tôi đã ${m} rồi.` },
+    { parts:['这个','{s}','很','有意思','。'], slotType:'danh từ', grammar:'Cấu trúc: 这个 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} này rất thú vị.` },
+    { parts:['他','觉得','{s}','很','重要','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 觉得 + Cụm chủ vị.', trans:m=>`Anh ấy cho rằng ${m} rất quan trọng.` },
+    { parts:['我','想','{s}','。'], slotType:'động từ', grammar:'Cấu trúc: Chủ ngữ + 想 (muốn) + Động từ + 。', trans:m=>`Tôi muốn ${m}.` }
+  ],
+  hsk3: [
+    { parts:['我们','应该','{s}','。'], slotType:'động từ', grammar:'Cấu trúc: Chủ ngữ + động từ năng nguyện 应该 + Động từ + 。', trans:m=>`Chúng ta nên ${m}.` },
+    { parts:['这','件','事','很','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Việc này rất ${m}.` },
+    { parts:['他','对','{s}','很','感兴趣','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 对 + Danh từ + 很感兴趣 (rất hứng thú với).', trans:m=>`Anh ấy rất hứng thú với ${m}.` },
+    { parts:['你','有','什么','{s}','吗','？'], slotType:'danh từ', grammar:'Câu hỏi với 吗 luôn đứng cuối câu.', trans:m=>`Bạn có ${m} gì không?` }
+  ],
+  hsk4: [
+    { parts:['尽管','很','难','，','他','还是','{s}','了','。'], slotType:'động từ', grammar:'Cấu trúc nhượng bộ 尽管...还是...: dù A nhưng vẫn B.', trans:m=>`Mặc dù rất khó, anh ấy vẫn ${m} rồi.` },
+    { parts:['这个','{s}','对','公司','非常','重要','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 非常 + Tính từ.', trans:m=>`${cap(m)} này vô cùng quan trọng đối với công ty.` },
+    { parts:['他','的','态度','很','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: 的-định ngữ + Chủ ngữ + 很 + Tính từ.', trans:m=>`Thái độ của anh ấy rất ${m}.` },
+    { parts:['我们','需要','更多','的','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: 更多的 + Danh từ làm tân ngữ.', trans:m=>`Chúng ta cần nhiều ${m} hơn.` }
+  ],
+  hsk5: [
+    { parts:['在','这个','问题','上','，','我们','应该','保持','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: 在...上 (về vấn đề...) làm trạng ngữ, theo sau là mệnh đề chính.', trans:m=>`Về vấn đề này, chúng ta nên giữ thái độ ${m}.` },
+    { parts:['他','对','{s}','有','独特','的','看法','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 有 + Định ngữ + 看法.', trans:m=>`Anh ấy có quan điểm độc đáo về ${m}.` },
+    { parts:['这','需要','长期','的','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: 长期的 + Danh từ trừu tượng làm tân ngữ.', trans:m=>`Việc này cần ${m} lâu dài.` },
+    { parts:['她','始终','保持','{s}','的','态度','。'], slotType:'tính từ', grammar:'Cấu trúc: 始终 (luôn luôn) + 保持 + Định ngữ + 态度.', trans:m=>`Cô ấy luôn giữ thái độ ${m}.` }
+  ],
+  hsk6: [
+    { parts:['这','项','政策','引发','了','广泛','的','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 引发了 + Định ngữ + Danh từ trừu tượng.', trans:m=>`Chính sách này đã gây ra ${m} rộng rãi.` },
+    { parts:['他','始终','恪守','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: 始终 + 恪守 (tuân thủ nghiêm ngặt) + Tân ngữ.', trans:m=>`Anh ấy luôn tuân thủ nghiêm ngặt ${m}.` },
+    { parts:['这个','现象','十分','{s}','，','值得','深思','。'], slotType:'tính từ', grammar:'Cấu trúc: Chủ ngữ + 十分 + Tính từ + ，+ mệnh đề bổ sung.', trans:m=>`Hiện tượng này rất ${m}, đáng để suy ngẫm.` },
+    { parts:['他','的','决定','令','大家','感到','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc 令 (khiến) + Tân ngữ + 感到 + Tính từ.', trans:m=>`Quyết định của anh ấy khiến mọi người cảm thấy ${m}.` }
+  ]
+};
+function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+/* Các cặp từ đồng nghĩa/trái nghĩa đã được kiểm chứng thủ công (không tự sinh bằng máy vì dễ sai
+   quan hệ ngữ nghĩa). Mỗi cặp sinh ra 2 câu hỏi (hỏi theo chiều A hoặc chiều B), nhiễu chọn ngẫu
+   nhiên từ từ điển mỗi lần nên vẫn đa dạng khi luyện lại nhiều lần. */
+const WORD_PAIRS = {
+  hsk1: [
+    {type:'antonym', a:'大', am:'to, lớn', b:'小', bm:'nhỏ'},
+    {type:'antonym', a:'多', am:'nhiều', b:'少', bm:'ít'},
+    {type:'antonym', a:'高', am:'cao', b:'矮', bm:'thấp'},
+    {type:'antonym', a:'冷', am:'lạnh', b:'热', bm:'nóng'},
+    {type:'antonym', a:'好', am:'tốt', b:'坏', bm:'xấu, hỏng'},
+    {type:'antonym', a:'快', am:'nhanh', b:'慢', bm:'chậm'},
+    {type:'antonym', a:'新', am:'mới', b:'旧', bm:'cũ'},
+    {type:'antonym', a:'男', am:'nam', b:'女', bm:'nữ'},
+    {type:'synonym', a:'喜欢', am:'thích', b:'爱', bm:'yêu, yêu thích'},
+    {type:'synonym', a:'漂亮', am:'xinh đẹp', b:'美', bm:'đẹp'}
+  ],
+  hsk2: [
+    {type:'antonym', a:'简单', am:'đơn giản', b:'复杂', bm:'phức tạp'},
+    {type:'antonym', a:'早', am:'sớm', b:'晚', bm:'muộn'},
+    {type:'antonym', a:'贵', am:'đắt', b:'便宜', bm:'rẻ'},
+    {type:'antonym', a:'忙', am:'bận', b:'闲', bm:'rảnh rỗi'},
+    {type:'antonym', a:'干净', am:'sạch sẽ', b:'脏', bm:'bẩn'},
+    {type:'antonym', a:'安静', am:'yên tĩnh', b:'吵', bm:'ồn ào'},
+    {type:'antonym', a:'胖', am:'béo', b:'瘦', bm:'gầy'},
+    {type:'synonym', a:'高兴', am:'vui vẻ', b:'开心', bm:'vui vẻ'},
+    {type:'synonym', a:'马上', am:'ngay lập tức', b:'立刻', bm:'lập tức'}
+  ],
+  hsk3: [
+    {type:'antonym', a:'保护', am:'bảo vệ', b:'破坏', bm:'phá hoại'},
+    {type:'antonym', a:'成功', am:'thành công', b:'失败', bm:'thất bại'},
+    {type:'antonym', a:'安全', am:'an toàn', b:'危险', bm:'nguy hiểm'},
+    {type:'antonym', a:'热情', am:'nhiệt tình', b:'冷淡', bm:'thờ ơ, lạnh nhạt'},
+    {type:'antonym', a:'诚实', am:'thành thật', b:'虚假', bm:'giả dối'},
+    {type:'synonym', a:'提高', am:'nâng cao', b:'提升', bm:'nâng lên'},
+    {type:'synonym', a:'马虎', am:'cẩu thả', b:'粗心', bm:'bất cẩn'},
+    {type:'synonym', a:'突然', am:'đột nhiên', b:'忽然', bm:'bỗng nhiên'}
+  ],
+  hsk4: [
+    {type:'antonym', a:'合作', am:'hợp tác', b:'竞争', bm:'cạnh tranh'},
+    {type:'antonym', a:'谦虚', am:'khiêm tốn', b:'骄傲', bm:'kiêu ngạo'},
+    {type:'antonym', a:'积极', am:'tích cực', b:'消极', bm:'tiêu cực'},
+    {type:'antonym', a:'乐观', am:'lạc quan', b:'悲观', bm:'bi quan'},
+    {type:'antonym', a:'具体', am:'cụ thể', b:'抽象', bm:'trừu tượng'},
+    {type:'synonym', a:'挑战', am:'thử thách', b:'难题', bm:'vấn đề khó'},
+    {type:'synonym', a:'幽默', am:'hài hước', b:'诙谐', bm:'dí dỏm'}
+  ],
+  hsk5: [
+    {type:'antonym', a:'谨慎', am:'thận trọng', b:'草率', bm:'khinh suất'},
+    {type:'antonym', a:'充裕', am:'dồi dào', b:'匮乏', bm:'thiếu thốn'},
+    {type:'antonym', a:'坚强', am:'kiên cường', b:'脆弱', bm:'yếu đuối'},
+    {type:'synonym', a:'疲惫', am:'mệt mỏi', b:'疲劳', bm:'mệt mỏi'},
+    {type:'synonym', a:'谨慎', am:'thận trọng', b:'慎重', bm:'thận trọng'},
+    {type:'synonym', a:'潜力', am:'tiềm năng', b:'潜能', bm:'tiềm năng'}
+  ],
+  hsk6: [
+    {type:'antonym', a:'匮乏', am:'thiếu thốn', b:'充裕', bm:'dồi dào'},
+    {type:'antonym', a:'颠覆', am:'lật đổ, đảo lộn', b:'巩固', bm:'củng cố'},
+    {type:'antonym', a:'谦逊', am:'khiêm tốn', b:'傲慢', bm:'ngạo mạn'},
+    {type:'synonym', a:'恪守', am:'tuân thủ nghiêm ngặt', b:'遵守', bm:'tuân thủ'},
+    {type:'synonym', a:'沉淀', am:'lắng đọng, tích lũy', b:'积累', bm:'tích lũy'},
+    {type:'synonym', a:'韧性', am:'tính bền bỉ', b:'坚韧', bm:'kiên cường bền bỉ'}
+  ]
 };
 
 /* ===================== SHADOWING SENTENCE BANK (30 câu/cấp độ HSK 1-6) ===================== */
@@ -1618,8 +1663,32 @@ function syncToCloud(){
     lastStudyDate: p.lastStudyDate || '',
     streak: p.streak || 0,
     totalWordsLearned: p.totalWordsLearned || 0,
-    totalMinutes: p.totalMinutes || 0
+    totalMinutes: p.totalMinutes || 0,
+    shadowDone: p.shadowDone || {},
+    reflexDone: p.reflexDone || {},
+    levelQueue: p.levelQueue || {}
   }).catch(err => console.warn('Không thể đồng bộ dữ liệu học tập lên Firestore (có thể chưa bật Firestore Database trong Firebase Console):', err));
+}
+// Khi đăng nhập, tải lại toàn bộ tiến trình (ID bài/từ đã hoàn thành) từ Firestore để đồng bộ
+// giữa các thiết bị: không lặp lại câu Shadowing/Phản xạ đã làm, tiếp tục đúng chỗ dở dang ở
+// Nối từ/Đoán nhanh, dù học viên đang dùng máy khác với lần học trước.
+function loadCloudProgress(){
+  if (!(window.__FIREBASE_READY__ && window.fsStudents && window.fsStudents.load && currentUser)) return;
+  const uid = currentUser.uid;
+  window.fsStudents.load(uid).then(cloud => {
+    if (!cloud || uid !== (currentUser && currentUser.uid)) return;
+    const p = getProgress();
+    if (cloud.shadowDone) p.shadowDone = cloud.shadowDone;
+    if (cloud.reflexDone) p.reflexDone = cloud.reflexDone;
+    if (cloud.levelQueue) p.levelQueue = cloud.levelQueue;
+    if ((cloud.totalMinutes||0) > (p.totalMinutes||0)) p.totalMinutes = cloud.totalMinutes;
+    if ((cloud.totalWordsLearned||0) > (p.totalWordsLearned||0)) p.totalWordsLearned = cloud.totalWordsLearned;
+    if ((cloud.streak||0) > (p.streak||0)) p.streak = cloud.streak;
+    setProgress(p);
+    if (shadowInitDone && !document.getElementById('sec-shadowing').classList.contains('hidden')) pickNewShadowSentence();
+    if (reflexInitDone && !document.getElementById('sec-reflex').classList.contains('hidden')) pickNewReflexQuestion();
+    if (gamesInitDone && !document.getElementById('sec-games').classList.contains('hidden')) { setupMatchGame(currentMatchLevel); }
+  }).catch(err => console.warn('Không thể tải tiến trình từ Firestore:', err));
 }
 function pushHistory(entry){
   const p = getProgress();
@@ -1756,6 +1825,7 @@ function initVocabSection(){
 }
 function selectVocabTab(key){
   currentVocabTab = key;
+  vocabPageNum = 1;
   document.querySelectorAll('.vocab-tab').forEach(b => {
     b.classList.toggle('bg-red-600', b.dataset.tab === key);
     b.classList.toggle('text-white', b.dataset.tab === key);
@@ -1766,17 +1836,57 @@ function selectVocabTab(key){
   });
   renderVocabGrid(key);
 }
+function vocabSearchInput(){ vocabPageNum = 1; renderVocabGrid(currentVocabTab); }
 function typeColor(t){
   const map = {'danh từ':'red','danh từ riêng':'blue','động từ':'green','tính từ':'amber','phó từ':'purple','liên từ':'pink','số từ':'indigo','cụm từ':'teal','thán từ':'orange'};
   return map[t] || 'gray';
 }
+let vocabPageNum = 1;
+const VOCAB_PAGE_SIZE = 6;
+function getVocabWordsForTab(key){
+  if (HSK_LEVELS.includes(key)) {
+    const curatedByHanzi = {};
+    VOCAB_DATA[key].words.forEach(w => { curatedByHanzi[w.h] = w; });
+    return (window.DICTIONARY_DATA[key]||[]).map(row => {
+      const curated = curatedByHanzi[row[0]];
+      return { h: row[0], p: row[1], m: row[2], t: row[3], ex: curated ? curated.ex : [] };
+    });
+  }
+  return VOCAB_DATA[key].words;
+}
+function vocabPage(delta){ vocabPageNum += delta; renderVocabGrid(currentVocabTab); }
 function renderVocabGrid(key){
   const grid = document.getElementById('vocab-grid');
+  const pag = document.getElementById('vocab-pagination');
   const query = (document.getElementById('vocab-search').value || '').trim().toLowerCase();
-  const words = VOCAB_DATA[key].words.filter(w => !query || w.h.includes(query) || w.p.toLowerCase().includes(query) || w.m.toLowerCase().includes(query));
-  if (!words.length) { grid.innerHTML = '<p class="text-sm text-gray-400 col-span-full text-center py-8">Không tìm thấy từ phù hợp trong chủ đề này.</p>'; return; }
-  grid.innerHTML = words.map((w, i) => {
+  const words = getVocabWordsForTab(key).filter(w => !query || w.h.includes(query) || w.p.toLowerCase().includes(query) || w.m.toLowerCase().includes(query));
+  if (!words.length) {
+    grid.innerHTML = '<p class="text-sm text-gray-400 col-span-full text-center py-8">Không tìm thấy từ phù hợp.</p>';
+    pag.classList.add('hidden'); pag.classList.remove('flex');
+    return;
+  }
+
+  const isPaginated = HSK_LEVELS.includes(key);
+  let pageWords = words;
+  if (isPaginated) {
+    const maxPage = Math.max(1, Math.ceil(words.length / VOCAB_PAGE_SIZE));
+    vocabPageNum = Math.min(Math.max(1, vocabPageNum), maxPage);
+    const start = (vocabPageNum-1) * VOCAB_PAGE_SIZE;
+    pageWords = words.slice(start, start + VOCAB_PAGE_SIZE);
+    document.getElementById('vocab-page-label').textContent = `Trang ${vocabPageNum}/${maxPage}`;
+    pag.classList.remove('hidden'); pag.classList.add('flex');
+  } else {
+    pag.classList.add('hidden'); pag.classList.remove('flex');
+  }
+
+  grid.innerHTML = pageWords.map((w, i) => {
     const color = typeColor(w.t);
+    const exBlock = w.ex && w.ex.length
+      ? `<div class="bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-xl space-y-1.5 text-[11px] flex-1">
+           <p class="font-bold text-gray-500">Ví dụ:</p>
+           ${w.ex.map(e => `<p class="text-gray-800 dark:text-gray-200">${e[0]}<br><span class="text-gray-500">${e[1]}</span></p>`).join('')}
+         </div>`
+      : `<div class="bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-xl text-[11px] flex-1 flex items-center justify-center text-gray-400 text-center">Từ trong kho từ điển tra cứu (chưa có câu ví dụ minh hoạ riêng)</div>`;
     return `
     <div class="flip-card h-80" id="card-${key}-${i}">
       <div class="flip-inner relative w-full h-full">
@@ -1796,10 +1906,7 @@ function renderVocabGrid(key){
             <div class="text-sm text-amber-600 font-medium">${w.p}</div>
             <div class="text-sm font-semibold text-gray-600 dark:text-gray-300">${w.m}</div>
           </div>
-          <div class="bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-xl space-y-1.5 text-[11px] flex-1">
-            <p class="font-bold text-gray-500">Ví dụ:</p>
-            ${w.ex.map(e => `<p class="text-gray-800 dark:text-gray-200">${e[0]}<br><span class="text-gray-500">${e[1]}</span></p>`).join('')}
-          </div>
+          ${exBlock}
           <div class="flex gap-2">
             <button onclick="event.stopPropagation();openHanziWriterModal('${w.h}')" class="flex-1 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-[11px] font-bold rounded-lg transition">Luyện viết chữ Hán</button>
             <button onclick="event.stopPropagation();markWordLearned('${w.h}');flipCard('card-${key}-${i}')" class="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold rounded-lg transition">Đã thuộc ✓</button>
@@ -1930,40 +2037,63 @@ let currentShadowIndex = 0;
 let shadowRecognition = null;
 let shadowRecording = false;
 
+function getDoneSet(field, level){
+  const p = getProgress();
+  if (!p[field]) p[field] = {};
+  if (!p[field][level]) p[field][level] = [];
+  return p[field][level];
+}
+function markDone(field, level, idx){
+  const p = getProgress();
+  if (!p[field]) p[field] = {};
+  if (!p[field][level]) p[field][level] = [];
+  if (!p[field][level].includes(idx)) p[field][level].push(idx);
+  setProgress(p);
+  syncToCloud();
+}
+function pickUndoneIndex(field, level, bankLength, levelLabel, activityName){
+  const done = new Set(getDoneSet(field, level));
+  const remaining = [];
+  for (let i=0;i<bankLength;i++) if (!done.has(i)) remaining.push(i);
+  if (!remaining.length) {
+    const p = getProgress(); p[field][level] = []; setProgress(p); syncToCloud();
+    setTimeout(() => alert(`🎉 Chúc mừng! Bạn đã hoàn thành hết ${bankLength} câu ${activityName} của ${levelLabel}. Vòng luyện tập mới cho cấp độ này bắt đầu lại!`), 50);
+    return Math.floor(Math.random()*bankLength);
+  }
+  return remaining[Math.floor(Math.random()*remaining.length)];
+}
+
 function initShadowingSection(){
   shadowInitDone = true;
   const tabsEl = document.getElementById('shadow-level-tabs');
   tabsEl.innerHTML = HSK_LEVELS.map(k => `<button onclick="selectShadowLevel('${k}')" data-lvl="${k}" class="shadow-lvl px-3 py-1.5 rounded-lg text-xs font-bold ${k===currentShadowLevel?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800'}">${VOCAB_DATA[k].label}</button>`).join('');
   if (!SpeechRec) document.getElementById('shadow-support-note').classList.remove('hidden');
-  currentShadowIndex = Math.floor(Math.random()*SHADOW_BANK[currentShadowLevel].length);
+  currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, VOCAB_DATA[currentShadowLevel].label, 'mẫu Shadowing');
   renderShadowSentence();
 }
 function selectShadowLevel(lvl){
   currentShadowLevel = lvl;
-  currentShadowIndex = 0;
   document.querySelectorAll('.shadow-lvl').forEach(b => {
     b.classList.toggle('bg-red-600', b.dataset.lvl===lvl);
     b.classList.toggle('text-white', b.dataset.lvl===lvl);
     b.classList.toggle('bg-gray-200', b.dataset.lvl!==lvl);
   });
-  renderShadowSentence();
+  pickNewShadowSentence();
 }
 function renderShadowSentence(){
   const item = SHADOW_BANK[currentShadowLevel][currentShadowIndex];
-  document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Câu ${currentShadowIndex+1}/${SHADOW_BANK[currentShadowLevel].length}`;
+  const doneCount = getDoneSet('shadowDone', currentShadowLevel).length;
+  document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Đã hoàn thành ${doneCount}/${SHADOW_BANK[currentShadowLevel].length}`;
   document.getElementById('shadow-sentence').textContent = item[0];
   document.getElementById('shadow-pinyin').textContent = item[1];
   document.getElementById('shadow-meaning').textContent = item[2];
   document.getElementById('shadow-result').classList.add('hidden');
 }
 function pickNewShadowSentence(){
-  currentShadowIndex = Math.floor(Math.random()*SHADOW_BANK[currentShadowLevel].length);
+  currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, VOCAB_DATA[currentShadowLevel].label, 'mẫu Shadowing');
   renderShadowSentence();
 }
-function nextShadowSentence(){
-  currentShadowIndex = (currentShadowIndex + 1) % SHADOW_BANK[currentShadowLevel].length;
-  renderShadowSentence();
-}
+function nextShadowSentence(){ pickNewShadowSentence(); }
 function speakCurrentShadow(){ speakText(SHADOW_BANK[currentShadowLevel][currentShadowIndex][0], 0.8); }
 function toggleShadowRecording(){
   if (gateInteraction()) return;
@@ -1990,6 +2120,8 @@ function toggleShadowRecording(){
     document.getElementById('shadow-feedback').textContent = `Bạn đã nói: "${heard}". ${feedback}`;
     document.getElementById('shadow-result').classList.remove('hidden');
     recordShadowingScore(currentShadowLevel, pct);
+    markDone('shadowDone', currentShadowLevel, currentShadowIndex);
+    document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Đã hoàn thành ${getDoneSet('shadowDone', currentShadowLevel).length}/${SHADOW_BANK[currentShadowLevel].length}`;
     pushHistory({type:'Shadowing / Phát âm', detail:`${VOCAB_DATA[currentShadowLevel].label} · "${targetSentence}"`, score: pct + '%'});
   };
   shadowRecognition.onerror = () => { shadowRecording = false; btn.classList.remove('recording'); };
@@ -2001,6 +2133,7 @@ function toggleShadowRecording(){
 let reflexInitDone = false;
 let currentReflexLevel = 'hsk1';
 let currentReflexItem = null;
+let currentReflexIndex = 0;
 let reflexRecognition = null;
 let reflexRecording = false;
 
@@ -2022,7 +2155,8 @@ function selectReflexLevel(lvl){
 }
 function pickNewReflexQuestion(){
   const pool = REFLEX_BANK[currentReflexLevel];
-  currentReflexItem = pool[Math.floor(Math.random()*pool.length)];
+  currentReflexIndex = pickUndoneIndex('reflexDone', currentReflexLevel, pool.length, VOCAB_DATA[currentReflexLevel].label, 'hỏi Phản xạ Nghe - Nói');
+  currentReflexItem = pool[currentReflexIndex];
   document.getElementById('reflex-sub').textContent = currentReflexItem.q + ' (' + currentReflexItem.p + ' - ' + currentReflexItem.m + ')';
   document.getElementById('reflex-sub').classList.add('hidden');
   document.getElementById('reflex-result').classList.add('hidden');
@@ -2056,6 +2190,7 @@ function toggleReflexRecording(){
     }
     resultBox.classList.remove('hidden');
     touchDailyActivity();
+    markDone('reflexDone', currentReflexLevel, currentReflexIndex);
     pushHistory({type:'Phản xạ Nghe - Nói', detail:`${VOCAB_DATA[currentReflexLevel].label} · "${currentReflexItem.q}"`, score: isSuitable ? 'Phù hợp' : 'Chưa phù hợp'});
   };
   reflexRecognition.onerror = () => { reflexRecording = false; btn.classList.remove('recording'); };
@@ -2072,7 +2207,6 @@ function renderPracticeMenu(){
   document.getElementById('practice-menu').classList.remove('hidden');
   document.getElementById('practice-type-menu').classList.add('hidden');
   document.getElementById('practice-quiz').classList.add('hidden');
-  document.getElementById('practice-done').classList.add('hidden');
   const grid = document.getElementById('practice-level-grid');
   grid.innerHTML = HSK_LEVELS.map(l => `<button onclick="selectPracticeLevel('${l}')" class="py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">${VOCAB_DATA[l].label}</button>`).join('');
 }
@@ -2084,43 +2218,128 @@ function selectPracticeLevel(level){
 }
 function backToTypeMenu(){
   document.getElementById('practice-quiz').classList.add('hidden');
-  document.getElementById('practice-done').classList.add('hidden');
   document.getElementById('practice-type-menu').classList.remove('hidden');
 }
 
-function buildMeaningQuestions(level){
-  const pool = VOCAB_DATA[level].words;
-  const n = Math.min(8, pool.length * 2);
-  const qs = [];
-  for (let i=0;i<n;i++){
+const QUIZ_BATCH_SIZE = 40;
+const CURATED_BY_LEVEL_HANZI = {};
+HSK_LEVELS.forEach(l => { CURATED_BY_LEVEL_HANZI[l] = {}; VOCAB_DATA[l].words.forEach(w => { CURATED_BY_LEVEL_HANZI[l][w.h] = w; }); });
+
+function pickRandomWordOfType(level, type){
+  const pool = (window.DICTIONARY_DATA[level]||[]).filter(w => w[3] === type);
+  if (!pool.length) return null;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function pickRandomDistractors(level, excludeHanzi, count){
+  const pool = (window.DICTIONARY_DATA[level]||[]).filter(w => w[0] !== excludeHanzi);
+  const picked = [];
+  const used = new Set();
+  let attempts = 0;
+  while (picked.length < count && attempts < count*30 && pool.length){
+    attempts++;
     const w = pool[Math.floor(Math.random()*pool.length)];
-    const distractors = pool.filter(x => x.h !== w.h).sort(() => Math.random()-0.5).slice(0,3).map(x => x.m);
+    if (used.has(w[0])) continue;
+    used.add(w[0]); picked.push(w);
+  }
+  return picked;
+}
+
+function buildMeaningQuestions(level, count, usedSet){
+  const qs = [];
+  const dict = window.DICTIONARY_DATA[level] || [];
+  let attempts = 0;
+  while (qs.length < count && attempts < count*20 && dict.length){
+    attempts++;
+    const row = dict[Math.floor(Math.random()*dict.length)];
+    if (usedSet.has(row[0])) continue;
+    usedSet.add(row[0]);
+    const w = { h:row[0], p:row[1], m:row[2], t:row[3], ex: (CURATED_BY_LEVEL_HANZI[level][row[0]]||{}).ex };
+    const distractors = pickRandomDistractors(level, w.h, 3).map(d => d[2]);
     const options = [...distractors, w.m].sort(() => Math.random()-0.5);
     qs.push({ kind:'meaning', word: w, options, correct: w.m });
   }
   return qs;
 }
-function buildOrderQuestions(level){ return EXERCISE_BANK.order[level].map(q => ({kind:'order', ...q})); }
-function buildFillQuestions(level){ return EXERCISE_BANK.fill[level].map(q => ({kind:'fill', ...q})); }
-function buildSynonymQuestions(level){ return EXERCISE_BANK.synonym[level].map(q => ({kind:'synonym', ...q})); }
-function buildWritingQuestions(level){
-  const pool = [...VOCAB_DATA[level].words].sort(() => Math.random()-0.5).slice(0,3);
-  return pool.map(w => ({kind:'writing', word:w}));
+
+function buildOrderQuestions(level, count, usedSet){
+  const templates = SENTENCE_TEMPLATES[level];
+  const qs = [];
+  let attempts = 0;
+  while (qs.length < count && attempts < count*20){
+    attempts++;
+    const tIdx = Math.floor(Math.random()*templates.length);
+    const tpl = templates[tIdx];
+    const word = pickRandomWordOfType(level, tpl.slotType);
+    if (!word) continue;
+    const key = tIdx + '|' + word[0];
+    if (usedSet.has(key)) continue;
+    usedSet.add(key);
+    const filledParts = tpl.parts.map(p => p === '{s}' ? word[0] : p);
+    qs.push({ kind:'order', words: filledParts, correct: filledParts, alts: [], grammar: tpl.grammar, translation: tpl.trans(word[2]) });
+  }
+  return qs;
+}
+
+function buildFillQuestions(level, count, usedSet){
+  const templates = SENTENCE_TEMPLATES[level];
+  const qs = [];
+  let attempts = 0;
+  while (qs.length < count && attempts < count*20){
+    attempts++;
+    const tIdx = Math.floor(Math.random()*templates.length);
+    const tpl = templates[tIdx];
+    const word = pickRandomWordOfType(level, tpl.slotType);
+    if (!word) continue;
+    const key = tIdx + '|' + word[0];
+    if (usedSet.has(key)) continue;
+    usedSet.add(key);
+    const sentence = tpl.parts.map(p => p === '{s}' ? '___' : p).join('');
+    const distractors = pickRandomDistractors(level, word[0], 3);
+    const options = distractors.map(d => d[0]);
+    options.splice(Math.floor(Math.random()*(options.length+1)), 0, word[0]);
+    const why = distractors.map(d => `"${d[0]}" (${d[2]}) là ${d[3]}, không phù hợp về nghĩa/ngữ pháp ở vị trí cần ${tpl.slotType} trong câu này.`);
+    qs.push({ kind:'fill', sentence, options, correct: word[0], why, translation: tpl.trans(word[2]) });
+  }
+  return qs;
+}
+
+function buildSynonymQuestions(level, count){
+  const pairs = WORD_PAIRS[level] || [];
+  const dict = window.DICTIONARY_DATA[level] || [];
+  const combos = [];
+  pairs.forEach(pr => { combos.push({pr, dir:'ab'}); combos.push({pr, dir:'ba'}); });
+  const shuffled = combos.sort(() => Math.random()-0.5);
+  const qs = [];
+  for (let i=0; i<count; i++){
+    const c = shuffled[i % shuffled.length];
+    const { pr, dir } = c;
+    const prompt = dir === 'ab' ? pr.a : pr.b;
+    const promptMeaning = dir === 'ab' ? pr.am : pr.bm;
+    const correct = dir === 'ab' ? pr.b : pr.a;
+    const correctMeaning = dir === 'ab' ? pr.bm : pr.am;
+    const distractors = dict.filter(w => w[0] !== correct && w[0] !== prompt).sort(() => Math.random()-0.5).slice(0,3).map(d => d[0]);
+    const options = [...distractors, correct].sort(() => Math.random()-0.5);
+    const label = pr.type === 'antonym' ? 'trái nghĩa' : 'đồng nghĩa';
+    qs.push({ kind:'synonym', type: pr.type, word: prompt, options, correct,
+      explain: `"${prompt}" (${promptMeaning}) là từ ${label} với "${correct}" (${correctMeaning}). Các từ còn lại không cùng nhóm nghĩa này.` });
+  }
+  return qs;
+}
+
+function generateBatch(type, level, count, usedSet){
+  if (type === 'meaning') return buildMeaningQuestions(level, count, usedSet);
+  if (type === 'order') return buildOrderQuestions(level, count, usedSet);
+  if (type === 'fill') return buildFillQuestions(level, count, usedSet);
+  return buildSynonymQuestions(level, count);
 }
 
 function startExercise(type){
   currentExerciseType = type;
-  let questions;
-  if (type === 'meaning') questions = buildMeaningQuestions(practiceLevel);
-  else if (type === 'order') questions = buildOrderQuestions(practiceLevel);
-  else if (type === 'fill') questions = buildFillQuestions(practiceLevel);
-  else if (type === 'synonym') questions = buildSynonymQuestions(practiceLevel);
-  else questions = buildWritingQuestions(practiceLevel);
-
-  quizState = { level: practiceLevel, type, index: 0, correctCount: 0, questions, answered: false };
+  const usedSet = new Set();
+  const questions = generateBatch(type, practiceLevel, QUIZ_BATCH_SIZE, usedSet);
+  quizState = { level: practiceLevel, type, index: 0, correctCount: 0, questions, answered: false, usedSet };
   document.getElementById('practice-type-menu').classList.add('hidden');
   document.getElementById('practice-quiz').classList.remove('hidden');
-  document.getElementById('practice-done').classList.add('hidden');
   renderQuizQuestion();
 }
 
@@ -2128,6 +2347,7 @@ function renderQuizQuestion(){
   const q = quizState.questions[quizState.index];
   quizState.answered = false;
   document.getElementById('quiz-progress-label').textContent = `Câu ${quizState.index+1}/${quizState.questions.length}`;
+  document.getElementById('quiz-prev-btn').classList.toggle('hidden', quizState.index === 0);
   document.getElementById('quiz-explanation').classList.add('hidden');
   const body = document.getElementById('quiz-body');
 
@@ -2138,8 +2358,12 @@ function renderQuizQuestion(){
     document.getElementById('quiz-options').innerHTML = q.options.map((opt,i) => `<button onclick="answerMeaning(${i})" data-i="${i}" class="quiz-opt p-4 border rounded-xl text-left hover:border-red-500 font-semibold transition text-sm">${String.fromCharCode(65+i)}. ${opt}</button>`).join('');
   } else if (q.kind === 'order') {
     quizState.picked = [];
-    quizState.pool = [...q.words];
-    body.innerHTML = `<h3 class="text-lg font-bold mb-2">Sắp xếp các từ sau thành câu đúng:</h3>
+    let pool = [...q.words];
+    let shuffleTries = 0;
+    do { pool = pool.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]); shuffleTries++; }
+    while (shuffleTries < 20 && pool.length > 1 && arraysEqual(pool, q.correct));
+    quizState.pool = pool;
+    body.innerHTML = `<h3 class="text-lg font-bold mb-2">Sắp xếp các từ/thẻ sau (kể cả dấu câu) thành câu đúng:</h3>
       <div id="order-answer" class="min-h-[3rem] flex flex-wrap gap-2 p-3 bg-gray-50 dark:bg-gray-900 rounded-xl mb-3 border border-dashed border-gray-300 dark:border-gray-600"></div>
       <div id="order-pool" class="flex flex-wrap gap-2 justify-center mb-4"></div>
       <button onclick="submitOrder()" class="w-full py-2.5 bg-red-600 text-white font-bold text-sm rounded-xl">Nộp bài</button>`;
@@ -2155,12 +2379,6 @@ function renderQuizQuestion(){
       <p class="text-4xl font-extrabold text-center py-6 bg-gray-50 dark:bg-gray-900 rounded-xl mb-4">${q.word}</p>
       <div id="quiz-options" class="grid grid-cols-2 gap-3"></div>`;
     document.getElementById('quiz-options').innerHTML = q.options.map((opt,i) => `<button onclick="answerSynonym(${i})" data-i="${i}" class="quiz-opt p-4 border rounded-xl text-center hover:border-red-500 font-bold transition text-lg">${opt}</button>`).join('');
-  } else if (q.kind === 'writing') {
-    body.innerHTML = `<h3 class="text-lg font-bold mb-2">Đặt một câu có sử dụng từ sau:</h3>
-      <p class="text-3xl font-extrabold text-center py-4 bg-gray-50 dark:bg-gray-900 rounded-xl mb-1">${q.word.h}</p>
-      <p class="text-center text-sm text-gray-500 mb-4">${q.word.p} · ${q.word.m}</p>
-      <textarea id="writing-input" rows="2" placeholder="Nhập câu tiếng Trung của bạn tại đây..." class="w-full px-3 py-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-transparent text-lg mb-3"></textarea>
-      <button onclick="submitWriting()" class="w-full py-2.5 bg-red-600 text-white font-bold text-sm rounded-xl">Nộp câu</button>`;
   }
 }
 
@@ -2253,61 +2471,40 @@ function answerMeaning(i){
     else if (idx === i) btn.classList.add('border-red-500','bg-red-50','dark:bg-red-900/20');
   });
   document.getElementById('quiz-correct-line').textContent = `Đáp án chính xác: ${q.correct}`;
-  document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Giải thích:</span> ${q.word.h} (${q.word.p}) là ${q.word.t}, mang nghĩa "${q.word.m}".</p>
-    <p class="mt-1"><span class="font-bold">Ví dụ:</span> ${q.word.ex[0][0]} — ${q.word.ex[0][1]}</p>`;
+  const exLine = (q.word.ex && q.word.ex.length) ? `<p class="mt-1"><span class="font-bold">Ví dụ:</span> ${q.word.ex[0][0]} — ${q.word.ex[0][1]}</p>` : '';
+  document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Giải thích:</span> ${q.word.h} (${q.word.p}) là ${q.word.t}, mang nghĩa "${q.word.m}".</p>${exLine}`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
   pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
 }
 
-function submitWriting(){
-  if (gateInteraction()) return;
-  if (quizState.answered) return;
-  const q = quizState.questions[quizState.index];
-  const input = document.getElementById('writing-input').value.trim();
-  quizState.answered = true;
-  const containsWord = input.includes(q.word.h);
-  const longEnough = input.replace(/[，。？！、\s]/g,'').length >= 4;
-  const endsProperly = /[。！？]$/.test(input);
-  const isPass = containsWord && longEnough && endsProperly;
-  if (isPass) quizState.correctCount++;
-  const reasons = [];
-  if (!containsWord) reasons.push(`Câu chưa chứa từ "${q.word.h}".`);
-  if (!longEnough) reasons.push('Câu quá ngắn, hãy viết một câu hoàn chỉnh hơn.');
-  if (!endsProperly) reasons.push('Câu cần kết thúc bằng dấu câu Hán ngữ (。！？).');
-  document.getElementById('quiz-correct-line').innerHTML = isPass
-    ? '<span class="text-green-600">✅ Đạt yêu cầu!</span>'
-    : '<span class="text-red-600">❌ Chưa đạt yêu cầu</span>';
-  document.getElementById('quiz-explain-body').innerHTML = `
-    ${reasons.length ? `<p class="font-bold">Nhận xét:</p><ul class="list-disc pl-5">${reasons.map(r=>`<li>${r}</li>`).join('')}</ul>` : '<p>Câu của bạn đã sử dụng đúng từ vựng và có cấu trúc hợp lý. Rất tốt!</p>'}
-    <p class="mt-2"><span class="font-bold">Câu gợi ý chuẩn:</span> ${q.word.ex[0][0]} <span class="text-gray-500">(${q.word.ex[0][1]})</span></p>`;
-  document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Đặt câu', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word.h}: "${input}"`, score: isPass?'Đạt yêu cầu':'Chưa đạt yêu cầu'});
+function showBatchToast(msg){
+  const t = document.getElementById('quiz-batch-toast');
+  t.textContent = msg;
+  t.classList.remove('hidden');
+  clearTimeout(window.__batchToastTimer);
+  window.__batchToastTimer = setTimeout(() => t.classList.add('hidden'), 4000);
 }
-
 function quizNext(){
   if (quizState.index < quizState.questions.length - 1) {
     quizState.index++;
     renderQuizQuestion();
-  } else {
-    document.getElementById('practice-quiz').classList.add('hidden');
-    document.getElementById('practice-done').classList.remove('hidden');
-    if (currentExerciseType === 'writing') {
-      document.getElementById('practice-score-line').textContent = `Bạn đã hoàn thành ${quizState.correctCount}/${quizState.questions.length} câu đạt yêu cầu.`;
-    } else {
-      document.getElementById('practice-score-line').textContent = `Bạn trả lời đúng ${quizState.correctCount}/${quizState.questions.length} câu.`;
-    }
+    return;
   }
+  // Hết lượt câu hỏi hiện tại -> tự động sinh thêm để luyện tập không giới hạn.
+  const more = generateBatch(quizState.type, quizState.level, QUIZ_BATCH_SIZE, quizState.usedSet);
+  if (!more.length) {
+    // Kho câu hỏi (đồng/trái nghĩa) đã dùng hết các cặp đã kiểm chứng trong phiên này -> làm mới usedSet để có thể lặp lại với nhiễu mới.
+    quizState.usedSet.clear();
+  }
+  quizState.questions = quizState.questions.concat(more.length ? more : generateBatch(quizState.type, quizState.level, QUIZ_BATCH_SIZE, quizState.usedSet));
+  quizState.index++;
+  renderQuizQuestion();
+  showBatchToast(`🎉 Đã tạo thêm ${QUIZ_BATCH_SIZE} câu mới! Tiếp tục luyện tập không giới hạn.`);
 }
-function quizBack(){
-  if (!quizState) { renderPracticeMenu(); return; }
-  if (quizState.index > 0 && !quizState.answered) {
-    quizState.index--;
-    renderQuizQuestion();
-  } else if (quizState.index === 0) {
-    backToTypeMenu();
-  } else {
-    renderQuizQuestion();
-  }
+function quizPrevQuestion(){
+  if (!quizState || quizState.index === 0 || quizState.answered) return;
+  quizState.index--;
+  renderQuizQuestion();
 }
 
 /* ===================== GAMES ===================== */
@@ -2408,11 +2605,40 @@ function flipMemoryCard(idx){
 }
 
 /* --- Word Matching game --- */
+/* Hàng đợi bao phủ 100% từ vựng của cấp độ, dùng chung cho Nối từ & Đoán nhanh.
+   Thứ tự được xáo trộn 1 lần và lưu lại (localStorage + Firestore) để đi tiếp đúng chỗ dở dang,
+   kể cả khi đổi thiết bị. Khi pos chạm hết order.length -> done, hiển thị chúc mừng & dừng lại. */
+function getLevelQueue(gameKey, level){
+  const p = getProgress();
+  if (!p.levelQueue) p.levelQueue = {};
+  const key = gameKey + '_' + level;
+  const total = (window.DICTIONARY_DATA[level]||[]).length;
+  if (!p.levelQueue[key] || p.levelQueue[key].total !== total) {
+    const order = Array.from({length: total}, (_,i) => i).sort(() => Math.random()-0.5);
+    p.levelQueue[key] = { order, pos: 0, done: false, total };
+    setProgress(p);
+  }
+  return p.levelQueue[key];
+}
+function saveLevelQueue(gameKey, level, q){
+  const p = getProgress();
+  if (!p.levelQueue) p.levelQueue = {};
+  p.levelQueue[gameKey + '_' + level] = q;
+  setProgress(p);
+  syncToCloud();
+}
+function resetLevelQueue(gameKey, level){
+  const p = getProgress();
+  if (p.levelQueue) delete p.levelQueue[gameKey + '_' + level];
+  setProgress(p);
+}
+
 function initMatchTabs(){
   const tabsEl = document.getElementById('match-level-tabs');
   tabsEl.innerHTML = HSK_LEVELS.map(k => `<button onclick="selectMatchLevel('${k}')" data-lvl="${k}" class="match-lvl px-3 py-1.5 rounded-lg text-xs font-bold ${k===currentMatchLevel?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800'}">${VOCAB_DATA[k].label}</button>`).join('');
   setupMatchGame(currentMatchLevel);
 }
+function restartMatchGame(){ resetLevelQueue('match', currentMatchLevel); setupMatchGame(currentMatchLevel); }
 function selectMatchLevel(lvl){
   currentMatchLevel = lvl;
   document.querySelectorAll('.match-lvl').forEach(b => {
@@ -2421,11 +2647,21 @@ function selectMatchLevel(lvl){
   setupMatchGame(lvl);
 }
 function setupMatchGame(level){
-  const words = VOCAB_DATA[level].words.slice(0,6);
+  const q = getLevelQueue('match', level);
+  if (q.done) {
+    document.getElementById('match-status').textContent = `🎉 Đã hoàn thành 100% từ vựng ${VOCAB_DATA[level].label}!`;
+    document.getElementById('match-col-hanzi').innerHTML = '';
+    document.getElementById('match-col-meaning').innerHTML = `<div class="col-span-2 text-center text-sm text-gray-500 py-6">Bạn đã dùng hết toàn bộ ${q.total} từ vựng của cấp độ này trong Game Nối từ. Hãy chọn cấp độ khác hoặc bấm "Chơi lại" để luyện lại từ đầu.</div>`;
+    return;
+  }
+  const remaining = q.total - q.pos;
+  const batchSize = Math.min(6, remaining);
+  const indices = q.order.slice(q.pos, q.pos + batchSize);
+  const words = indices.map(i => window.DICTIONARY_DATA[level][i]).map(row => ({h:row[0], m:row[2]}));
   const hanziList = words.map((w,i) => ({key:i, text:w.h})).sort(() => Math.random()-0.5);
   const meaningList = words.map((w,i) => ({key:i, text:w.m})).sort(() => Math.random()-0.5);
-  matchState = { total: words.length, matched: 0, selHanzi: null, selMeaning: null, locked: false };
-  document.getElementById('match-status').textContent = `Số cặp đã nối: 0/${words.length}`;
+  matchState = { total: words.length, matched: 0, selHanzi: null, selMeaning: null, locked: false, level, queuePos: q.pos, batchSize };
+  document.getElementById('match-status').textContent = `Số cặp đã nối: 0/${words.length} · Tiến độ cấp độ: ${q.pos}/${q.total}`;
   document.getElementById('match-col-hanzi').innerHTML = hanziList.map(c => `<button onclick="selectMatchItem('hanzi',${c.key},this)" class="match-item w-full py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 font-bold text-lg">${c.text}</button>`).join('');
   document.getElementById('match-col-meaning').innerHTML = meaningList.map(c => `<button onclick="selectMatchItem('meaning',${c.key},this)" class="match-item w-full py-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 font-semibold text-sm">${c.text}</button>`).join('');
 }
@@ -2453,8 +2689,16 @@ function selectMatchItem(col, key, el){
       matchState.selHanzi = null; matchState.selMeaning = null; matchState.locked = false;
       if (matchState.matched === matchState.total) {
         touchDailyActivity();
-        pushHistory({type:'Trò chơi - Nối từ', detail:VOCAB_DATA[currentMatchLevel].label, score:'Hoàn thành'});
-        setTimeout(()=>alert('🎉 Chúc mừng! Bạn đã nối đúng toàn bộ từ vựng.'), 200);
+        const q = getLevelQueue('match', matchState.level);
+        q.pos += matchState.batchSize;
+        if (q.pos >= q.total) q.done = true;
+        saveLevelQueue('match', matchState.level, q);
+        pushHistory({type:'Trò chơi - Nối từ', detail:VOCAB_DATA[currentMatchLevel].label, score: q.done ? 'Hoàn thành 100% cấp độ' : `${q.pos}/${q.total} từ`});
+        if (q.done) {
+          setTimeout(() => { alert(`🎉 Chúc mừng! Bạn đã hoàn thành 100% từ vựng (${q.total} từ) của ${VOCAB_DATA[matchState.level].label} trong Game Nối từ!`); setupMatchGame(matchState.level); }, 300);
+        } else {
+          setTimeout(() => setupMatchGame(matchState.level), 500);
+        }
       }
     } else {
       beep(200, 0.2);
@@ -2479,8 +2723,17 @@ function selectDashLevel(lvl){
     b.classList.toggle('bg-red-600', b.dataset.lvl===lvl); b.classList.toggle('text-white', b.dataset.lvl===lvl); b.classList.toggle('bg-gray-200', b.dataset.lvl!==lvl);
   });
 }
+function restartDashGame(){ resetLevelQueue('dash', currentDashLevel); startDashGame(); }
 function startDashGame(){
   if (gateInteraction()) return;
+  const q = getLevelQueue('dash', currentDashLevel);
+  if (q.done) {
+    document.getElementById('dash-start-screen').classList.add('hidden');
+    document.getElementById('dash-game-screen').classList.add('hidden');
+    document.getElementById('dash-end-screen').classList.remove('hidden');
+    document.getElementById('dash-final-score').textContent = `Đã hoàn thành 100% (${q.total} từ)`;
+    return;
+  }
   document.getElementById('dash-start-screen').classList.add('hidden');
   document.getElementById('dash-end-screen').classList.add('hidden');
   document.getElementById('dash-game-screen').classList.remove('hidden');
@@ -2491,12 +2744,17 @@ function startDashGame(){
 }
 function dashNextRound(){
   clearInterval(dashState.interval);
-  const pool = VOCAB_DATA[currentDashLevel].words;
-  const w = pool[Math.floor(Math.random()*pool.length)];
-  const distractors = pool.filter(x=>x.h!==w.h).sort(()=>Math.random()-0.5).slice(0,3).map(x=>x.m);
-  const options = [...distractors, w.m].sort(()=>Math.random()-0.5);
+  const q = getLevelQueue('dash', currentDashLevel);
+  if (q.done) { dashEndGame(true); return; }
+  const dict = window.DICTIONARY_DATA[currentDashLevel];
+  const idx = q.order[q.pos];
+  const row = dict[idx];
+  const w = { h: row[0], m: row[2] };
+  const distractors = dict.filter(x => x[0] !== w.h).sort(() => Math.random()-0.5).slice(0,3).map(x => x[2]);
+  const options = [...distractors, w.m].sort(() => Math.random()-0.5);
   dashState.current = { w, correct: w.m };
   document.getElementById('dash-word').textContent = w.h;
+  document.getElementById('dash-progress-note').textContent = `Tiến độ cấp độ: ${q.pos}/${q.total}`;
   document.getElementById('dash-options').innerHTML = options.map((o,i)=>`<button onclick="dashAnswer('${o.replace(/'/g,"")}')" class="p-3 rounded-xl bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 font-semibold text-sm">${o}</button>`).join('');
   const bar = document.getElementById('dash-timer-bar');
   let elapsed = 0;
@@ -2505,34 +2763,50 @@ function dashNextRound(){
     elapsed += 100;
     const pct = Math.max(0, 100 - (elapsed/dashState.roundTime)*100);
     bar.style.width = pct + '%';
-    if (elapsed >= dashState.roundTime) { clearInterval(dashState.interval); dashLoseLife(); }
+    if (elapsed >= dashState.roundTime) { clearInterval(dashState.interval); dashAdvanceQueue(); dashLoseLife(); }
   }, 100);
+}
+function dashAdvanceQueue(){
+  const q = getLevelQueue('dash', currentDashLevel);
+  q.pos += 1;
+  if (q.pos >= q.total) q.done = true;
+  saveLevelQueue('dash', currentDashLevel, q);
+  return q.done;
 }
 function dashAnswer(choice){
   clearInterval(dashState.interval);
-  if (choice === dashState.current.correct) {
+  const isCorrect = choice === dashState.current.correct;
+  const justFinished = dashAdvanceQueue();
+  if (isCorrect) {
     dashState.score += 10;
     document.getElementById('dash-score').textContent = dashState.score;
     beep(880,0.1);
+  } else {
+    beep(200,0.2);
+  }
+  if (justFinished) { dashEndGame(true); return; }
+  if (isCorrect) {
     dashState.roundTime = Math.max(2500, dashState.roundTime - 100);
     dashNextRound();
   } else {
-    beep(200,0.2);
     dashLoseLife();
   }
 }
 function dashLoseLife(){
   dashState.lives--;
   document.getElementById('dash-lives').textContent = dashState.lives;
-  if (dashState.lives <= 0) { dashEndGame(); } else { dashNextRound(); }
+  if (dashState.lives <= 0) { dashEndGame(false); } else { dashNextRound(); }
 }
-function dashEndGame(){
+function dashEndGame(levelCompleted){
   clearInterval(dashState.interval);
   document.getElementById('dash-game-screen').classList.add('hidden');
   document.getElementById('dash-end-screen').classList.remove('hidden');
-  document.getElementById('dash-final-score').textContent = dashState.score;
+  const q = getLevelQueue('dash', currentDashLevel);
+  document.getElementById('dash-final-score').textContent = levelCompleted
+    ? `${dashState.score} điểm — 🎉 Đã hoàn thành 100% (${q.total} từ) của ${VOCAB_DATA[currentDashLevel].label}!`
+    : `${dashState.score} điểm`;
   touchDailyActivity();
-  pushHistory({type:'Trò chơi - Đoán nhanh từ vựng', detail:VOCAB_DATA[currentDashLevel].label, score: dashState.score + ' điểm'});
+  pushHistory({type:'Trò chơi - Đoán nhanh từ vựng', detail:VOCAB_DATA[currentDashLevel].label, score: levelCompleted ? 'Hoàn thành 100% cấp độ' : dashState.score + ' điểm'});
 }
 
 /* ===================== PROFILE / ANALYSIS ===================== */
@@ -2678,6 +2952,14 @@ function firebaseErrorMessage(err){
   };
   return map[code] || (err && err.message) || 'Đã xảy ra lỗi không xác định. Vui lòng thử lại.';
 }
+// Gọi khi phát hiện tài khoản Email/Mật khẩu đăng nhập nhưng CHƯA xác thực Gmail.
+// Một email xác thực mới đã được gửi lại tự động mỗi lần thử này.
+window.handleUnverifiedEmail = function(email){
+  openLoginModal();
+  const msg = document.getElementById('auth-msg');
+  msg.className = 'text-xs text-center text-amber-600';
+  msg.innerHTML = `Gmail <b>${email}</b> chưa được xác thực. Vui lòng mở hộp thư (kiểm tra cả mục Spam), bấm vào liên kết xác nhận, sau đó quay lại bấm <b>Đăng nhập</b>. Mỗi lần thử đăng nhập khi chưa xác thực, hệ thống sẽ tự gửi lại email xác thực mới.`;
+};
 function signInGoogle(){
   if (!(window.__FIREBASE_READY__ && window.firebaseAuth && window.fb)) {
     document.getElementById('auth-msg').textContent = 'Không thể kết nối Firebase Authentication. Vui lòng thử lại sau.';
@@ -2703,7 +2985,7 @@ function authAction(mode){
     window.fb.createUserWithEmailAndPassword(email, pass)
       .then(() => {
         msg.className='text-xs text-center text-green-600';
-        msg.textContent = 'Đăng ký thành công! Bạn đã được đăng nhập vào Jasmine.';
+        msg.textContent = 'Đăng ký thành công! Đang gửi email xác thực đến Gmail của bạn...';
       })
       .catch(err => { msg.className='text-xs text-center text-red-500'; msg.textContent = firebaseErrorMessage(err); });
   } else {
@@ -2732,7 +3014,9 @@ window.handleAuthLogin = function(user){
 
   initTeacherAvatar();
   refreshHomeStats();
-  syncToCloud();
+  // Tải tiến trình từ Firestore TRƯỚC khi đồng bộ ngược lên, tránh dữ liệu rỗng của thiết bị
+  // mới ghi đè mất tiến trình thật đã có từ các thiết bị khác.
+  loadCloudProgress();
   const onboarded = loadJSON(uidKey('jc_onboarded'), false);
   if (!onboarded) openOnboarding();
 };
