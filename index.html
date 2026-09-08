@@ -318,6 +318,7 @@
         <span id="shadow-level-badge" class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 text-xs font-bold rounded-full">HSK 1</span>
         <div id="shadow-sentence" class="text-3xl font-extrabold"></div>
         <div id="shadow-pinyin" class="text-amber-600 font-medium text-sm"></div>
+        <button id="shadow-pinyin-toggle" onclick="toggleShadowPinyin()" class="hidden text-xs font-bold text-red-600 underline">Xem phiên âm</button>
         <p id="shadow-meaning" class="text-gray-500 text-sm"></p>
       </div>
       <div class="flex justify-center gap-4">
@@ -1024,7 +1025,31 @@ const VOCAB_DATA = {
     {h:'认识你很高兴', p:'rènshi nǐ hěn gāoxìng', m:'rất vui được quen biết bạn', t:'cụm từ', ex:[
       ['认识你很高兴，我叫玛丽。','Rất vui được quen biết bạn, tôi tên là Mary.'],
       ['他握手说认识你很高兴。','Anh ấy bắt tay và nói rất vui được quen biết bạn.'],
-      ['第一次见面，大家都说认识你很高兴。','Lần đầu gặp mặt, mọi người đều nói rất vui được quen biết.']]}
+      ['第一次见面，大家都说认识你很高兴。','Lần đầu gặp mặt, mọi người đều nói rất vui được quen biết.']]},
+    {h:'你好', p:'nǐ hǎo', m:'xin chào', t:'cụm từ', ex:[['你好，很高兴认识你。','Xin chào, rất vui được quen biết bạn.'],['见面的时候要说你好。','Khi gặp mặt cần nói xin chào.']]},
+    {h:'谢谢', p:'xièxie', m:'cảm ơn', t:'động từ', ex:[['谢谢你的帮助。','Cảm ơn sự giúp đỡ của bạn.'],['他谢谢老师的指导。','Anh ấy cảm ơn sự chỉ dạy của thầy giáo.']]},
+    {h:'不客气', p:'bú kèqi', m:'không có gì', t:'cụm từ', ex:[['谢谢你！不客气。','Cảm ơn bạn! Không có gì.'],['不用谢，不客气。','Không cần cảm ơn đâu, không có gì.']]},
+    {h:'欢迎', p:'huānyíng', m:'hoan nghênh', t:'động từ', ex:[['欢迎你来我家做客。','Hoan nghênh bạn đến nhà tôi chơi.'],['我们热烈欢迎新同学。','Chúng tôi nhiệt liệt chào đón bạn học mới.']]},
+    {h:'晚安', p:'wǎn’ān', m:'chúc ngủ ngon', t:'cụm từ', ex:[['睡觉前她跟我说晚安。','Trước khi ngủ cô ấy nói chúc tôi ngủ ngon.'],['晚安，明天见。','Chúc ngủ ngon, hẹn gặp lại ngày mai.']]},
+    {h:'打招呼', p:'dǎ zhāohu', m:'chào hỏi', t:'động từ', ex:[['见到老师要主动打招呼。','Gặp thầy giáo cần chủ động chào hỏi.'],['他对每个人都打招呼。','Anh ấy chào hỏi mọi người.']]},
+    {h:'介绍', p:'jièshào', m:'giới thiệu', t:'động từ', ex:[['我来介绍一下我的朋友。','Để tôi giới thiệu bạn tôi.'],['老师给我们介绍了新同学。','Thầy giáo giới thiệu bạn học mới cho chúng tôi.']]},
+    {h:'见面', p:'jiànmiàn', m:'gặp mặt', t:'động từ', ex:[['我们明天在公园见面。','Ngày mai chúng ta gặp mặt ở công viên.'],['好久没见面了。','Đã lâu không gặp mặt rồi.']]},
+    {h:'问候', p:'wènhòu', m:'hỏi thăm', t:'động từ', ex:[['他常常问候我的家人。','Anh ấy thường hỏi thăm gia đình tôi.'],['请代我问候你妈妈。','Nhờ bạn hỏi thăm mẹ bạn giúp tôi.']]},
+    {h:'好久不见', p:'hǎojiǔ bújiàn', m:'lâu rồi không gặp', t:'cụm từ', ex:[['好久不见，你还好吗？','Lâu rồi không gặp, bạn vẫn khỏe chứ?'],['老朋友见面都说好久不见。','Bạn cũ gặp nhau đều nói lâu rồi không gặp.']]},
+    {h:'名字', p:'míngzi', m:'tên', t:'danh từ', ex:[['你的名字很好听。','Tên của bạn rất hay.'],['请问你叫什么名字？','Xin hỏi bạn tên là gì?']]},
+    {h:'握手', p:'wòshǒu', m:'bắt tay', t:'động từ', ex:[['他们见面时握手问好。','Họ bắt tay chào hỏi khi gặp nhau.'],['我和新同事握手认识。','Tôi bắt tay làm quen với đồng nghiệp mới.']]},
+    {h:'微笑', p:'wēixiào', m:'mỉm cười', t:'động từ', ex:[['她对我微笑着打招呼。','Cô ấy mỉm cười chào tôi.'],['服务员总是微笑着接待客人。','Nhân viên phục vụ luôn mỉm cười tiếp đón khách.']]},
+    {h:'客气', p:'kèqi', m:'khách sáo', t:'tính từ', ex:[['你太客气了。','Bạn khách sáo quá.'],['他对朋友一点都不客气。','Anh ấy không hề khách sáo với bạn bè.']]},
+    {h:'有礼貌', p:'yǒu lǐmào', m:'lịch sự, lễ phép', t:'cụm từ', ex:[['见到长辈要有礼貌。','Gặp người lớn tuổi cần lễ phép.'],['这个孩子很有礼貌。','Đứa trẻ này rất lễ phép.']]},
+    {h:'熟悉', p:'shúxī', m:'quen thuộc', t:'tính từ', ex:[['我们已经很熟悉了。','Chúng tôi đã rất quen thuộc rồi.'],['他对这个城市很熟悉。','Anh ấy rất quen thuộc với thành phố này.']]},
+    {h:'陌生人', p:'mòshēngrén', m:'người lạ', t:'danh từ', ex:[['不要跟陌生人说话。','Đừng nói chuyện với người lạ.'],['他在这里没有陌生人。','Ở đây anh ấy không có ai là người lạ.']]},
+    {h:'联系', p:'liánxì', m:'liên lạc', t:'động từ', ex:[['有事请跟我联系。','Có việc gì xin liên lạc với tôi.'],['我们保持联系吧。','Chúng ta giữ liên lạc nhé.']]},
+    {h:'电话号码', p:'diànhuà hàomǎ', m:'số điện thoại', t:'danh từ', ex:[['可以给我你的电话号码吗？','Có thể cho tôi số điện thoại của bạn không?'],['我记不住他的电话号码。','Tôi không nhớ được số điện thoại của anh ấy.']]},
+    {h:'微信', p:'wēixìn', m:'WeChat', t:'danh từ', ex:[['我们加个微信吧。','Chúng ta kết bạn WeChat nhé.'],['他每天都用微信聊天。','Anh ấy mỗi ngày đều dùng WeChat trò chuyện.']]},
+    {h:'聊天', p:'liáotiān', m:'trò chuyện', t:'động từ', ex:[['我们聊天聊了很久。','Chúng tôi trò chuyện rất lâu.'],['她喜欢和朋友聊天。','Cô ấy thích trò chuyện với bạn bè.']]},
+    {h:'拜访', p:'bàifǎng', m:'đến thăm', t:'động từ', ex:[['明天我要去拜访老师。','Ngày mai tôi sẽ đi thăm thầy giáo.'],['他拜访了很多客户。','Anh ấy đã đi thăm rất nhiều khách hàng.']]},
+    {h:'邀请', p:'yāoqǐng', m:'mời', t:'động từ', ex:[['他邀请我参加婚礼。','Anh ấy mời tôi tham dự đám cưới.'],['谢谢你的邀请。','Cảm ơn lời mời của bạn.']]},
+    {h:'告别', p:'gàobié', m:'từ biệt', t:'động từ', ex:[['他们在车站告别。','Họ từ biệt nhau ở nhà ga.'],['告别的时候她哭了。','Lúc từ biệt cô ấy đã khóc.']]}
   ]},
   t_family: { label: 'Gia đình', words: [
     {h:'爸爸', p:'bàba', m:'bố', t:'danh từ', ex:[
@@ -1050,7 +1075,31 @@ const VOCAB_DATA = {
     {h:'家庭', p:'jiātíng', m:'gia đình', t:'danh từ', ex:[
       ['他来自一个幸福的家庭。','Anh ấy đến từ một gia đình hạnh phúc.'],
       ['家庭教育非常重要。','Giáo dục gia đình rất quan trọng.'],
-      ['她很重视家庭生活。','Cô ấy rất coi trọng cuộc sống gia đình.']]}
+      ['她很重视家庭生活。','Cô ấy rất coi trọng cuộc sống gia đình.']]},
+    {h:'弟弟', p:'dìdi', m:'em trai', t:'danh từ', ex:[['我弟弟还在上小学。','Em trai tôi vẫn đang học tiểu học.'],['弟弟比我小两岁。','Em trai nhỏ hơn tôi hai tuổi.']]},
+    {h:'妹妹', p:'mèimei', m:'em gái', t:'danh từ', ex:[['妹妹很喜欢画画。','Em gái rất thích vẽ tranh.'],['我和妹妹一起长大。','Tôi và em gái cùng nhau lớn lên.']]},
+    {h:'爷爷', p:'yéye', m:'ông nội', t:'danh từ', ex:[['爷爷每天早上散步。','Ông nội mỗi sáng đều đi dạo.'],['我爷爷今年八十岁了。','Ông nội tôi năm nay tám mươi tuổi rồi.']]},
+    {h:'奶奶', p:'nǎinai', m:'bà nội', t:'danh từ', ex:[['奶奶做的菜很好吃。','Món ăn bà nội nấu rất ngon.'],['奶奶很疼爱孙子孙女。','Bà nội rất yêu thương các cháu.']]},
+    {h:'外公', p:'wàigōng', m:'ông ngoại', t:'danh từ', ex:[['外公住在乡下。','Ông ngoại sống ở nông thôn.'],['我常去外公家玩儿。','Tôi thường đến nhà ông ngoại chơi.']]},
+    {h:'外婆', p:'wàipó', m:'bà ngoại', t:'danh từ', ex:[['外婆给我讲故事。','Bà ngoại kể chuyện cho tôi nghe.'],['外婆的身体很健康。','Sức khỏe của bà ngoại rất tốt.']]},
+    {h:'丈夫', p:'zhàngfu', m:'chồng', t:'danh từ', ex:[['她的丈夫是老师。','Chồng của cô ấy là giáo viên.'],['我丈夫每天做饭。','Chồng tôi mỗi ngày đều nấu cơm.']]},
+    {h:'妻子', p:'qīzi', m:'vợ', t:'danh từ', ex:[['他的妻子在医院工作。','Vợ anh ấy làm việc ở bệnh viện.'],['我很爱我的妻子。','Tôi rất yêu vợ tôi.']]},
+    {h:'儿子', p:'érzi', m:'con trai', t:'danh từ', ex:[['他们的儿子上大学了。','Con trai họ đã lên đại học.'],['我儿子喜欢踢足球。','Con trai tôi thích đá bóng.']]},
+    {h:'女儿', p:'nǚ’ér', m:'con gái', t:'danh từ', ex:[['女儿今年五岁。','Con gái năm nay năm tuổi.'],['我女儿很喜欢唱歌。','Con gái tôi rất thích hát.']]},
+    {h:'亲戚', p:'qīnqi', m:'họ hàng', t:'danh từ', ex:[['过年的时候亲戚都来了。','Vào dịp Tết họ hàng đều đến.'],['我们家的亲戚很多。','Họ hàng nhà chúng tôi rất đông.']]},
+    {h:'父母', p:'fùmǔ', m:'bố mẹ', t:'danh từ', ex:[['我父母都是老师。','Bố mẹ tôi đều là giáo viên.'],['要多关心父母。','Cần quan tâm bố mẹ nhiều hơn.']]},
+    {h:'长辈', p:'zhǎngbèi', m:'bậc trưởng bối', t:'danh từ', ex:[['要尊敬长辈。','Cần tôn kính bậc trưởng bối.'],['家里的长辈都很和蔼。','Người lớn tuổi trong nhà đều rất hiền hòa.']]},
+    {h:'结婚', p:'jiéhūn', m:'kết hôn', t:'động từ', ex:[['他们下个月结婚。','Tháng sau họ kết hôn.'],['我姐姐去年结婚了。','Chị gái tôi năm ngoái đã kết hôn.']]},
+    {h:'照顾', p:'zhàogù', m:'chăm sóc', t:'động từ', ex:[['妈妈在家照顾孩子。','Mẹ ở nhà chăm sóc con cái.'],['他很会照顾家人。','Anh ấy rất biết chăm sóc gia đình.']]},
+    {h:'团聚', p:'tuánjù', m:'đoàn tụ', t:'động từ', ex:[['春节全家团聚。','Tết đến cả nhà đoàn tụ.'],['一家人终于团聚了。','Cả nhà cuối cùng cũng đã đoàn tụ.']]},
+    {h:'关心', p:'guānxīn', m:'quan tâm', t:'động từ', ex:[['父母很关心孩子的学习。','Bố mẹ rất quan tâm việc học của con cái.'],['我们应该多关心家人。','Chúng ta nên quan tâm gia đình nhiều hơn.']]},
+    {h:'幸福', p:'xìngfú', m:'hạnh phúc', t:'tính từ', ex:[['他们一家很幸福。','Gia đình họ rất hạnh phúc.'],['幸福的家庭都很相似。','Những gia đình hạnh phúc đều giống nhau.']]},
+    {h:'温暖', p:'wēnnuǎn', m:'ấm áp', t:'tính từ', ex:[['家是温暖的港湾。','Gia đình là bến bờ ấm áp.'],['妈妈的怀抱很温暖。','Vòng tay mẹ rất ấm áp.']]},
+    {h:'陪伴', p:'péibàn', m:'đồng hành, ở bên', t:'động từ', ex:[['周末我陪伴父母。','Cuối tuần tôi ở bên bố mẹ.'],['他一直陪伴着奶奶。','Anh ấy luôn ở bên chăm sóc bà nội.']]},
+    {h:'独生子女', p:'dúshēngzǐnǚ', m:'con một', t:'danh từ', ex:[['我是家里的独生子女。','Tôi là con một trong nhà.'],['现在很多孩子是独生子女。','Hiện nay nhiều đứa trẻ là con một.']]},
+    {h:'双胞胎', p:'shuāngbāotāi', m:'sinh đôi', t:'danh từ', ex:[['他们是一对双胞胎。','Họ là một cặp sinh đôi.'],['这对双胞胎长得很像。','Cặp sinh đôi này trông rất giống nhau.']]},
+    {h:'侄子', p:'zhízi', m:'cháu trai (con của anh/em trai)', t:'danh từ', ex:[['我侄子今年十岁。','Cháu trai tôi năm nay mười tuổi.'],['侄子很聪明。','Cháu trai rất thông minh.']]},
+    {h:'孙子', p:'sūnzi', m:'cháu nội trai', t:'danh từ', ex:[['爷爷很疼孙子。','Ông nội rất thương cháu trai.'],['他的孙子在国外上学。','Cháu trai của ông ấy đang đi học ở nước ngoài.']]}
   ]},
   t_time: { label: 'Số đếm & thời gian', words: [
     {h:'分钟', p:'fēnzhōng', m:'phút', t:'danh từ', ex:[
@@ -1076,7 +1125,31 @@ const VOCAB_DATA = {
     {h:'现在', p:'xiànzài', m:'bây giờ', t:'danh từ', ex:[
       ['现在几点了？','Bây giờ là mấy giờ rồi?'],
       ['我现在很忙。','Bây giờ tôi rất bận.'],
-      ['现在开始上课。','Bây giờ bắt đầu vào tiết học.']]}
+      ['现在开始上课。','Bây giờ bắt đầu vào tiết học.']]},
+    {h:'今天', p:'jīntiān', m:'hôm nay', t:'danh từ', ex:[['今天是星期一。','Hôm nay là thứ hai.'],['今天天气很好。','Hôm nay thời tiết rất đẹp.']]},
+    {h:'明天', p:'míngtiān', m:'ngày mai', t:'danh từ', ex:[['明天我们去旅游。','Ngày mai chúng tôi đi du lịch.'],['明天是他的生日。','Ngày mai là sinh nhật anh ấy.']]},
+    {h:'昨天', p:'zuótiān', m:'hôm qua', t:'danh từ', ex:[['昨天下雨了。','Hôm qua trời đã mưa.'],['我昨天很忙。','Hôm qua tôi rất bận.']]},
+    {h:'早上', p:'zǎoshang', m:'buổi sáng', t:'danh từ', ex:[['我早上七点起床。','Tôi dậy lúc bảy giờ sáng.'],['早上的空气很新鲜。','Không khí buổi sáng rất trong lành.']]},
+    {h:'中午', p:'zhōngwǔ', m:'buổi trưa', t:'danh từ', ex:[['中午我们一起吃饭。','Buổi trưa chúng ta cùng ăn cơm.'],['中午的时候很热。','Vào buổi trưa trời rất nóng.']]},
+    {h:'晚上', p:'wǎnshang', m:'buổi tối', t:'danh từ', ex:[['晚上我喜欢看电视。','Buổi tối tôi thích xem tivi.'],['他晚上很晚才睡觉。','Buổi tối anh ấy rất khuya mới ngủ.']]},
+    {h:'上午', p:'shàngwǔ', m:'buổi sáng (trước trưa)', t:'danh từ', ex:[['上午有两节课。','Buổi sáng có hai tiết học.'],['我上午要去开会。','Buổi sáng tôi phải đi họp.']]},
+    {h:'下午', p:'xiàwǔ', m:'buổi chiều', t:'danh từ', ex:[['下午我们去打球吧。','Buổi chiều chúng ta đi chơi bóng nhé.'],['下午三点见面。','Ba giờ chiều gặp nhau.']]},
+    {h:'秒', p:'miǎo', m:'giây', t:'danh từ', ex:[['请等我三十秒。','Xin đợi tôi ba mươi giây.'],['比赛只剩十秒钟。','Trận đấu chỉ còn mười giây.']]},
+    {h:'世纪', p:'shìjì', m:'thế kỷ', t:'danh từ', ex:[['这是二十一世纪。','Đây là thế kỷ hai mươi mốt.'],['这座建筑有一个世纪的历史。','Công trình này có lịch sử một thế kỷ.']]},
+    {h:'日期', p:'rìqī', m:'ngày tháng', t:'danh từ', ex:[['请问今天的日期是多少？','Xin hỏi hôm nay là ngày mấy?'],['会议的日期还没定。','Ngày họp vẫn chưa được xác định.']]},
+    {h:'时间', p:'shíjiān', m:'thời gian', t:'danh từ', ex:[['时间过得真快。','Thời gian trôi qua thật nhanh.'],['我没有时间休息。','Tôi không có thời gian nghỉ ngơi.']]},
+    {h:'以前', p:'yǐqián', m:'trước đây', t:'danh từ', ex:[['以前这里是一片田地。','Trước đây nơi này là cánh đồng.'],['我以前不喜欢学习。','Trước đây tôi không thích học.']]},
+    {h:'以后', p:'yǐhòu', m:'sau này', t:'danh từ', ex:[['以后我想当医生。','Sau này tôi muốn làm bác sĩ.'],['下课以后我们一起去吃饭。','Sau khi tan học chúng ta cùng đi ăn.']]},
+    {h:'最近', p:'zuìjìn', m:'gần đây', t:'danh từ', ex:[['最近工作很忙。','Gần đây công việc rất bận.'],['你最近怎么样？','Dạo này bạn thế nào?']]},
+    {h:'马上', p:'mǎshàng', m:'ngay lập tức', t:'phó từ', ex:[['我马上就到。','Tôi sẽ đến ngay.'],['请你马上过来。','Xin bạn đến ngay lập tức.']]},
+    {h:'提前', p:'tíqián', m:'trước (thời gian dự kiến)', t:'động từ', ex:[['会议提前开始了。','Cuộc họp đã bắt đầu sớm hơn dự kiến.'],['我们提前到了车站。','Chúng tôi đến bến xe sớm hơn.']]},
+    {h:'准时', p:'zhǔnshí', m:'đúng giờ', t:'tính từ', ex:[['他每次都很准时。','Lần nào anh ấy cũng rất đúng giờ.'],['请准时参加会议。','Xin hãy tham dự cuộc họp đúng giờ.']]},
+    {h:'迟到', p:'chídào', m:'đến muộn', t:'động từ', ex:[['他今天上班迟到了。','Hôm nay anh ấy đi làm muộn.'],['别迟到，快点儿走。','Đừng đến muộn, đi nhanh lên.']]},
+    {h:'日历', p:'rìlì', m:'lịch', t:'danh từ', ex:[['墙上挂着一本日历。','Trên tường treo một cuốn lịch.'],['他每天在日历上打勾。','Anh ấy mỗi ngày đều đánh dấu vào lịch.']]},
+    {h:'假期', p:'jiàqī', m:'kỳ nghỉ', t:'danh từ', ex:[['暑假是很长的假期。','Nghỉ hè là một kỳ nghỉ dài.'],['我们打算利用假期旅行。','Chúng tôi định tận dụng kỳ nghỉ để đi du lịch.']]},
+    {h:'周末', p:'zhōumò', m:'cuối tuần', t:'danh từ', ex:[['周末我一般在家休息。','Cuối tuần tôi thường ở nhà nghỉ ngơi.'],['这个周末你有空吗？','Cuối tuần này bạn có rảnh không?']]},
+    {h:'季节', p:'jìjié', m:'mùa', t:'danh từ', ex:[['春天是我最喜欢的季节。','Mùa xuân là mùa tôi thích nhất.'],['四个季节各有特色。','Bốn mùa mỗi mùa đều có đặc trưng riêng.']]},
+    {h:'永远', p:'yǒngyuǎn', m:'mãi mãi', t:'phó từ', ex:[['我们永远是好朋友。','Chúng ta mãi mãi là bạn tốt.'],['时间不会永远停留。','Thời gian sẽ không mãi dừng lại.']]}
   ]},
   t_food: { label: 'Ăn uống', words: [
     {h:'米饭', p:'mǐfàn', m:'cơm', t:'danh từ', ex:[
@@ -1102,7 +1175,31 @@ const VOCAB_DATA = {
     {h:'买单', p:'mǎidān', m:'thanh toán', t:'động từ', ex:[
       ['吃完饭我们买单吧。','Ăn xong chúng ta thanh toán nhé.'],
       ['今天我来买单。','Hôm nay để tôi thanh toán.'],
-      ['服务员，麻烦买单。','Phục vụ ơi, làm ơn tính tiền.']]}
+      ['服务员，麻烦买单。','Phục vụ ơi, làm ơn tính tiền.']]},
+    {h:'面条', p:'miàntiáo', m:'mì sợi', t:'danh từ', ex:[['我喜欢吃面条。','Tôi thích ăn mì.'],['这碗面条很好吃。','Bát mì này rất ngon.']]},
+    {h:'包子', p:'bāozi', m:'bánh bao', t:'danh từ', ex:[['早上我吃了两个包子。','Sáng nay tôi đã ăn hai cái bánh bao.'],['妈妈做的包子很香。','Bánh bao mẹ làm rất thơm.']]},
+    {h:'饺子', p:'jiǎozi', m:'bánh chẻo', t:'danh từ', ex:[['过年我们一起包饺子。','Tết đến chúng tôi cùng nhau gói bánh chẻo.'],['这家店的饺子很有名。','Bánh chẻo của quán này rất nổi tiếng.']]},
+    {h:'水果', p:'shuǐguǒ', m:'hoa quả', t:'danh từ', ex:[['多吃水果对身体好。','Ăn nhiều hoa quả tốt cho sức khỏe.'],['我最喜欢的水果是苹果。','Loại quả tôi thích nhất là táo.']]},
+    {h:'蔬菜', p:'shūcài', m:'rau', t:'danh từ', ex:[['医生建议多吃蔬菜。','Bác sĩ khuyên nên ăn nhiều rau.'],['冰箱里有新鲜的蔬菜。','Trong tủ lạnh có rau tươi.']]},
+    {h:'牛肉', p:'niúròu', m:'thịt bò', t:'danh từ', ex:[['这道菜是牛肉做的。','Món này được làm từ thịt bò.'],['他不喜欢吃牛肉。','Anh ấy không thích ăn thịt bò.']]},
+    {h:'鸡蛋', p:'jīdàn', m:'trứng gà', t:'danh từ', ex:[['早餐我吃了一个鸡蛋。','Bữa sáng tôi đã ăn một quả trứng gà.'],['妈妈买了一盒鸡蛋。','Mẹ đã mua một hộp trứng gà.']]},
+    {h:'牛奶', p:'niúnǎi', m:'sữa bò', t:'danh từ', ex:[['每天早上我喝一杯牛奶。','Mỗi sáng tôi uống một cốc sữa.'],['牛奶对孩子的成长很重要。','Sữa rất quan trọng cho sự phát triển của trẻ.']]},
+    {h:'咖啡', p:'kāfēi', m:'cà phê', t:'danh từ', ex:[['我每天早上喝咖啡。','Mỗi sáng tôi đều uống cà phê.'],['这家店的咖啡很香。','Cà phê của quán này rất thơm.']]},
+    {h:'茶', p:'chá', m:'trà', t:'danh từ', ex:[['中国人喜欢喝茶。','Người Trung Quốc thích uống trà.'],['请喝杯茶吧。','Mời bạn uống chén trà.']]},
+    {h:'甜', p:'tián', m:'ngọt', t:'tính từ', ex:[['这个蛋糕很甜。','Chiếc bánh này rất ngọt.'],['她喜欢吃甜的东西。','Cô ấy thích ăn đồ ngọt.']]},
+    {h:'辣', p:'là', m:'cay', t:'tính từ', ex:[['四川菜很辣。','Món ăn Tứ Xuyên rất cay.'],['我不太能吃辣的食物。','Tôi không ăn cay được nhiều.']]},
+    {h:'酸', p:'suān', m:'chua', t:'tính từ', ex:[['这个水果有点酸。','Loại quả này hơi chua.'],['她喜欢吃酸的东西。','Cô ấy thích ăn đồ chua.']]},
+    {h:'咸', p:'xián', m:'mặn', t:'tính từ', ex:[['这个汤太咸了。','Bát canh này mặn quá.'],['他口味比较咸。','Khẩu vị của anh ấy khá mặn.']]},
+    {h:'饿', p:'è', m:'đói', t:'tính từ', ex:[['我现在很饿。','Bây giờ tôi rất đói.'],['他饿得受不了了。','Anh ấy đói đến mức chịu không nổi.']]},
+    {h:'渴', p:'kě', m:'khát', t:'tính từ', ex:[['天气热，我很渴。','Trời nóng, tôi rất khát.'],['跑步以后他觉得很渴。','Sau khi chạy bộ anh ấy thấy rất khát.']]},
+    {h:'味道', p:'wèidao', m:'mùi vị', t:'danh từ', ex:[['这道菜味道很好。','Món ăn này mùi vị rất ngon.'],['我喜欢这种味道。','Tôi thích mùi vị này.']]},
+    {h:'厨房', p:'chúfáng', m:'nhà bếp', t:'danh từ', ex:[['妈妈在厨房做饭。','Mẹ đang nấu ăn trong bếp.'],['厨房里放着很多菜。','Trong bếp để rất nhiều rau củ.']]},
+    {h:'做饭', p:'zuòfàn', m:'nấu cơm', t:'động từ', ex:[['我每天在家做饭。','Mỗi ngày tôi đều nấu cơm ở nhà.'],['他很会做饭。','Anh ấy rất giỏi nấu ăn.']]},
+    {h:'筷子', p:'kuàizi', m:'đũa', t:'danh từ', ex:[['请给我一双筷子。','Xin cho tôi một đôi đũa.'],['中国人用筷子吃饭。','Người Trung Quốc dùng đũa để ăn cơm.']]},
+    {h:'菜单', p:'càidān', m:'thực đơn', t:'danh từ', ex:[['服务员拿来了菜单。','Nhân viên phục vụ mang thực đơn đến.'],['请给我看一下菜单。','Xin cho tôi xem thực đơn.']]},
+    {h:'外卖', p:'wàimài', m:'đồ ăn giao tận nơi', t:'danh từ', ex:[['我今天叫了外卖。','Hôm nay tôi đã gọi đồ ăn giao tận nơi.'],['外卖二十分钟就到了。','Đồ ăn giao tận nơi hai mươi phút là đến.']]},
+    {h:'尝', p:'cháng', m:'nếm thử', t:'động từ', ex:[['你尝尝这个菜。','Bạn nếm thử món này xem.'],['我想尝一下这道甜点。','Tôi muốn nếm thử món tráng miệng này.']]},
+    {h:'早餐', p:'zǎocān', m:'bữa sáng', t:'danh từ', ex:[['早餐一定要吃好。','Bữa sáng nhất định phải ăn no đủ.'],['我每天七点吃早餐。','Mỗi ngày tôi ăn sáng lúc bảy giờ.']]}
   ]},
   t_shopping: { label: 'Mua sắm', words: [
     {h:'商店', p:'shāngdiàn', m:'cửa hàng', t:'danh từ', ex:[
@@ -1128,7 +1225,31 @@ const VOCAB_DATA = {
     {h:'试穿', p:'shìchuān', m:'mặc thử', t:'động từ', ex:[
       ['我可以试穿这件衣服吗？','Tôi có thể mặc thử bộ quần áo này không?'],
       ['她试穿了好几双鞋。','Cô ấy đã thử mấy đôi giày.'],
-      ['试穿之后觉得很合适。','Sau khi mặc thử thấy rất vừa vặn.']]}
+      ['试穿之后觉得很合适。','Sau khi mặc thử thấy rất vừa vặn.']]},
+    {h:'购物', p:'gòuwù', m:'mua sắm', t:'động từ', ex:[['周末我喜欢去购物。','Cuối tuần tôi thích đi mua sắm.'],['她在网上购物。','Cô ấy mua sắm trên mạng.']]},
+    {h:'超市', p:'chāoshì', m:'siêu thị', t:'danh từ', ex:[['我去超市买东西。','Tôi đi siêu thị mua đồ.'],['超市里的东西很齐全。','Đồ trong siêu thị rất đầy đủ.']]},
+    {h:'市场', p:'shìchǎng', m:'chợ', t:'danh từ', ex:[['妈妈每天去市场买菜。','Mẹ mỗi ngày đi chợ mua rau.'],['这个市场很热闹。','Cái chợ này rất nhộn nhịp.']]},
+    {h:'价格', p:'jiàgé', m:'giá cả', t:'danh từ', ex:[['这个价格很合理。','Mức giá này rất hợp lý.'],['商店提高了价格。','Cửa hàng đã tăng giá.']]},
+    {h:'现金', p:'xiànjīn', m:'tiền mặt', t:'danh từ', ex:[['我没有带现金。','Tôi không mang theo tiền mặt.'],['请问可以用现金吗？','Xin hỏi có thể dùng tiền mặt không?']]},
+    {h:'信用卡', p:'xìnyòngkǎ', m:'thẻ tín dụng', t:'danh từ', ex:[['我用信用卡付款。','Tôi thanh toán bằng thẻ tín dụng.'],['这里可以刷信用卡。','Ở đây có thể quẹt thẻ tín dụng.']]},
+    {h:'收银台', p:'shōuyíntái', m:'quầy thu ngân', t:'danh từ', ex:[['请到收银台付款。','Xin đến quầy thu ngân thanh toán.'],['收银台前排着队。','Trước quầy thu ngân đang xếp hàng.']]},
+    {h:'购物车', p:'gòuwùchē', m:'xe đẩy mua hàng', t:'danh từ', ex:[['他推着购物车逛超市。','Anh ấy đẩy xe đi mua sắm trong siêu thị.'],['购物车里装满了东西。','Xe đẩy chất đầy đồ.']]},
+    {h:'换', p:'huàn', m:'đổi (hàng)', t:'động từ', ex:[['这件衣服不合适，我想换一件。','Chiếc áo này không vừa, tôi muốn đổi cái khác.'],['可以换货吗？','Có thể đổi hàng không?']]},
+    {h:'退货', p:'tuìhuò', m:'trả hàng', t:'động từ', ex:[['商品有问题可以退货。','Hàng có vấn đề thì có thể trả lại.'],['他去商店退货了。','Anh ấy đã đến cửa hàng trả hàng.']]},
+    {h:'尺码', p:'chǐmǎ', m:'kích cỡ', t:'danh từ', ex:[['这件衣服的尺码不合适。','Kích cỡ chiếc áo này không vừa.'],['请问有大一点的尺码吗？','Xin hỏi có cỡ lớn hơn không?']]},
+    {h:'颜色', p:'yánsè', m:'màu sắc', t:'danh từ', ex:[['这件衣服的颜色很好看。','Màu sắc chiếc áo này rất đẹp.'],['你喜欢什么颜色？','Bạn thích màu gì?']]},
+    {h:'款式', p:'kuǎnshì', m:'kiểu dáng', t:'danh từ', ex:[['这个款式很流行。','Kiểu dáng này đang rất thịnh hành.'],['我喜欢这种款式的鞋子。','Tôi thích kiểu giày này.']]},
+    {h:'品牌', p:'pǐnpái', m:'thương hiệu', t:'danh từ', ex:[['这是有名的品牌。','Đây là thương hiệu nổi tiếng.'],['他只买这个品牌的手机。','Anh ấy chỉ mua điện thoại của thương hiệu này.']]},
+    {h:'质量', p:'zhìliàng', m:'chất lượng', t:'danh từ', ex:[['这件商品质量很好。','Chất lượng sản phẩm này rất tốt.'],['我们很重视产品质量。','Chúng tôi rất coi trọng chất lượng sản phẩm.']]},
+    {h:'划算', p:'huásuàn', m:'hời, đáng giá', t:'tính từ', ex:[['这次购物很划算。','Lần mua sắm này rất hời.'],['打折的时候买东西比较划算。','Mua đồ lúc giảm giá thì hời hơn.']]},
+    {h:'逛街', p:'guàngjiē', m:'đi dạo phố (mua sắm)', t:'động từ', ex:[['周末我和朋友去逛街。','Cuối tuần tôi và bạn đi dạo phố.'],['她很喜欢逛街。','Cô ấy rất thích đi dạo phố mua sắm.']]},
+    {h:'网购', p:'wǎnggòu', m:'mua hàng online', t:'động từ', ex:[['现在很多人喜欢网购。','Hiện nay nhiều người thích mua hàng online.'],['我经常网购衣服。','Tôi thường mua quần áo online.']]},
+    {h:'快递', p:'kuàidì', m:'chuyển phát nhanh', t:'danh từ', ex:[['我的快递到了。','Hàng chuyển phát nhanh của tôi đã đến.'],['他每天都要去拿快递。','Anh ấy mỗi ngày đều phải đi nhận hàng.']]},
+    {h:'送货', p:'sònghuò', m:'giao hàng', t:'động từ', ex:[['这家店提供免费送货服务。','Cửa hàng này cung cấp dịch vụ giao hàng miễn phí.'],['快递员正在送货。','Nhân viên giao hàng đang giao hàng.']]},
+    {h:'售货员', p:'shòuhuòyuán', m:'nhân viên bán hàng', t:'danh từ', ex:[['售货员很热情地介绍产品。','Nhân viên bán hàng nhiệt tình giới thiệu sản phẩm.'],['我向售货员咨询价格。','Tôi hỏi nhân viên bán hàng về giá cả.']]},
+    {h:'免费', p:'miǎnfèi', m:'miễn phí', t:'tính từ', ex:[['这个活动是免费的。','Hoạt động này là miễn phí.'],['商店提供免费试用。','Cửa hàng cung cấp dùng thử miễn phí.']]},
+    {h:'结账', p:'jiézhàng', m:'thanh toán', t:'động từ', ex:[['我们去结账吧。','Chúng ta đi thanh toán thôi.'],['请问在哪里结账？','Xin hỏi thanh toán ở đâu?']]},
+    {h:'讨价还价', p:'tǎojiàhuánjià', m:'mặc cả', t:'động từ', ex:[['在市场买东西可以讨价还价。','Mua đồ ở chợ có thể mặc cả.'],['他很会讨价还价。','Anh ấy rất giỏi mặc cả.']]}
   ]},
   t_school: { label: 'Trường học', words: [
     {h:'教室', p:'jiàoshì', m:'phòng học', t:'danh từ', ex:[
@@ -1154,7 +1275,31 @@ const VOCAB_DATA = {
     {h:'毕业', p:'bìyè', m:'tốt nghiệp', t:'động từ', ex:[
       ['她今年大学毕业。','Năm nay cô ấy tốt nghiệp đại học.'],
       ['毕业以后他想当老师。','Sau khi tốt nghiệp anh ấy muốn làm giáo viên.'],
-      ['我们一起参加了毕业典礼。','Chúng tôi cùng tham dự lễ tốt nghiệp.']]}
+      ['我们一起参加了毕业典礼。','Chúng tôi cùng tham dự lễ tốt nghiệp.']]},
+    {h:'学校', p:'xuéxiào', m:'trường học', t:'danh từ', ex:[['我每天走路去学校。','Mỗi ngày tôi đi bộ đến trường.'],['这所学校很有名。','Ngôi trường này rất nổi tiếng.']]},
+    {h:'老师', p:'lǎoshī', m:'giáo viên', t:'danh từ', ex:[['老师教我们汉语。','Thầy giáo dạy chúng tôi tiếng Hán.'],['我很尊敬我的老师。','Tôi rất kính trọng thầy giáo của mình.']]},
+    {h:'学生', p:'xuésheng', m:'học sinh', t:'danh từ', ex:[['学生们认真听课。','Học sinh chăm chú nghe giảng.'],['他是一个好学生。','Anh ấy là một học sinh giỏi.']]},
+    {h:'课本', p:'kèběn', m:'sách giáo khoa', t:'danh từ', ex:[['请打开课本第十页。','Xin mở sách giáo khoa trang mười.'],['我忘记带课本了。','Tôi quên mang sách giáo khoa rồi.']]},
+    {h:'黑板', p:'hēibǎn', m:'bảng đen', t:'danh từ', ex:[['老师在黑板上写字。','Thầy giáo viết chữ lên bảng đen.'],['黑板前坐着一位老师。','Trước bảng đen có một thầy giáo đang ngồi.']]},
+    {h:'图书馆', p:'túshūguǎn', m:'thư viện', t:'danh từ', ex:[['我经常去图书馆看书。','Tôi thường đi thư viện đọc sách.'],['图书馆里很安静。','Trong thư viện rất yên tĩnh.']]},
+    {h:'宿舍', p:'sùshè', m:'ký túc xá', t:'danh từ', ex:[['我住在学校的宿舍里。','Tôi ở trong ký túc xá của trường.'],['宿舍离教室很近。','Ký túc xá gần phòng học.']]},
+    {h:'专业', p:'zhuānyè', m:'chuyên ngành', t:'danh từ', ex:[['我的专业是汉语。','Chuyên ngành của tôi là tiếng Hán.'],['他学的专业很热门。','Chuyên ngành anh ấy học rất được ưa chuộng.']]},
+    {h:'成绩', p:'chéngjì', m:'thành tích, điểm số', t:'danh từ', ex:[['他这次考试成绩很好。','Kỳ thi lần này anh ấy đạt điểm rất tốt.'],['成绩不能代表一切。','Điểm số không thể đại diện cho tất cả.']]},
+    {h:'及格', p:'jígé', m:'đạt (điểm), qua môn', t:'động từ', ex:[['这次考试他及格了。','Kỳ thi lần này anh ấy đã đạt.'],['只要努力就能及格。','Chỉ cần cố gắng là có thể đạt.']]},
+    {h:'请假', p:'qǐngjià', m:'xin nghỉ phép', t:'động từ', ex:[['他今天请假没来上课。','Hôm nay anh ấy xin nghỉ không đến lớp.'],['生病了要跟老师请假。','Bị ốm thì phải xin phép thầy giáo.']]},
+    {h:'上课', p:'shàngkè', m:'lên lớp học', t:'động từ', ex:[['我们八点开始上课。','Chúng tôi bắt đầu học lúc tám giờ.'],['上课的时候不要说话。','Trong giờ học không được nói chuyện.']]},
+    {h:'下课', p:'xiàkè', m:'tan học', t:'động từ', ex:[['下课以后我们去打球。','Tan học chúng tôi đi chơi bóng.'],['老师说完就下课了。','Thầy giáo nói xong thì tan học.']]},
+    {h:'提问', p:'tíwèn', m:'đặt câu hỏi', t:'động từ', ex:[['学生可以随时提问。','Học sinh có thể đặt câu hỏi bất cứ lúc nào.'],['老师鼓励我们多提问。','Thầy giáo khuyến khích chúng tôi đặt nhiều câu hỏi.']]},
+    {h:'回答', p:'huídá', m:'trả lời', t:'động từ', ex:[['他回答得很正确。','Anh ấy trả lời rất chính xác.'],['请回答我的问题。','Xin hãy trả lời câu hỏi của tôi.']]},
+    {h:'预习', p:'yùxí', m:'học trước (bài mới)', t:'động từ', ex:[['上课前要预习课文。','Trước khi vào lớp cần học trước bài.'],['他每天晚上预习功课。','Mỗi tối anh ấy đều học trước bài.']]},
+    {h:'讲课', p:'jiǎngkè', m:'giảng bài', t:'động từ', ex:[['老师讲课讲得很清楚。','Thầy giáo giảng bài rất rõ ràng.'],['他正在给学生讲课。','Anh ấy đang giảng bài cho học sinh.']]},
+    {h:'学期', p:'xuéqī', m:'học kỳ', t:'danh từ', ex:[['这个学期我很努力。','Học kỳ này tôi rất cố gắng.'],['新学期开始了。','Học kỳ mới đã bắt đầu.']]},
+    {h:'班级', p:'bānjí', m:'lớp học', t:'danh từ', ex:[['我们班级一共三十个人。','Lớp chúng tôi tổng cộng có ba mươi người.'],['他是我们班级的班长。','Anh ấy là lớp trưởng của lớp chúng tôi.']]},
+    {h:'校园', p:'xiàoyuán', m:'khuôn viên trường', t:'danh từ', ex:[['校园里种满了树。','Khuôn viên trường trồng đầy cây xanh.'],['我们在校园里散步。','Chúng tôi đi dạo trong khuôn viên trường.']]},
+    {h:'奖学金', p:'jiǎngxuéjīn', m:'học bổng', t:'danh từ', ex:[['他获得了学校的奖学金。','Anh ấy đã nhận được học bổng của trường.'],['申请奖学金需要好成绩。','Xin học bổng cần có thành tích tốt.']]},
+    {h:'学历', p:'xuélì', m:'trình độ học vấn', t:'danh từ', ex:[['他的学历很高。','Trình độ học vấn của anh ấy rất cao.'],['这份工作要求本科学历。','Công việc này yêu cầu bằng đại học.']]},
+    {h:'汉字', p:'hànzì', m:'chữ Hán', t:'danh từ', ex:[['这个汉字我不认识。','Chữ Hán này tôi không biết.'],['学习汉字需要多练习。','Học chữ Hán cần luyện tập nhiều.']]},
+    {h:'词典', p:'cídiǎn', m:'từ điển', t:'danh từ', ex:[['我用词典查生词。','Tôi tra từ mới bằng từ điển.'],['这本词典很有用。','Cuốn từ điển này rất hữu ích.']]}
   ]},
   t_travel: { label: 'Du lịch', words: [
     {h:'旅游', p:'lǚyóu', m:'du lịch', t:'động từ', ex:[
@@ -1180,7 +1325,31 @@ const VOCAB_DATA = {
     {h:'签证', p:'qiānzhèng', m:'visa', t:'danh từ', ex:[
       ['办签证需要几天时间？','Làm visa cần bao nhiêu ngày?'],
       ['我的签证还没批下来。','Visa của tôi vẫn chưa được duyệt.'],
-      ['他顺利拿到了签证。','Anh ấy đã nhận được visa một cách thuận lợi.']]}
+      ['他顺利拿到了签证。','Anh ấy đã nhận được visa một cách thuận lợi.']]},
+    {h:'飞机', p:'fēijī', m:'máy bay', t:'danh từ', ex:[['我们坐飞机去北京。','Chúng tôi đi máy bay đến Bắc Kinh.'],['飞机马上就要起飞了。','Máy bay sắp cất cánh rồi.']]},
+    {h:'火车', p:'huǒchē', m:'tàu hỏa', t:'danh từ', ex:[['他喜欢坐火车旅行。','Anh ấy thích đi du lịch bằng tàu hỏa.'],['火车站离这里不远。','Ga tàu hỏa cách đây không xa.']]},
+    {h:'机场', p:'jīchǎng', m:'sân bay', t:'danh từ', ex:[['我们到机场接他。','Chúng tôi đến sân bay đón anh ấy.'],['机场里人很多。','Trong sân bay có rất nhiều người.']]},
+    {h:'车票', p:'chēpiào', m:'vé xe', t:'danh từ', ex:[['我已经买好了车票。','Tôi đã mua sẵn vé xe rồi.'],['请出示您的车票。','Xin vui lòng xuất trình vé xe của bạn.']]},
+    {h:'地图', p:'dìtú', m:'bản đồ', t:'danh từ', ex:[['我们用地图找路。','Chúng tôi dùng bản đồ để tìm đường.'],['这张地图很详细。','Tấm bản đồ này rất chi tiết.']]},
+    {h:'景点', p:'jǐngdiǎn', m:'điểm tham quan', t:'danh từ', ex:[['这个城市有很多著名景点。','Thành phố này có nhiều điểm tham quan nổi tiếng.'],['我们参观了几个景点。','Chúng tôi đã tham quan mấy điểm.']]},
+    {h:'拍照', p:'pāizhào', m:'chụp ảnh', t:'động từ', ex:[['我们在长城拍照留念。','Chúng tôi chụp ảnh lưu niệm ở Vạn Lý Trường Thành.'],['她很喜欢旅游拍照。','Cô ấy rất thích chụp ảnh khi đi du lịch.']]},
+    {h:'出发', p:'chūfā', m:'xuất phát', t:'động từ', ex:[['我们明天早上出发。','Sáng mai chúng tôi xuất phát.'],['出发前请检查行李。','Trước khi xuất phát hãy kiểm tra hành lý.']]},
+    {h:'到达', p:'dàodá', m:'đến nơi', t:'động từ', ex:[['飞机准时到达了机场。','Máy bay đã đến sân bay đúng giờ.'],['我们中午到达目的地。','Chúng tôi đến nơi vào buổi trưa.']]},
+    {h:'预订', p:'yùdìng', m:'đặt trước', t:'động từ', ex:[['我在网上预订了酒店。','Tôi đã đặt khách sạn trên mạng.'],['请提前预订机票。','Xin hãy đặt vé máy bay trước.']]},
+    {h:'路线', p:'lùxiàn', m:'lộ trình', t:'danh từ', ex:[['导游给我们介绍了旅游路线。','Hướng dẫn viên giới thiệu lộ trình du lịch cho chúng tôi.'],['这条路线风景很美。','Lộ trình này phong cảnh rất đẹp.']]},
+    {h:'目的地', p:'mùdìdì', m:'điểm đến', t:'danh từ', ex:[['我们的目的地是上海。','Điểm đến của chúng tôi là Thượng Hải.'],['快到目的地了。','Sắp đến nơi rồi.']]},
+    {h:'风景', p:'fēngjǐng', m:'phong cảnh', t:'danh từ', ex:[['这里的风景非常美丽。','Phong cảnh nơi đây rất đẹp.'],['他喜欢拍风景照片。','Anh ấy thích chụp ảnh phong cảnh.']]},
+    {h:'出国', p:'chūguó', m:'ra nước ngoài', t:'động từ', ex:[['他打算明年出国留学。','Anh ấy dự định năm sau đi du học nước ngoài.'],['出国旅游需要办护照。','Đi du lịch nước ngoài cần làm hộ chiếu.']]},
+    {h:'海关', p:'hǎiguān', m:'hải quan', t:'danh từ', ex:[['我们顺利通过了海关。','Chúng tôi đã thuận lợi qua hải quan.'],['海关检查很严格。','Kiểm tra hải quan rất nghiêm ngặt.']]},
+    {h:'登机', p:'dēngjī', m:'lên máy bay', t:'động từ', ex:[['请准备好登机牌。','Xin chuẩn bị sẵn thẻ lên máy bay.'],['我们马上要登机了。','Chúng tôi sắp lên máy bay rồi.']]},
+    {h:'航班', p:'hángbān', m:'chuyến bay', t:'danh từ', ex:[['我们的航班延误了。','Chuyến bay của chúng tôi bị hoãn.'],['请问下一班航班几点起飞？','Xin hỏi chuyến bay tiếp theo mấy giờ cất cánh?']]},
+    {h:'住宿', p:'zhùsù', m:'chỗ ở, lưu trú', t:'danh từ', ex:[['这里的住宿条件很好。','Điều kiện lưu trú ở đây rất tốt.'],['我们已经安排好住宿。','Chúng tôi đã sắp xếp xong chỗ ở.']]},
+    {h:'度假', p:'dùjià', m:'đi nghỉ mát', t:'động từ', ex:[['我们全家去海边度假。','Cả nhà chúng tôi đi nghỉ mát ở biển.'],['他很喜欢去乡下度假。','Anh ấy rất thích đi nghỉ mát ở vùng quê.']]},
+    {h:'纪念品', p:'jìniànpǐn', m:'đồ lưu niệm', t:'danh từ', ex:[['我买了一些纪念品。','Tôi đã mua vài món đồ lưu niệm.'],['这是当地有名的纪念品。','Đây là đồ lưu niệm nổi tiếng của địa phương.']]},
+    {h:'迷路', p:'mílù', m:'lạc đường', t:'động từ', ex:[['我们在陌生的城市迷路了。','Chúng tôi đã lạc đường ở thành phố xa lạ.'],['迷路的时候要问路。','Khi lạc đường cần hỏi đường.']]},
+    {h:'当地人', p:'dāngdìrén', m:'người bản địa', t:'danh từ', ex:[['当地人很热情。','Người bản địa rất nhiệt tình.'],['我们请当地人推荐美食。','Chúng tôi nhờ người bản địa giới thiệu món ngon.']]},
+    {h:'旅行社', p:'lǚxíngshè', m:'công ty du lịch', t:'danh từ', ex:[['我们通过旅行社报了团。','Chúng tôi đăng ký tour qua công ty du lịch.'],['这家旅行社服务很好。','Công ty du lịch này dịch vụ rất tốt.']]},
+    {h:'出租车', p:'chūzūchē', m:'taxi', t:'danh từ', ex:[['我们打出租车去酒店。','Chúng tôi bắt taxi đến khách sạn.'],['出租车司机很热情。','Tài xế taxi rất nhiệt tình.']]}
   ]},
   t_health: { label: 'Sức khỏe', words: [
     {h:'医院', p:'yīyuàn', m:'bệnh viện', t:'danh từ', ex:[
@@ -1206,7 +1375,31 @@ const VOCAB_DATA = {
     {h:'锻炼', p:'duànliàn', m:'rèn luyện', t:'động từ', ex:[
       ['他每天早上锻炼身体。','Anh ấy mỗi sáng đều rèn luyện thân thể.'],
       ['多锻炼可以增强体质。','Rèn luyện nhiều có thể tăng cường thể chất.'],
-      ['我们一起去公园锻炼吧。','Chúng ta cùng đi công viên rèn luyện nhé.']]}
+      ['我们一起去公园锻炼吧。','Chúng ta cùng đi công viên rèn luyện nhé.']]},
+    {h:'医生', p:'yīshēng', m:'bác sĩ', t:'danh từ', ex:[['医生给我检查身体。','Bác sĩ khám sức khỏe cho tôi.'],['他是一位有名的医生。','Anh ấy là một bác sĩ nổi tiếng.']]},
+    {h:'护士', p:'hùshi', m:'y tá', t:'danh từ', ex:[['护士很细心地照顾病人。','Y tá chăm sóc bệnh nhân rất tận tâm.'],['她是医院的护士。','Cô ấy là y tá của bệnh viện.']]},
+    {h:'病人', p:'bìngrén', m:'bệnh nhân', t:'danh từ', ex:[['医院里有很多病人。','Trong bệnh viện có rất nhiều bệnh nhân.'],['医生认真地为病人看病。','Bác sĩ khám bệnh tận tình cho bệnh nhân.']]},
+    {h:'头疼', p:'tóuténg', m:'đau đầu', t:'động từ', ex:[['我今天头疼得厉害。','Hôm nay tôi đau đầu dữ dội.'],['熬夜以后他常常头疼。','Sau khi thức khuya anh ấy thường bị đau đầu.']]},
+    {h:'咳嗽', p:'késou', m:'ho', t:'động từ', ex:[['他感冒后一直咳嗽。','Sau khi cảm anh ấy cứ ho mãi.'],['咳嗽的时候要多喝水。','Khi ho cần uống nhiều nước.']]},
+    {h:'疼', p:'téng', m:'đau', t:'tính từ', ex:[['我的胃有点疼。','Dạ dày tôi hơi đau.'],['他的脚很疼。','Chân anh ấy rất đau.']]},
+    {h:'舒服', p:'shūfu', m:'dễ chịu, thoải mái', t:'tính từ', ex:[['我今天不太舒服。','Hôm nay tôi không được khỏe.'],['睡个好觉会觉得很舒服。','Ngủ ngon giấc sẽ cảm thấy rất dễ chịu.']]},
+    {h:'检查', p:'jiǎnchá', m:'kiểm tra, khám', t:'động từ', ex:[['医生给他做了检查。','Bác sĩ đã khám cho anh ấy.'],['每年都要检查身体。','Mỗi năm đều cần khám sức khỏe.']]},
+    {h:'打针', p:'dǎzhēn', m:'tiêm', t:'động từ', ex:[['护士给孩子打针。','Y tá tiêm cho đứa trẻ.'],['他很怕打针。','Anh ấy rất sợ tiêm.']]},
+    {h:'住院', p:'zhùyuàn', m:'nhập viện', t:'động từ', ex:[['他因为生病住院了。','Anh ấy nhập viện vì bị bệnh.'],['住院期间朋友们都来看他。','Trong thời gian nhập viện bạn bè đều đến thăm anh ấy.']]},
+    {h:'手术', p:'shǒushù', m:'phẫu thuật', t:'danh từ', ex:[['他做了一个小手术。','Anh ấy đã làm một ca phẫu thuật nhỏ.'],['手术很成功。','Ca phẫu thuật rất thành công.']]},
+    {h:'休息', p:'xiūxi', m:'nghỉ ngơi', t:'động từ', ex:[['生病了要好好休息。','Bị ốm thì cần nghỉ ngơi thật tốt.'],['医生建议他多休息。','Bác sĩ khuyên anh ấy nghỉ ngơi nhiều hơn.']]},
+    {h:'体重', p:'tǐzhòng', m:'cân nặng', t:'danh từ', ex:[['他最近体重增加了。','Gần đây cân nặng của anh ấy tăng lên.'],['保持健康的体重很重要。','Duy trì cân nặng khỏe mạnh rất quan trọng.']]},
+    {h:'减肥', p:'jiǎnféi', m:'giảm cân', t:'động từ', ex:[['她最近在减肥。','Gần đây cô ấy đang giảm cân.'],['运动是健康减肥的方法。','Vận động là cách giảm cân lành mạnh.']]},
+    {h:'营养', p:'yíngyǎng', m:'dinh dưỡng', t:'danh từ', ex:[['这种食物营养很丰富。','Loại thực phẩm này rất giàu dinh dưỡng.'],['均衡的营养对健康很重要。','Dinh dưỡng cân bằng rất quan trọng cho sức khỏe.']]},
+    {h:'睡眠', p:'shuìmián', m:'giấc ngủ', t:'danh từ', ex:[['充足的睡眠很重要。','Ngủ đủ giấc rất quan trọng.'],['他最近睡眠不好。','Gần đây giấc ngủ của anh ấy không tốt.']]},
+    {h:'压力', p:'yālì', m:'áp lực', t:'danh từ', ex:[['工作压力太大对健康不好。','Áp lực công việc quá lớn không tốt cho sức khỏe.'],['他学会了如何缓解压力。','Anh ấy đã học được cách giảm áp lực.']]},
+    {h:'疲劳', p:'píláo', m:'mệt mỏi', t:'tính từ', ex:[['长时间工作让他很疲劳。','Làm việc trong thời gian dài khiến anh ấy rất mệt mỏi.'],['适当休息可以缓解疲劳。','Nghỉ ngơi hợp lý có thể giảm mệt mỏi.']]},
+    {h:'牙疼', p:'yáténg', m:'đau răng', t:'động từ', ex:[['他昨晚牙疼得睡不着。','Tối qua anh ấy đau răng đến mức không ngủ được.'],['牙疼的时候要去看牙医。','Khi đau răng cần đi khám nha sĩ.']]},
+    {h:'眼睛', p:'yǎnjing', m:'mắt', t:'danh từ', ex:[['看书太久对眼睛不好。','Đọc sách quá lâu không tốt cho mắt.'],['她的眼睛又大又亮。','Đôi mắt cô ấy to và sáng.']]},
+    {h:'急诊', p:'jízhěn', m:'cấp cứu', t:'danh từ', ex:[['他半夜被送去急诊。','Nửa đêm anh ấy được đưa đi cấp cứu.'],['医院的急诊室很忙。','Phòng cấp cứu của bệnh viện rất bận rộn.']]},
+    {h:'康复', p:'kāngfù', m:'hồi phục', t:'động từ', ex:[['他手术后很快康复了。','Sau phẫu thuật anh ấy hồi phục rất nhanh.'],['祝你早日康复。','Chúc bạn sớm hồi phục.']]},
+    {h:'疫苗', p:'yìmiáo', m:'vắc-xin', t:'danh từ', ex:[['孩子要按时打疫苗。','Trẻ em cần tiêm vắc-xin đúng lịch.'],['这种疫苗很有效。','Loại vắc-xin này rất hiệu quả.']]},
+    {h:'体检', p:'tǐjiǎn', m:'khám sức khỏe tổng quát', t:'danh từ', ex:[['公司每年安排一次体检。','Công ty mỗi năm sắp xếp khám sức khỏe một lần.'],['体检结果显示他很健康。','Kết quả khám sức khỏe cho thấy anh ấy rất khỏe mạnh.']]}
   ]},
   t_work: { label: 'Công việc', words: [
     {h:'公司', p:'gōngsī', m:'công ty', t:'danh từ', ex:[
@@ -1232,7 +1425,31 @@ const VOCAB_DATA = {
     {h:'面试', p:'miànshì', m:'phỏng vấn', t:'danh từ', ex:[
       ['我明天要去面试。','Ngày mai tôi phải đi phỏng vấn.'],
       ['他顺利通过了面试。','Anh ấy đã vượt qua buổi phỏng vấn một cách thuận lợi.'],
-      ['面试前要好好准备。','Trước khi phỏng vấn cần chuẩn bị thật kỹ.']]}
+      ['面试前要好好准备。','Trước khi phỏng vấn cần chuẩn bị thật kỹ.']]},
+    {h:'工作', p:'gōngzuò', m:'công việc', t:'danh từ', ex:[['他找到了一份好工作。','Anh ấy đã tìm được một công việc tốt.'],['我很喜欢现在的工作。','Tôi rất thích công việc hiện tại.']]},
+    {h:'老板', p:'lǎobǎn', m:'ông chủ, sếp', t:'danh từ', ex:[['老板对员工很好。','Ông chủ đối xử rất tốt với nhân viên.'],['我要向老板汇报工作。','Tôi phải báo cáo công việc với sếp.']]},
+    {h:'员工', p:'yuángōng', m:'nhân viên', t:'danh từ', ex:[['公司有一百多名员工。','Công ty có hơn một trăm nhân viên.'],['员工们都很努力工作。','Các nhân viên đều làm việc rất chăm chỉ.']]},
+    {h:'经理', p:'jīnglǐ', m:'giám đốc, quản lý', t:'danh từ', ex:[['他是这家公司的经理。','Anh ấy là giám đốc của công ty này.'],['经理正在开会。','Giám đốc đang họp.']]},
+    {h:'职业', p:'zhíyè', m:'nghề nghiệp', t:'danh từ', ex:[['你的职业是什么？','Nghề nghiệp của bạn là gì?'],['医生是一份受人尊敬的职业。','Bác sĩ là một nghề được mọi người kính trọng.']]},
+    {h:'简历', p:'jiǎnlì', m:'sơ yếu lý lịch', t:'danh từ', ex:[['请把你的简历发给我。','Xin hãy gửi sơ yếu lý lịch của bạn cho tôi.'],['他准备了一份详细的简历。','Anh ấy đã chuẩn bị một bản sơ yếu lý lịch chi tiết.']]},
+    {h:'应聘', p:'yìngpìn', m:'ứng tuyển', t:'động từ', ex:[['他去那家公司应聘。','Anh ấy đến công ty đó ứng tuyển.'],['应聘之前要好好准备。','Trước khi ứng tuyển cần chuẩn bị kỹ càng.']]},
+    {h:'录取', p:'lùqǔ', m:'tuyển dụng, nhận vào', t:'động từ', ex:[['他被这家公司录取了。','Anh ấy đã được công ty này nhận vào làm.'],['很高兴收到录取通知。','Rất vui khi nhận được thông báo trúng tuyển.']]},
+    {h:'辞职', p:'cízhí', m:'từ chức', t:'động từ', ex:[['他决定辞职创业。','Anh ấy quyết định từ chức để khởi nghiệp.'],['她上个月辞职了。','Tháng trước cô ấy đã từ chức.']]},
+    {h:'升职', p:'shēngzhí', m:'thăng chức', t:'động từ', ex:[['他工作努力，很快就升职了。','Anh ấy làm việc chăm chỉ nên nhanh chóng được thăng chức.'],['升职以后责任更大了。','Sau khi thăng chức trách nhiệm càng lớn hơn.']]},
+    {h:'项目', p:'xiàngmù', m:'dự án', t:'danh từ', ex:[['我们正在做一个新项目。','Chúng tôi đang thực hiện một dự án mới.'],['这个项目很有挑战性。','Dự án này rất có tính thách thức.']]},
+    {h:'任务', p:'rènwu', m:'nhiệm vụ', t:'danh từ', ex:[['老板给我们分配了任务。','Sếp đã phân công nhiệm vụ cho chúng tôi.'],['我们按时完成了任务。','Chúng tôi đã hoàn thành nhiệm vụ đúng hạn.']]},
+    {h:'报告', p:'bàogào', m:'báo cáo', t:'danh từ', ex:[['我需要写一份工作报告。','Tôi cần viết một bản báo cáo công việc.'],['明天要向经理提交报告。','Ngày mai phải nộp báo cáo cho giám đốc.']]},
+    {h:'出差', p:'chūchāi', m:'đi công tác', t:'động từ', ex:[['他下周要去上海出差。','Tuần sau anh ấy phải đi công tác Thượng Hải.'],['出差的时候很辛苦。','Đi công tác rất vất vả.']]},
+    {h:'合同', p:'hétong', m:'hợp đồng', t:'danh từ', ex:[['我们已经签了合同。','Chúng tôi đã ký hợp đồng.'],['请仔细阅读合同内容。','Xin hãy đọc kỹ nội dung hợp đồng.']]},
+    {h:'团队', p:'tuánduì', m:'nhóm, đội', t:'danh từ', ex:[['我们是一个团结的团队。','Chúng tôi là một đội đoàn kết.'],['团队合作很重要。','Làm việc nhóm rất quan trọng.']]},
+    {h:'效率', p:'xiàolǜ', m:'hiệu suất', t:'danh từ', ex:[['提高工作效率很重要。','Nâng cao hiệu suất công việc rất quan trọng.'],['他做事效率很高。','Anh ấy làm việc rất hiệu quả.']]},
+    {h:'压力大', p:'yālì dà', m:'áp lực lớn', t:'cụm từ', ex:[['这份工作压力很大。','Công việc này áp lực rất lớn.'],['他因为工作压力大而失眠。','Anh ấy mất ngủ vì áp lực công việc lớn.']]},
+    {h:'退休', p:'tuìxiū', m:'nghỉ hưu', t:'động từ', ex:[['我爸爸明年就要退休了。','Sang năm bố tôi sẽ nghỉ hưu.'],['退休以后他打算去旅游。','Sau khi nghỉ hưu anh ấy dự định đi du lịch.']]},
+    {h:'兼职', p:'jiānzhí', m:'làm thêm, bán thời gian', t:'danh từ', ex:[['我周末做一份兼职。','Cuối tuần tôi làm một công việc bán thời gian.'],['很多学生喜欢做兼职。','Nhiều sinh viên thích làm thêm.']]},
+    {h:'全职', p:'quánzhí', m:'toàn thời gian', t:'danh từ', ex:[['他找到了一份全职工作。','Anh ấy đã tìm được một công việc toàn thời gian.'],['全职工作比兼职稳定。','Công việc toàn thời gian ổn định hơn bán thời gian.']]},
+    {h:'奖金', p:'jiǎngjīn', m:'tiền thưởng', t:'danh từ', ex:[['年底公司会发奖金。','Cuối năm công ty sẽ phát tiền thưởng.'],['他因为表现好得到了奖金。','Anh ấy nhận được tiền thưởng vì thể hiện tốt.']]},
+    {h:'培训', p:'péixùn', m:'đào tạo, huấn luyện', t:'danh từ', ex:[['公司为新员工安排了培训。','Công ty sắp xếp đào tạo cho nhân viên mới.'],['他参加了一次专业培训。','Anh ấy đã tham gia một khóa đào tạo chuyên môn.']]},
+    {h:'忙碌', p:'mánglù', m:'bận rộn', t:'tính từ', ex:[['他的工作总是很忙碌。','Công việc của anh ấy luôn rất bận rộn.'],['忙碌的一天终于结束了。','Một ngày bận rộn cuối cùng cũng kết thúc.']]}
   ]},
   t_emotion: { label: 'Cảm xúc & tính cách', words: [
     {h:'开心', p:'kāixīn', m:'vui vẻ', t:'tính từ', ex:[
@@ -1258,7 +1475,31 @@ const VOCAB_DATA = {
     {h:'耐心', p:'nàixīn', m:'kiên nhẫn', t:'danh từ', ex:[
       ['老师对学生很有耐心。','Giáo viên rất kiên nhẫn với học sinh.'],
       ['学外语需要耐心。','Học ngoại ngữ cần sự kiên nhẫn.'],
-      ['他失去了耐心。','Anh ấy đã mất kiên nhẫn.']]}
+      ['他失去了耐心。','Anh ấy đã mất kiên nhẫn.']]},
+    {h:'高兴', p:'gāoxìng', m:'vui mừng', t:'tính từ', ex:[['听到这个消息我很高兴。','Nghe tin này tôi rất vui.'],['他高兴地笑了。','Anh ấy vui vẻ cười.']]},
+    {h:'生气', p:'shēngqì', m:'tức giận', t:'tính từ', ex:[['他因为这件事很生气。','Anh ấy rất tức giận vì chuyện này.'],['别生气，冷静一下。','Đừng tức giận, bình tĩnh lại đi.']]},
+    {h:'害怕', p:'hàipà', m:'sợ hãi', t:'động từ', ex:[['她很害怕黑暗。','Cô ấy rất sợ bóng tối.'],['孩子害怕一个人睡觉。','Đứa trẻ sợ ngủ một mình.']]},
+    {h:'担心', p:'dānxīn', m:'lo lắng', t:'động từ', ex:[['妈妈很担心我的健康。','Mẹ rất lo lắng cho sức khỏe của tôi.'],['别担心，一切都会好的。','Đừng lo, mọi chuyện sẽ ổn thôi.']]},
+    {h:'惊讶', p:'jīngyà', m:'ngạc nhiên', t:'tính từ', ex:[['听到这个消息他很惊讶。','Nghe tin này anh ấy rất ngạc nhiên.'],['大家都对结果感到惊讶。','Mọi người đều cảm thấy ngạc nhiên về kết quả.']]},
+    {h:'失望', p:'shīwàng', m:'thất vọng', t:'tính từ', ex:[['考试结果让他很失望。','Kết quả thi khiến anh ấy rất thất vọng.'],['请不要让父母失望。','Xin đừng để bố mẹ thất vọng.']]},
+    {h:'满意', p:'mǎnyì', m:'hài lòng', t:'tính từ', ex:[['老板对我的工作很满意。','Sếp rất hài lòng với công việc của tôi.'],['我对这个结果很满意。','Tôi rất hài lòng với kết quả này.']]},
+    {h:'骄傲', p:'jiāo’ào', m:'tự hào', t:'tính từ', ex:[['父母为他感到骄傲。','Bố mẹ cảm thấy tự hào về anh ấy.'],['他为自己的成就感到骄傲。','Anh ấy tự hào về thành tích của mình.']]},
+    {h:'孤独', p:'gūdú', m:'cô đơn', t:'tính từ', ex:[['一个人在外地生活很孤独。','Sống một mình ở nơi xa rất cô đơn.'],['他感到很孤独。','Anh ấy cảm thấy rất cô đơn.']]},
+    {h:'幽默', p:'yōumò', m:'hài hước', t:'tính từ', ex:[['他是一个很幽默的人。','Anh ấy là một người rất hài hước.'],['他的话很幽默，大家都笑了。','Câu nói của anh ấy rất hài hước, mọi người đều cười.']]},
+    {h:'善良', p:'shànliáng', m:'hiền lành, tốt bụng', t:'tính từ', ex:[['她是一个善良的人。','Cô ấy là một người tốt bụng.'],['善良的人总是受欢迎。','Người tốt bụng luôn được yêu mến.']]},
+    {h:'诚实', p:'chéngshí', m:'thật thà', t:'tính từ', ex:[['做人要诚实。','Làm người cần phải thật thà.'],['他一直是个诚实的孩子。','Anh ấy luôn là một đứa trẻ thật thà.']]},
+    {h:'自信', p:'zìxìn', m:'tự tin', t:'tính từ', ex:[['他说话很自信。','Anh ấy nói chuyện rất tự tin.'],['自信是成功的第一步。','Tự tin là bước đầu tiên của thành công.']]},
+    {h:'谦虚', p:'qiānxū', m:'khiêm tốn', t:'tính từ', ex:[['他虽然优秀但很谦虚。','Anh ấy tuy giỏi nhưng rất khiêm tốn.'],['谦虚使人进步。','Khiêm tốn giúp con người tiến bộ.']]},
+    {h:'懒惰', p:'lǎnduò', m:'lười biếng', t:'tính từ', ex:[['他工作起来一点也不懒惰。','Khi làm việc anh ấy không hề lười biếng.'],['懒惰会让人失去机会。','Lười biếng sẽ khiến con người mất đi cơ hội.']]},
+    {h:'认真', p:'rènzhēn', m:'nghiêm túc, chăm chỉ', t:'tính từ', ex:[['他学习非常认真。','Anh ấy học rất chăm chỉ.'],['认真做事才能成功。','Làm việc nghiêm túc mới có thể thành công.']]},
+    {h:'乐观', p:'lèguān', m:'lạc quan', t:'tính từ', ex:[['她对生活很乐观。','Cô ấy rất lạc quan với cuộc sống.'],['乐观的人更容易快乐。','Người lạc quan dễ hạnh phúc hơn.']]},
+    {h:'悲观', p:'bēiguān', m:'bi quan', t:'tính từ', ex:[['不要总是那么悲观。','Đừng luôn bi quan như vậy.'],['悲观的态度不利于解决问题。','Thái độ bi quan không có lợi cho việc giải quyết vấn đề.']]},
+    {h:'后悔', p:'hòuhuǐ', m:'hối hận', t:'động từ', ex:[['他很后悔没有认真学习。','Anh ấy rất hối hận vì đã không học hành nghiêm túc.'],['做错事以后他很后悔。','Sau khi làm sai anh ấy rất hối hận.']]},
+    {h:'感动', p:'gǎndòng', m:'cảm động', t:'động từ', ex:[['这个故事让我很感动。','Câu chuyện này khiến tôi rất cảm động.'],['大家都被他的行为感动了。','Mọi người đều cảm động trước hành động của anh ấy.']]},
+    {h:'无聊', p:'wúliáo', m:'buồn chán', t:'tính từ', ex:[['今天在家很无聊。','Hôm nay ở nhà rất buồn chán.'],['这部电影很无聊。','Bộ phim này rất chán.']]},
+    {h:'激动', p:'jīdòng', m:'xúc động, phấn khích', t:'tính từ', ex:[['听到好消息他很激动。','Nghe tin vui anh ấy rất phấn khích.'],['她激动得说不出话来。','Cô ấy xúc động đến mức không nói nên lời.']]},
+    {h:'温柔', p:'wēnróu', m:'dịu dàng', t:'tính từ', ex:[['她说话很温柔。','Cô ấy nói chuyện rất dịu dàng.'],['妈妈的性格很温柔。','Tính cách của mẹ rất dịu dàng.']]},
+    {h:'害羞', p:'hàixiū', m:'xấu hổ, e thẹn', t:'tính từ', ex:[['她见到陌生人有点害羞。','Cô ấy hơi e thẹn khi gặp người lạ.'],['他害羞地低下了头。','Anh ấy e thẹn cúi đầu xuống.']]}
   ]}
 };
 const TAB_ORDER = ['hsk1','hsk2','hsk3','hsk4','hsk5','hsk6','t_greeting','t_family','t_time','t_food','t_shopping','t_school','t_travel','t_health','t_work','t_emotion'];
@@ -1268,42 +1509,57 @@ const HSK_LEVELS = ['hsk1','hsk2','hsk3','hsk4','hsk5','hsk6'];
 /* Mẫu câu theo cấp độ: mỗi mẫu có 1 vị trí trống (slot) được lấp bằng một từ thật lấy ngẫu nhiên
    từ DICTIONARY_DATA (đúng loại từ), nhờ đó sinh ra được rất nhiều câu "Sắp xếp câu" / "Điền từ"
    duy nhất mà không lặp lại, thay vì chỉ có vài câu cố định. Dấu câu luôn là 1 thẻ riêng biệt. */
+/* Mỗi mẫu câu mang theo danh sách TỪ RIÊNG ĐÃ DUYỆT THỦ CÔNG (không lấy theo "loại từ" tự động
+   phân loại từ từ điển lớn, vì việc phân loại tự động có thể sai và tạo câu vô nghĩa kiểu
+   "他很先生"). Nhờ vậy mọi câu sinh ra đều đúng ngữ pháp lẫn ngữ nghĩa, không gây tranh cãi. */
 const SENTENCE_TEMPLATES = {
   hsk1: [
-    { parts:['我','是','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 是 + Danh từ + 。', trans:m=>`Tôi là ${m}.` },
-    { parts:['我','喜欢','{s}','。'], slotType:'động từ', grammar:'Cấu trúc: Chủ ngữ + 喜欢 + Động từ + 。', trans:m=>`Tôi thích ${m}.` },
-    { parts:['我','的','{s}','很','漂亮','。'], slotType:'danh từ', grammar:'Cấu trúc: 我的 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} của tôi rất đẹp.` },
-    { parts:['他','很','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: Chủ ngữ + 很 + Tính từ + 。', trans:m=>`Anh ấy rất ${m}.` }
+    { parts:['我','喜欢','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 喜欢 + Tân ngữ (danh từ hoặc động từ) + 。', trans:m=>`Tôi thích ${m}.`,
+      words:[['苹果','quả táo'],['水','nước'],['看书','đọc sách'],['唱歌','hát'],['跳舞','nhảy múa'],['游泳','bơi lội'],['踢足球','đá bóng'],['画画','vẽ tranh'],['旅游','du lịch'],['音乐','âm nhạc'],['猫','mèo'],['狗','chó']] },
+    { parts:['他','是','我','的','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 是 + 我的 + Danh từ chỉ quan hệ + 。', trans:m=>`Anh ấy là ${m} của tôi.`,
+      words:[['朋友','bạn'],['老师','thầy/cô giáo'],['同学','bạn học'],['哥哥','anh trai'],['弟弟','em trai'],['姐姐','chị gái'],['妹妹','em gái'],['邻居','hàng xóm'],['同事','đồng nghiệp'],['亲戚','họ hàng'],['客人','khách'],['爸爸','bố']] },
+    { parts:['这个','东西','很','{s}','。'], grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Thứ này rất ${m}.`,
+      words:[['大','to'],['小','nhỏ'],['好','tốt'],['漂亮','đẹp'],['贵','đắt'],['便宜','rẻ'],['新','mới'],['旧','cũ'],['干净','sạch sẽ'],['有趣','thú vị'],['重要','quan trọng'],['方便','tiện lợi']] }
   ],
   hsk2: [
-    { parts:['我','已经','{s}','了','。'], slotType:'động từ', grammar:'Cấu trúc 已经...了: diễn tả hành động đã hoàn thành.', trans:m=>`Tôi đã ${m} rồi.` },
-    { parts:['这个','{s}','很','有意思','。'], slotType:'danh từ', grammar:'Cấu trúc: 这个 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} này rất thú vị.` },
-    { parts:['他','觉得','{s}','很','重要','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 觉得 + Cụm chủ vị.', trans:m=>`Anh ấy cho rằng ${m} rất quan trọng.` },
-    { parts:['我','想','{s}','。'], slotType:'động từ', grammar:'Cấu trúc: Chủ ngữ + 想 (muốn) + Động từ + 。', trans:m=>`Tôi muốn ${m}.` }
+    { parts:['我','已经','{s}','了','。'], grammar:'Cấu trúc 已经...了: diễn tả hành động đã hoàn thành.', trans:m=>`Tôi đã ${m} rồi.`,
+      words:[['吃饭','ăn cơm'],['睡觉','đi ngủ'],['回家','về nhà'],['毕业','tốt nghiệp'],['结婚','kết hôn'],['下班','tan làm'],['起床','thức dậy'],['洗澡','tắm rửa'],['完成','hoàn thành'],['休息','nghỉ ngơi'],['出发','xuất phát'],['准备好','chuẩn bị xong']] },
+    { parts:['这个','{s}','很','有意思','。'], grammar:'Cấu trúc: 这个 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} này rất thú vị.`,
+      words:[['电影','bộ phim'],['故事','câu chuyện'],['游戏','trò chơi'],['问题','câu hỏi'],['想法','ý tưởng'],['经历','trải nghiệm'],['新闻','tin tức'],['话题','chủ đề'],['小说','tiểu thuyết'],['节目','chương trình'],['活动','hoạt động'],['爱好','sở thích']] },
+    { parts:['他','对','{s}','很','感兴趣','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 很感兴趣 (rất hứng thú với).', trans:m=>`Anh ấy rất hứng thú với ${m}.`,
+      words:[['音乐','âm nhạc'],['历史','lịch sử'],['运动','thể thao'],['科学','khoa học'],['艺术','nghệ thuật'],['旅游','du lịch'],['摄影','nhiếp ảnh'],['烹饪','nấu ăn'],['文学','văn học'],['电影','điện ảnh'],['心理学','tâm lý học'],['写作','viết lách']] }
   ],
   hsk3: [
-    { parts:['我们','应该','{s}','。'], slotType:'động từ', grammar:'Cấu trúc: Chủ ngữ + động từ năng nguyện 应该 + Động từ + 。', trans:m=>`Chúng ta nên ${m}.` },
-    { parts:['这','件','事','很','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Việc này rất ${m}.` },
-    { parts:['他','对','{s}','很','感兴趣','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 对 + Danh từ + 很感兴趣 (rất hứng thú với).', trans:m=>`Anh ấy rất hứng thú với ${m}.` },
-    { parts:['你','有','什么','{s}','吗','？'], slotType:'danh từ', grammar:'Câu hỏi với 吗 luôn đứng cuối câu.', trans:m=>`Bạn có ${m} gì không?` }
+    { parts:['我们','应该','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + động từ năng nguyện 应该 + Cụm động từ + 。', trans:m=>`Chúng ta nên ${m}.`,
+      words:[['保护环境','bảo vệ môi trường'],['互相帮助','giúp đỡ lẫn nhau'],['遵守规定','tuân thủ quy định'],['节约用水','tiết kiệm nước'],['按时完成','hoàn thành đúng giờ'],['多锻炼身体','rèn luyện thân thể nhiều hơn'],['尊重别人','tôn trọng người khác'],['提前预订','đặt trước'],['认真学习','học tập nghiêm túc'],['诚实守信','thành thật giữ chữ tín'],['合理安排时间','sắp xếp thời gian hợp lý'],['坚持锻炼','kiên trì rèn luyện']] },
+    { parts:['这','件','事','很','{s}','。'], grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Việc này rất ${m}.`,
+      words:[['重要','quan trọng'],['麻烦','phiền phức'],['简单','đơn giản'],['复杂','phức tạp'],['有趣','thú vị'],['奇怪','kỳ lạ'],['危险','nguy hiểm'],['困难','khó khăn'],['特别','đặc biệt'],['严重','nghiêm trọng'],['紧急','khẩn cấp'],['普通','bình thường']] },
+    { parts:['你','有','什么','{s}','吗','？'], grammar:'Câu hỏi với 吗 luôn đứng cuối câu.', trans:m=>`Bạn có ${m} gì không?`,
+      words:[['问题','câu hỏi'],['建议','đề nghị'],['爱好','sở thích'],['计划','kế hoạch'],['要求','yêu cầu'],['经验','kinh nghiệm'],['想法','ý tưởng'],['意见','ý kiến'],['困难','khó khăn'],['目标','mục tiêu'],['兴趣','hứng thú'],['打算','dự định']] }
   ],
   hsk4: [
-    { parts:['尽管','很','难','，','他','还是','{s}','了','。'], slotType:'động từ', grammar:'Cấu trúc nhượng bộ 尽管...还是...: dù A nhưng vẫn B.', trans:m=>`Mặc dù rất khó, anh ấy vẫn ${m} rồi.` },
-    { parts:['这个','{s}','对','公司','非常','重要','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 非常 + Tính từ.', trans:m=>`${cap(m)} này vô cùng quan trọng đối với công ty.` },
-    { parts:['他','的','态度','很','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: 的-định ngữ + Chủ ngữ + 很 + Tính từ.', trans:m=>`Thái độ của anh ấy rất ${m}.` },
-    { parts:['我们','需要','更多','的','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: 更多的 + Danh từ làm tân ngữ.', trans:m=>`Chúng ta cần nhiều ${m} hơn.` }
+    { parts:['尽管','很','难','，','他','还是','{s}','。'], grammar:'Cấu trúc nhượng bộ 尽管...还是...: dù A nhưng vẫn B.', trans:m=>`Mặc dù rất khó, anh ấy vẫn ${m}.`,
+      words:[['坚持完成任务','kiên trì hoàn thành nhiệm vụ'],['努力克服困难','nỗ lực vượt qua khó khăn'],['决定继续尝试','quyết định tiếp tục thử'],['选择相信自己','chọn tin tưởng bản thân'],['愿意承担责任','sẵn lòng gánh vác trách nhiệm'],['努力提高成绩','nỗ lực nâng cao thành tích'],['坚持自己的原则','kiên trì nguyên tắc của mình'],['努力寻找办法','nỗ lực tìm cách giải quyết'],['决定重新开始','quyết định bắt đầu lại'],['努力适应环境','nỗ lực thích nghi với môi trường'],['坚持每天锻炼','kiên trì tập luyện mỗi ngày'],['努力实现目标','nỗ lực thực hiện mục tiêu']] },
+    { parts:['这个','{s}','对','公司','非常','重要','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 非常 + Tính từ.', trans:m=>`${cap(m)} này vô cùng quan trọng đối với công ty.`,
+      words:[['决定','quyết định'],['项目','dự án'],['客户','khách hàng'],['计划','kế hoạch'],['政策','chính sách'],['战略','chiến lược'],['合同','hợp đồng'],['产品','sản phẩm'],['团队','đội nhóm'],['市场','thị trường'],['投资','khoản đầu tư'],['制度','chế độ']] },
+    { parts:['她','始终','保持','{s}','的','态度','。'], grammar:'Cấu trúc: 始终 (luôn luôn) + 保持 + Định ngữ + 态度.', trans:m=>`Cô ấy luôn giữ thái độ ${m}.`,
+      words:[['谦虚','khiêm tốn'],['乐观','lạc quan'],['冷静','bình tĩnh'],['认真','nghiêm túc'],['积极','tích cực'],['友好','thân thiện'],['耐心','kiên nhẫn'],['诚恳','chân thành'],['开放','cởi mở'],['客观','khách quan'],['自信','tự tin'],['谨慎','thận trọng']] }
   ],
   hsk5: [
-    { parts:['在','这个','问题','上','，','我们','应该','保持','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc: 在...上 (về vấn đề...) làm trạng ngữ, theo sau là mệnh đề chính.', trans:m=>`Về vấn đề này, chúng ta nên giữ thái độ ${m}.` },
-    { parts:['他','对','{s}','有','独特','的','看法','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 有 + Định ngữ + 看法.', trans:m=>`Anh ấy có quan điểm độc đáo về ${m}.` },
-    { parts:['这','需要','长期','的','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: 长期的 + Danh từ trừu tượng làm tân ngữ.', trans:m=>`Việc này cần ${m} lâu dài.` },
-    { parts:['她','始终','保持','{s}','的','态度','。'], slotType:'tính từ', grammar:'Cấu trúc: 始终 (luôn luôn) + 保持 + Định ngữ + 态度.', trans:m=>`Cô ấy luôn giữ thái độ ${m}.` }
+    { parts:['在','这个','问题','上','，','我们','应该','保持','{s}','。'], grammar:'Cấu trúc: 在...上 (về vấn đề...) làm trạng ngữ, theo sau là mệnh đề chính.', trans:m=>`Về vấn đề này, chúng ta nên giữ thái độ ${m}.`,
+      words:[['冷静','bình tĩnh'],['理智','sáng suốt'],['谨慎','thận trọng'],['客观','khách quan'],['耐心','kiên nhẫn'],['克制','kiềm chế'],['乐观','lạc quan'],['清醒','tỉnh táo'],['坚定','kiên định'],['灵活','linh hoạt'],['开放','cởi mở'],['独立','độc lập']] },
+    { parts:['他','对','{s}','有','独特','的','看法','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 有 + Định ngữ + 看法.', trans:m=>`Anh ấy có quan điểm độc đáo về ${m}.`,
+      words:[['教育','giáo dục'],['婚姻','hôn nhân'],['成功','thành công'],['人生','cuộc đời'],['艺术','nghệ thuật'],['历史','lịch sử'],['经济','kinh tế'],['社会','xã hội'],['未来','tương lai'],['爱情','tình yêu'],['文化','văn hóa'],['政治','chính trị']] },
+    { parts:['这','需要','长期','的','{s}','。'], grammar:'Cấu trúc: 长期的 + Danh từ trừu tượng làm tân ngữ.', trans:m=>`Việc này cần ${m} lâu dài.`,
+      words:[['努力','sự nỗ lực'],['投资','đầu tư'],['坚持','sự kiên trì'],['训练','huấn luyện'],['积累','sự tích lũy'],['规划','quy hoạch'],['合作','sự hợp tác'],['观察','sự quan sát'],['适应','sự thích nghi'],['准备','sự chuẩn bị'],['沟通','giao tiếp'],['支持','sự hỗ trợ']] }
   ],
   hsk6: [
-    { parts:['这','项','政策','引发','了','广泛','的','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: Chủ ngữ + 引发了 + Định ngữ + Danh từ trừu tượng.', trans:m=>`Chính sách này đã gây ra ${m} rộng rãi.` },
-    { parts:['他','始终','恪守','{s}','。'], slotType:'danh từ', grammar:'Cấu trúc: 始终 + 恪守 (tuân thủ nghiêm ngặt) + Tân ngữ.', trans:m=>`Anh ấy luôn tuân thủ nghiêm ngặt ${m}.` },
-    { parts:['这个','现象','十分','{s}','，','值得','深思','。'], slotType:'tính từ', grammar:'Cấu trúc: Chủ ngữ + 十分 + Tính từ + ，+ mệnh đề bổ sung.', trans:m=>`Hiện tượng này rất ${m}, đáng để suy ngẫm.` },
-    { parts:['他','的','决定','令','大家','感到','{s}','。'], slotType:'tính từ', grammar:'Cấu trúc 令 (khiến) + Tân ngữ + 感到 + Tính từ.', trans:m=>`Quyết định của anh ấy khiến mọi người cảm thấy ${m}.` }
+    { parts:['这','项','政策','引发','了','广泛','的','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 引发了 + Định ngữ + Danh từ trừu tượng.', trans:m=>`Chính sách này đã gây ra ${m} rộng rãi.`,
+      words:[['争议','tranh cãi'],['关注','sự quan tâm'],['讨论','thảo luận'],['质疑','sự nghi ngờ'],['批评','phê bình'],['支持','sự ủng hộ'],['反响','phản ứng'],['担忧','sự lo ngại'],['猜测','suy đoán'],['不满','sự bất mãn'],['赞誉','lời khen ngợi'],['抵制','sự tẩy chay']] },
+    { parts:['他','始终','恪守','{s}','。'], grammar:'Cấu trúc: 始终 + 恪守 (tuân thủ nghiêm ngặt) + Tân ngữ.', trans:m=>`Anh ấy luôn tuân thủ nghiêm ngặt ${m}.`,
+      words:[['诚信原则','nguyên tắc thành tín'],['职业道德','đạo đức nghề nghiệp'],['承诺','lời hứa'],['规定','quy định'],['底线','giới hạn cuối cùng'],['原则','nguyên tắc'],['准则','chuẩn tắc'],['纪律','kỷ luật'],['传统','truyền thống'],['法律','pháp luật'],['约定','giao ước'],['初心','tâm nguyện ban đầu']] },
+    { parts:['他','的','决定','令','大家','感到','{s}','。'], grammar:'Cấu trúc 令 (khiến) + Tân ngữ + 感到 + Tính từ.', trans:m=>`Quyết định của anh ấy khiến mọi người cảm thấy ${m}.`,
+      words:[['意外','bất ngờ'],['震惊','sốc'],['欣慰','an ủi'],['失望','thất vọng'],['困惑','bối rối'],['兴奋','hào hứng'],['担忧','lo lắng'],['欣喜','vui mừng'],['不安','bất an'],['满意','hài lòng'],['惊讶','ngạc nhiên'],['感动','cảm động']] }
   ]
 };
 function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
@@ -2080,14 +2336,43 @@ function selectShadowLevel(lvl){
   });
   pickNewShadowSentence();
 }
+let shadowPinyinRevealed = false;
 function renderShadowSentence(){
   const item = SHADOW_BANK[currentShadowLevel][currentShadowIndex];
   const doneCount = getDoneSet('shadowDone', currentShadowLevel).length;
   document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Đã hoàn thành ${doneCount}/${SHADOW_BANK[currentShadowLevel].length}`;
   document.getElementById('shadow-sentence').textContent = item[0];
-  document.getElementById('shadow-pinyin').textContent = item[1];
   document.getElementById('shadow-meaning').textContent = item[2];
+  const pinyinEl = document.getElementById('shadow-pinyin');
+  const toggleBtn = document.getElementById('shadow-pinyin-toggle');
+  const alwaysShow = (currentShadowLevel === 'hsk1' || currentShadowLevel === 'hsk2');
+  shadowPinyinRevealed = false;
+  if (alwaysShow) {
+    pinyinEl.textContent = item[1];
+    pinyinEl.classList.remove('hidden');
+    toggleBtn.classList.add('hidden');
+  } else {
+    pinyinEl.textContent = '';
+    pinyinEl.classList.add('hidden');
+    toggleBtn.classList.remove('hidden');
+    toggleBtn.textContent = 'Xem phiên âm';
+  }
   document.getElementById('shadow-result').classList.add('hidden');
+}
+function toggleShadowPinyin(){
+  const item = SHADOW_BANK[currentShadowLevel][currentShadowIndex];
+  const pinyinEl = document.getElementById('shadow-pinyin');
+  const toggleBtn = document.getElementById('shadow-pinyin-toggle');
+  shadowPinyinRevealed = !shadowPinyinRevealed;
+  if (shadowPinyinRevealed) {
+    pinyinEl.textContent = item[1];
+    pinyinEl.classList.remove('hidden');
+    toggleBtn.textContent = 'Ẩn phiên âm';
+  } else {
+    pinyinEl.textContent = '';
+    pinyinEl.classList.add('hidden');
+    toggleBtn.textContent = 'Xem phiên âm';
+  }
 }
 function pickNewShadowSentence(){
   currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, VOCAB_DATA[currentShadowLevel].label, 'mẫu Shadowing');
@@ -2177,21 +2462,14 @@ function toggleReflexRecording(){
   reflexRecognition.onresult = (e) => {
     const heard = e.results[0][0].transcript;
     document.getElementById('reflex-heard').textContent = heard;
-    const isSuitable = currentReflexItem.kw.some(k => heard.includes(k)) && heard.replace(/[，。？！、\s]/g,'').length >= 2;
     const resultBox = document.getElementById('reflex-result');
-    if (isSuitable) {
-      resultBox.className = 'bg-green-50 dark:bg-green-900/20 p-4 rounded-xl space-y-2 border border-green-200 dark:border-green-800 text-left text-xs';
-      document.getElementById('reflex-feedback').innerHTML = `<span class="font-bold text-green-600">✅ Rất tốt! Câu trả lời phù hợp với câu hỏi.</span><br>Bạn đã trả lời đúng ngữ cảnh và có cấu trúc hợp lý. Hãy tiếp tục phát huy phản xạ tự nhiên như vậy nhé!`;
-      document.getElementById('reflex-actions').innerHTML = `<button onclick="pickNewReflexQuestion()" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">Câu tiếp theo →</button>`;
-    } else {
-      resultBox.className = 'bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl space-y-2 border border-amber-200 dark:border-amber-800 text-left text-xs';
-      document.getElementById('reflex-feedback').innerHTML = `<span class="font-bold text-amber-600">⚠️ Câu trả lời chưa phù hợp.</span><br>Câu trả lời của bạn chưa đúng trọng tâm câu hỏi hoặc chưa đủ ý. Gợi ý câu trả lời chuẩn: <span class="font-semibold">${currentReflexItem.sug}</span>`;
-      document.getElementById('reflex-actions').innerHTML = `<button onclick="toggleReflexRecording()" class="px-4 py-2 bg-amber-500 text-gray-900 text-xs font-bold rounded-lg">Thử lại</button><button onclick="pickNewReflexQuestion()" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">Câu tiếp theo →</button>`;
-    }
+    resultBox.className = 'bg-green-50 dark:bg-green-900/20 p-4 rounded-xl space-y-2 border border-green-200 dark:border-green-800 text-left text-xs';
+    document.getElementById('reflex-feedback').innerHTML = `<span class="font-bold text-green-600">✅ Đã ghi nhận câu trả lời của bạn.</span><br>Câu gợi ý tham khảo: <span class="font-semibold">${currentReflexItem.sug}</span>`;
+    document.getElementById('reflex-actions').innerHTML = `<button onclick="pickNewReflexQuestion()" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">Câu tiếp theo →</button>`;
     resultBox.classList.remove('hidden');
     touchDailyActivity();
     markDone('reflexDone', currentReflexLevel, currentReflexIndex);
-    pushHistory({type:'Phản xạ Nghe - Nói', detail:`${VOCAB_DATA[currentReflexLevel].label} · "${currentReflexItem.q}"`, score: isSuitable ? 'Phù hợp' : 'Chưa phù hợp'});
+    pushHistory({type:'Phản xạ Nghe - Nói', detail:`${VOCAB_DATA[currentReflexLevel].label} · "${currentReflexItem.q}"`, score: 'Hoàn thành'});
   };
   reflexRecognition.onerror = () => { reflexRecording = false; btn.classList.remove('recording'); };
   reflexRecognition.onend = () => { reflexRecording = false; btn.classList.remove('recording'); };
@@ -2225,11 +2503,6 @@ const QUIZ_BATCH_SIZE = 40;
 const CURATED_BY_LEVEL_HANZI = {};
 HSK_LEVELS.forEach(l => { CURATED_BY_LEVEL_HANZI[l] = {}; VOCAB_DATA[l].words.forEach(w => { CURATED_BY_LEVEL_HANZI[l][w.h] = w; }); });
 
-function pickRandomWordOfType(level, type){
-  const pool = (window.DICTIONARY_DATA[level]||[]).filter(w => w[3] === type);
-  if (!pool.length) return null;
-  return pool[Math.floor(Math.random()*pool.length)];
-}
 function pickRandomDistractors(level, excludeHanzi, count){
   const pool = (window.DICTIONARY_DATA[level]||[]).filter(w => w[0] !== excludeHanzi);
   const picked = [];
@@ -2254,9 +2527,9 @@ function buildMeaningQuestions(level, count, usedSet){
     if (usedSet.has(row[0])) continue;
     usedSet.add(row[0]);
     const w = { h:row[0], p:row[1], m:row[2], t:row[3], ex: (CURATED_BY_LEVEL_HANZI[level][row[0]]||{}).ex };
-    const distractors = pickRandomDistractors(level, w.h, 3).map(d => d[2]);
-    const options = [...distractors, w.m].sort(() => Math.random()-0.5);
-    qs.push({ kind:'meaning', word: w, options, correct: w.m });
+    const distractorRows = pickRandomDistractors(level, w.h, 3);
+    const optionRows = [...distractorRows, row].sort(() => Math.random()-0.5);
+    qs.push({ kind:'meaning', word: w, options: optionRows.map(r => r[2]), optionRows, correct: w.m });
   }
   return qs;
 }
@@ -2269,13 +2542,13 @@ function buildOrderQuestions(level, count, usedSet){
     attempts++;
     const tIdx = Math.floor(Math.random()*templates.length);
     const tpl = templates[tIdx];
-    const word = pickRandomWordOfType(level, tpl.slotType);
-    if (!word) continue;
-    const key = tIdx + '|' + word[0];
+    const wIdx = Math.floor(Math.random()*tpl.words.length);
+    const [hanzi, meaning] = tpl.words[wIdx];
+    const key = tIdx + '|' + wIdx;
     if (usedSet.has(key)) continue;
     usedSet.add(key);
-    const filledParts = tpl.parts.map(p => p === '{s}' ? word[0] : p);
-    qs.push({ kind:'order', words: filledParts, correct: filledParts, alts: [], grammar: tpl.grammar, translation: tpl.trans(word[2]) });
+    const filledParts = tpl.parts.map(p => p === '{s}' ? hanzi : p);
+    qs.push({ kind:'order', words: filledParts, correct: filledParts, alts: [], grammar: tpl.grammar, translation: tpl.trans(meaning) });
   }
   return qs;
 }
@@ -2288,17 +2561,21 @@ function buildFillQuestions(level, count, usedSet){
     attempts++;
     const tIdx = Math.floor(Math.random()*templates.length);
     const tpl = templates[tIdx];
-    const word = pickRandomWordOfType(level, tpl.slotType);
-    if (!word) continue;
-    const key = tIdx + '|' + word[0];
+    const wIdx = Math.floor(Math.random()*tpl.words.length);
+    const [hanzi, meaning] = tpl.words[wIdx];
+    const key = tIdx + '|' + wIdx;
     if (usedSet.has(key)) continue;
     usedSet.add(key);
     const sentence = tpl.parts.map(p => p === '{s}' ? '___' : p).join('');
-    const distractors = pickRandomDistractors(level, word[0], 3);
+    // Nhiễu lấy từ CÁC MẪU CÂU KHÁC trong cùng cấp độ -> chắc chắn sai ngữ nghĩa ở câu này,
+    // đồng thời vẫn là từ thật, có nghĩa thật để học viên mở rộng vốn từ.
+    const otherWords = [];
+    templates.forEach((t, ti) => { if (ti !== tIdx) t.words.forEach(w => otherWords.push(w)); });
+    const distractors = otherWords.sort(() => Math.random()-0.5).slice(0,3);
     const options = distractors.map(d => d[0]);
-    options.splice(Math.floor(Math.random()*(options.length+1)), 0, word[0]);
-    const why = distractors.map(d => `"${d[0]}" (${d[2]}) là ${d[3]}, không phù hợp về nghĩa/ngữ pháp ở vị trí cần ${tpl.slotType} trong câu này.`);
-    qs.push({ kind:'fill', sentence, options, correct: word[0], why, translation: tpl.trans(word[2]) });
+    options.splice(Math.floor(Math.random()*(options.length+1)), 0, hanzi);
+    const why = distractors.map(d => `"${d[0]}" (nghĩa: ${d[1]}) không phù hợp về nghĩa trong câu này.`);
+    qs.push({ kind:'fill', sentence, options, correct: hanzi, why, translation: tpl.trans(meaning) });
   }
   return qs;
 }
@@ -2317,11 +2594,12 @@ function buildSynonymQuestions(level, count){
     const promptMeaning = dir === 'ab' ? pr.am : pr.bm;
     const correct = dir === 'ab' ? pr.b : pr.a;
     const correctMeaning = dir === 'ab' ? pr.bm : pr.am;
-    const distractors = dict.filter(w => w[0] !== correct && w[0] !== prompt).sort(() => Math.random()-0.5).slice(0,3).map(d => d[0]);
-    const options = [...distractors, correct].sort(() => Math.random()-0.5);
+    const distractorRows = dict.filter(w => w[0] !== correct && w[0] !== prompt).sort(() => Math.random()-0.5).slice(0,3);
+    const options = [...distractorRows.map(d=>d[0]), correct].sort(() => Math.random()-0.5);
     const label = pr.type === 'antonym' ? 'trái nghĩa' : 'đồng nghĩa';
-    qs.push({ kind:'synonym', type: pr.type, word: prompt, options, correct,
-      explain: `"${prompt}" (${promptMeaning}) là từ ${label} với "${correct}" (${correctMeaning}). Các từ còn lại không cùng nhóm nghĩa này.` });
+    const distractorWhy = distractorRows.map(d => `"${d[0]}" (${d[2]}) không cùng nhóm nghĩa ${label} với "${prompt}".`);
+    qs.push({ kind:'synonym', type: pr.type, word: prompt, options, correct, distractorWhy,
+      explain: `"${prompt}" (${promptMeaning}) là từ ${label} với "${correct}" (${correctMeaning}).` });
   }
   return qs;
 }
@@ -2406,7 +2684,7 @@ function submitOrder(){
   quizState.answered = true;
   const isCorrect = arraysEqual(quizState.picked, q.correct) || (q.alts||[]).some(alt => arraysEqual(quizState.picked, alt));
   recordQuizAnswer(quizState.level, isCorrect);
-  if (isCorrect) quizState.correctCount++;
+  if (isCorrect) { quizState.correctCount++; playCorrectSound(); } else { playWrongSound(); }
   document.getElementById('quiz-correct-line').textContent = `Đáp án đúng: ${q.correct.join(' ')}`;
   let bodyHtml = `<p><span class="font-bold">Dịch nghĩa:</span> ${q.translation}</p><p class="mt-1"><span class="font-bold">Phân tích ngữ pháp:</span> ${q.grammar}</p>`;
   if (q.alts && q.alts.length) bodyHtml += `<p class="mt-1"><span class="font-bold">Cách sắp xếp hợp lệ khác:</span> ${q.alts.map(a=>a.join(' ')).join(' | ')} — câu này có nhiều cách sắp xếp hợp lệ vì thành phần trạng ngữ có thể linh hoạt vị trí trong câu.</p>`;
@@ -2424,7 +2702,7 @@ function answerFill(i){
   const chosen = q.options[i];
   const isCorrect = chosen === q.correct;
   recordQuizAnswer(quizState.level, isCorrect);
-  if (isCorrect) quizState.correctCount++;
+  if (isCorrect) { quizState.correctCount++; playCorrectSound(); } else { playWrongSound(); }
   document.querySelectorAll('.quiz-opt').forEach((btn, idx) => {
     if (q.options[idx] === q.correct) btn.classList.add('border-green-500','bg-green-50','dark:bg-green-900/20');
     else if (idx === i) btn.classList.add('border-red-500','bg-red-50','dark:bg-red-900/20');
@@ -2446,13 +2724,14 @@ function answerSynonym(i){
   const chosen = q.options[i];
   const isCorrect = chosen === q.correct;
   recordQuizAnswer(quizState.level, isCorrect);
-  if (isCorrect) quizState.correctCount++;
+  if (isCorrect) { quizState.correctCount++; playCorrectSound(); } else { playWrongSound(); }
   document.querySelectorAll('.quiz-opt').forEach((btn, idx) => {
     if (q.options[idx] === q.correct) btn.classList.add('border-green-500','bg-green-50','dark:bg-green-900/20');
     else if (idx === i) btn.classList.add('border-red-500','bg-red-50','dark:bg-red-900/20');
   });
   document.getElementById('quiz-correct-line').textContent = `Đáp án đúng: ${q.correct}`;
-  document.getElementById('quiz-explain-body').innerHTML = `<p>${q.explain}</p>`;
+  const distractorLines = (q.distractorWhy||[]).map(w => `<li>${w}</li>`).join('');
+  document.getElementById('quiz-explain-body').innerHTML = `<p>${q.explain}</p>${distractorLines ? `<p class="mt-1 font-bold">Vì sao các từ còn lại không phù hợp:</p><ul class="list-disc pl-5">${distractorLines}</ul>` : ''}`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
   pushHistory({type:'Bài tập - Đồng/Trái nghĩa', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word}`, score: isCorrect?'Đúng':'Sai'});
 }
@@ -2465,14 +2744,18 @@ function answerMeaning(i){
   const chosen = q.options[i];
   const isCorrect = chosen === q.correct;
   recordQuizAnswer(quizState.level, isCorrect);
-  if (isCorrect) quizState.correctCount++;
+  if (isCorrect) { quizState.correctCount++; playCorrectSound(); } else { playWrongSound(); }
   document.querySelectorAll('.quiz-opt').forEach((btn, idx) => {
     if (q.options[idx] === q.correct) btn.classList.add('border-green-500','bg-green-50','dark:bg-green-900/20');
     else if (idx === i) btn.classList.add('border-red-500','bg-red-50','dark:bg-red-900/20');
   });
   document.getElementById('quiz-correct-line').textContent = `Đáp án chính xác: ${q.correct}`;
   const exLine = (q.word.ex && q.word.ex.length) ? `<p class="mt-1"><span class="font-bold">Ví dụ:</span> ${q.word.ex[0][0]} — ${q.word.ex[0][1]}</p>` : '';
-  document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Giải thích:</span> ${q.word.h} (${q.word.p}) là ${q.word.t}, mang nghĩa "${q.word.m}".</p>${exLine}`;
+  const wrongRows = q.optionRows.filter(r => r[0] !== q.word.h);
+  const wrongLines = wrongRows.map(r => `<li><b>${r[2]}</b> — đây là nghĩa của từ "${r[0]}" (${r[1]}), không phải của "${q.word.h}".</li>`).join('');
+  document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Giải thích:</span> ${q.word.h} (${q.word.p}) là ${q.word.t}, mang nghĩa "${q.word.m}".</p>${exLine}
+    <p class="mt-1 font-bold">Mở rộng vốn từ - các đáp án còn lại thực ra là nghĩa của từ nào:</p>
+    <ul class="list-disc pl-5">${wrongLines}</ul>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
   pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
 }
@@ -2528,6 +2811,9 @@ function beep(freq, dur){
     osc.stop(audioCtx.currentTime + dur);
   }catch(e){}
 }
+/* Âm thanh phản hồi Đúng/Sai dùng chung cho mọi bài tập & trò chơi (Web Audio API, không cần file mp3). */
+function playCorrectSound(){ beep(880, 0.12); setTimeout(() => beep(1175, 0.16), 100); }
+function playWrongSound(){ beep(220, 0.28); }
 function initGamesSection(){
   gamesInitDone = true;
   selectGameTab('memory');
@@ -2584,7 +2870,7 @@ function flipMemoryCard(idx){
         memoryState.matched.push(a,b);
         document.getElementById('mem-card-'+a).classList.replace('bg-amber-500','bg-green-600');
         document.getElementById('mem-card-'+b).classList.replace('bg-amber-500','bg-green-600');
-        beep(880, 0.15);
+        playCorrectSound();
         document.getElementById('memory-status').textContent = `Số cặp đã ghép: ${memoryState.matched.length/2}/${memoryState.total}`;
         if (memoryState.matched.length === memoryState.cards.length) {
           touchDailyActivity();
@@ -2592,7 +2878,7 @@ function flipMemoryCard(idx){
           setTimeout(()=>alert('🎉 Chúc mừng! Bạn đã ghép xong toàn bộ từ vựng.'), 200);
         }
       } else {
-        beep(200, 0.2);
+        playWrongSound();
         document.getElementById('mem-card-'+a).textContent = '?';
         document.getElementById('mem-card-'+b).textContent = '?';
         document.getElementById('mem-card-'+a).classList.replace('bg-amber-500','bg-red-600');
@@ -2681,7 +2967,7 @@ function selectMatchItem(col, key, el){
     matchState.locked = true;
     const {selHanzi, selMeaning} = matchState;
     if (selHanzi.key === selMeaning.key) {
-      beep(880, 0.15);
+      playCorrectSound();
       selHanzi.el.classList.add('locked-card','border-green-500','bg-green-50','dark:bg-green-900/20');
       selMeaning.el.classList.add('locked-card','border-green-500','bg-green-50','dark:bg-green-900/20');
       matchState.matched++;
@@ -2701,7 +2987,7 @@ function selectMatchItem(col, key, el){
         }
       }
     } else {
-      beep(200, 0.2);
+      playWrongSound();
       selHanzi.el.classList.add('flash-wrong'); selMeaning.el.classList.add('flash-wrong');
       setTimeout(() => {
         selHanzi.el.classList.remove('border-amber-500','flash-wrong');
@@ -2780,9 +3066,9 @@ function dashAnswer(choice){
   if (isCorrect) {
     dashState.score += 10;
     document.getElementById('dash-score').textContent = dashState.score;
-    beep(880,0.1);
+    playCorrectSound();
   } else {
-    beep(200,0.2);
+    playWrongSound();
   }
   if (justFinished) { dashEndGame(true); return; }
   if (isCorrect) {
