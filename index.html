@@ -544,7 +544,10 @@
         </div>
       </div>
       <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
-        <h4 class="font-bold text-sm mb-2">Thống kê học tập theo học viên</h4>
+        <div class="flex justify-between items-center mb-2">
+          <h4 class="font-bold text-sm">Thống kê học tập theo học viên</h4>
+          <span id="admin-data-source-note" class="text-[11px] font-semibold"></span>
+        </div>
         <div class="overflow-x-auto">
           <table class="w-full text-xs text-left">
             <thead>
@@ -754,6 +757,15 @@
     GoogleAuthProvider,
     signInWithPopup
   } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    getDocs,
+    collection,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDWd8fy12f1Qz_GUTc9XAKlZkoriFnmNck",
@@ -768,6 +780,7 @@
   try {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
     window.firebaseAuth = auth;
     window.googleProvider = new GoogleAuthProvider();
 
@@ -776,6 +789,14 @@
       signInWithPopup: (provider) => signInWithPopup(auth, provider),
       createUserWithEmailAndPassword: (email, password) => createUserWithEmailAndPassword(auth, email, password),
       signInWithEmailAndPassword: (email, password) => signInWithEmailAndPassword(auth, email, password)
+    };
+
+    // Shared cross-device data (collection "students", one document per uid) so the Admin
+    // Dashboard can aggregate real numbers from every device, not just this browser's localStorage.
+    window.fsStudents = {
+      save: (uid, data) => setDoc(doc(db, 'students', uid), data, { merge: true }),
+      getAll: () => getDocs(collection(db, 'students')),
+      serverTimestamp
     };
 
     window.__FIREBASE_READY__ = true;
@@ -1583,6 +1604,22 @@ function touchDailyActivity(){
   setProgress(p);
   hasActivityToday = true;
   return p;
+}
+// Pushes this student's summary to Firestore (collection "students", one doc per uid) so the
+// Admin Dashboard can aggregate real totals across every device, not just this browser.
+// Silently no-ops if Firestore isn't reachable/enabled yet (e.g. not created in the console).
+function syncToCloud(){
+  if (!(window.__FIREBASE_READY__ && window.fsStudents && currentUser)) return;
+  const p = getProgress();
+  window.fsStudents.save(currentUser.uid, {
+    email: currentUser.email,
+    displayName: currentUser.displayName || currentUser.email.split('@')[0],
+    lastLogin: new Date().toISOString(),
+    lastStudyDate: p.lastStudyDate || '',
+    streak: p.streak || 0,
+    totalWordsLearned: p.totalWordsLearned || 0,
+    totalMinutes: p.totalMinutes || 0
+  }).catch(err => console.warn('Không thể đồng bộ dữ liệu học tập lên Firestore (có thể chưa bật Firestore Database trong Firebase Console):', err));
 }
 function pushHistory(entry){
   const p = getProgress();
@@ -2695,6 +2732,7 @@ window.handleAuthLogin = function(user){
 
   initTeacherAvatar();
   refreshHomeStats();
+  syncToCloud();
   const onboarded = loadJSON(uidKey('jc_onboarded'), false);
   if (!onboarded) openOnboarding();
 };
@@ -2736,6 +2774,7 @@ function executeLogout(){
     p.minutesToday = (p.minutesToday || 0) + mins;
     p.totalMinutes = (p.totalMinutes || 0) + mins;
     setProgress(p);
+    syncToCloud();
   }
   sessionStartMs = null;
   if (window.__FIREBASE_READY__ && window.fb) {
@@ -2759,6 +2798,7 @@ setInterval(() => {
     p.totalMinutes = (p.totalMinutes || 0) + 1;
     setProgress(p);
     sessionStartMs = Date.now();
+    syncToCloud();
   }
 }, 60000);
 
@@ -2797,37 +2837,14 @@ function submitFeedback(){
 }
 
 /* ===================== ADMIN ===================== */
-function renderAdmin(){
-  const users = loadJSON('jc_all_users', {});
-  const uids = Object.keys(users);
-  document.getElementById('admin-account-count').textContent = uids.length;
-
-  const curatedTotal = TAB_ORDER.reduce((sum,k) => sum + VOCAB_DATA[k].words.length, 0);
-  const dictTotal = HSK_LEVELS.reduce((s,l) => s + (window.DICTIONARY_DATA[l]||[]).length, 0);
-  document.getElementById('admin-vocab-count').textContent = (curatedTotal + dictTotal).toLocaleString('vi-VN');
-
+function renderAdminRows(rows, sourceLabel){
   const today = todayStr();
-  const rows = uids.map(uid => {
-    const u = users[uid];
-    const p = loadJSON('jc_progress_' + uid, null);
-    const loggedInToday = u.lastLogin && u.lastLogin.slice(0,10) === today;
-    const studiedToday = (p && p.lastStudyDate === today) || loggedInToday;
-    return {
-      uid,
-      name: u.displayName || (u.email||'').split('@')[0],
-      email: u.email || '',
-      wordsLearned: p ? (p.totalWordsLearned||0) : 0,
-      streak: p ? (p.streak||0) : 0,
-      totalMinutes: p ? (p.totalMinutes||0) : 0,
-      studiedToday,
-      lastLogin: u.lastLogin ? new Date(u.lastLogin).toLocaleString('vi-VN') : '—'
-    };
-  }).sort((a,b) => b.totalMinutes - a.totalMinutes);
-
+  document.getElementById('admin-data-source-note').textContent = sourceLabel.text;
+  document.getElementById('admin-data-source-note').className = 'text-[11px] font-semibold ' + sourceLabel.cls;
+  document.getElementById('admin-account-count').textContent = rows.length;
   document.getElementById('admin-active-today').textContent = rows.filter(r => r.studiedToday).length;
-
   document.getElementById('admin-students-table').innerHTML = rows.length
-    ? rows.map(r => `<tr class="border-b border-gray-100 dark:border-gray-800">
+    ? rows.sort((a,b) => b.totalMinutes - a.totalMinutes).map(r => `<tr class="border-b border-gray-100 dark:border-gray-800">
         <td class="py-1.5 pr-3 font-semibold">${r.name}</td>
         <td class="py-1.5 pr-3 text-gray-500">${r.email}</td>
         <td class="py-1.5 pr-3">${r.wordsLearned}</td>
@@ -2836,13 +2853,63 @@ function renderAdmin(){
         <td class="py-1.5 pr-3">${r.studiedToday ? '<span class="text-green-600 font-bold">Có</span>' : '<span class="text-gray-400">Chưa</span>'}</td>
         <td class="py-1.5 text-gray-500">${r.lastLogin}</td>
       </tr>`).join('')
-    : '<tr><td colspan="7" class="py-4 text-center text-gray-400">Chưa có học viên nào đăng nhập trên thiết bị này.</td></tr>';
+    : '<tr><td colspan="7" class="py-4 text-center text-gray-400">Chưa có học viên nào.</td></tr>';
+}
+function renderAdminFromLocalStorage(){
+  const users = loadJSON('jc_all_users', {});
+  const uids = Object.keys(users);
+  const today = todayStr();
+  const rows = uids.map(uid => {
+    const u = users[uid];
+    const p = loadJSON('jc_progress_' + uid, null);
+    const loggedInToday = u.lastLogin && u.lastLogin.slice(0,10) === today;
+    return {
+      name: u.displayName || (u.email||'').split('@')[0],
+      email: u.email || '',
+      wordsLearned: p ? (p.totalWordsLearned||0) : 0,
+      streak: p ? (p.streak||0) : 0,
+      totalMinutes: p ? (p.totalMinutes||0) : 0,
+      studiedToday: (p && p.lastStudyDate === today) || loggedInToday,
+      lastLogin: u.lastLogin ? new Date(u.lastLogin).toLocaleString('vi-VN') : '—'
+    };
+  });
+  renderAdminRows(rows, { text: '⚠️ Chưa lấy được dữ liệu từ Firestore — chỉ hiển thị học viên đã từng đăng nhập trên thiết bị này.', cls: 'text-amber-600' });
+}
+async function renderAdmin(){
+  const curatedTotal = TAB_ORDER.reduce((sum,k) => sum + VOCAB_DATA[k].words.length, 0);
+  const dictTotal = HSK_LEVELS.reduce((s,l) => s + (window.DICTIONARY_DATA[l]||[]).length, 0);
+  document.getElementById('admin-vocab-count').textContent = (curatedTotal + dictTotal).toLocaleString('vi-VN');
 
   const feedback = loadJSON('jc_feedback', []);
   document.getElementById('admin-feedback-count').textContent = feedback.length;
   document.getElementById('admin-feedback-list').innerHTML = feedback.length
     ? feedback.map(f => `<div class="p-2 bg-gray-50 dark:bg-gray-900/50 rounded-lg"><p>${f.text}</p><p class="text-gray-400 mt-1">— ${f.by} · ${f.date}</p></div>`).join('')
     : '<p class="text-gray-400">Chưa có góp ý nào.</p>';
+
+  if (!(window.__FIREBASE_READY__ && window.fsStudents)) { renderAdminFromLocalStorage(); return; }
+  document.getElementById('admin-data-source-note').textContent = 'Đang tải dữ liệu từ tất cả thiết bị...';
+  document.getElementById('admin-data-source-note').className = 'text-[11px] font-semibold text-gray-400';
+  try {
+    const snap = await window.fsStudents.getAll();
+    const today = todayStr();
+    const rows = [];
+    snap.forEach(docSnap => {
+      const d = docSnap.data();
+      rows.push({
+        name: d.displayName || (d.email||'').split('@')[0],
+        email: d.email || '',
+        wordsLearned: d.totalWordsLearned || 0,
+        streak: d.streak || 0,
+        totalMinutes: d.totalMinutes || 0,
+        studiedToday: d.lastStudyDate === today || (d.lastLogin && d.lastLogin.slice(0,10) === today),
+        lastLogin: d.lastLogin ? new Date(d.lastLogin).toLocaleString('vi-VN') : '—'
+      });
+    });
+    renderAdminRows(rows, { text: '✅ Dữ liệu tổng hợp từ mọi thiết bị (Firestore).', cls: 'text-green-600' });
+  } catch (err) {
+    console.warn('Không thể tải dữ liệu Firestore cho Admin Dashboard:', err);
+    renderAdminFromLocalStorage();
+  }
 }
 
 /* ===================== INIT ===================== */
