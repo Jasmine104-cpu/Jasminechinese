@@ -27,7 +27,12 @@
 <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
 
 <style>
-  .gradient-bg{ background:linear-gradient(135deg,#DC2626 0%,#991B1B 100%); }
+  .gradient-bg{
+    background-color:#7F1D1D;
+    background-image: linear-gradient(135deg, rgba(153,27,27,0.55) 0%, rgba(30,10,10,0.78) 100%), url('https://commons.wikimedia.org/wiki/Special:FilePath/The_Great_Wall_of_China_at_Jinshanling-edit.jpg');
+    background-size: cover;
+    background-position: center;
+  }
   .flip-card{ perspective:1000px; }
   .flip-inner{ transition:transform .5s; transform-style:preserve-3d; }
   .flip-card.flipped .flip-inner{ transform:rotateY(180deg); }
@@ -71,6 +76,8 @@
           <button onclick="gotoVocabTab('hsk6')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 6</button>
           <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
           <button onclick="gotoVocabTab('t_greeting')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">15 Chủ đề giao tiếp</button>
+          <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+          <button onclick="gotoVocabTab('notebook')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">📓 Sổ tay của tôi</button>
         </div>
       </div>
 
@@ -107,6 +114,7 @@
           <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">🔀 Sắp xếp câu</button>
           <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">✏️ Điền từ vào chỗ trống</button>
           <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">🔁 Đồng nghĩa - Trái nghĩa</button>
+          <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">⌨️ Luyện gõ chữ Hán</button>
         </div>
       </div>
 
@@ -136,6 +144,18 @@
     </nav>
 
     <div class="flex items-center gap-2">
+      <div class="relative">
+        <button onclick="toggleSpeedMenu()" id="speech-rate-btn" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-bold flex items-center gap-1" title="Tốc độ phát âm thanh (áp dụng cho toàn bộ ứng dụng)">
+          🔊 <span id="speech-rate-label">1.0x</span>
+        </button>
+        <div id="speed-menu" class="hidden absolute right-0 mt-2 w-36 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-1 text-sm z-50">
+          <button data-rate="0.5" onclick="setSpeechRate(0.5)" class="speech-rate-opt w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">0.5x - Rất chậm</button>
+          <button data-rate="0.75" onclick="setSpeechRate(0.75)" class="speech-rate-opt w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">0.75x - Chậm</button>
+          <button data-rate="1" onclick="setSpeechRate(1)" class="speech-rate-opt w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">1.0x - Bình thường</button>
+          <button data-rate="1.25" onclick="setSpeechRate(1.25)" class="speech-rate-opt w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">1.25x - Nhanh</button>
+          <button data-rate="1.5" onclick="setSpeechRate(1.5)" class="speech-rate-opt w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">1.5x - Rất nhanh</button>
+        </div>
+      </div>
       <div class="relative">
         <button onclick="toggleThemeMenu()" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300" title="Giao diện">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 hidden dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -345,7 +365,9 @@
       <h2 class="text-2xl font-bold">Thư viện Từ vựng & HSK</h2>
       <p class="text-sm text-gray-500">Chọn cấp độ HSK 1-6 hoặc chủ đề giao tiếp. Bấm thẻ để lật xem nghĩa, bấm lại để lật về mặt trước, nghe phát âm & luyện viết.</p>
     </div>
-    <input id="vocab-search" oninput="vocabSearchInput()" type="text" placeholder="Tra cứu nhanh Trung - Việt trong chủ đề này (Hán tự, pinyin hoặc nghĩa)..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
+    <div id="vocab-search-wrap">
+      <input id="vocab-search" oninput="vocabSearchInput()" type="text" placeholder="Tra cứu nhanh Trung - Việt trong chủ đề này (Hán tự, pinyin hoặc nghĩa)..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
+    </div>
     <div id="vocab-tabs" class="flex gap-2 overflow-x-auto pb-2"></div>
     <div id="vocab-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
     <div id="vocab-pagination" class="hidden justify-center items-center gap-3 text-sm">
@@ -362,7 +384,10 @@
       <p class="text-sm text-gray-500">Kho dữ liệu <span id="dict-total-count" class="font-bold text-red-600">0</span> từ vựng HSK 1-6. Loại từ được hệ thống phân loại tự động, mang tính tham khảo.</p>
     </div>
     <div class="flex flex-col sm:flex-row gap-3">
-      <input id="dict-search" oninput="dictSearch()" type="text" placeholder="Tìm theo Hán tự, pinyin hoặc nghĩa..." class="flex-1 px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
+      <div class="relative flex-1">
+        <input id="dict-search" oninput="dictSearch()" type="text" placeholder="Tìm theo Hán tự, pinyin hoặc nghĩa, hoặc bấm 🎤 để nói..." class="w-full pl-4 pr-11 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
+        <button id="dict-voice-btn" onclick="dictVoiceSearch()" title="Tra cứu bằng giọng nói" class="absolute right-1.5 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-gray-400 hover:text-red-600">🎤</button>
+      </div>
       <div class="flex gap-2 overflow-x-auto" id="dict-level-tabs"></div>
     </div>
     <div id="dict-results" class="text-xs text-gray-500"></div>
@@ -452,7 +477,8 @@
         <button onclick="startExercise('meaning')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">📚 Nghĩa từ vựng<div class="text-xs font-normal opacity-80 mt-1">Chọn nghĩa đúng của từ</div></button>
         <button onclick="startExercise('order')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">🔀 Sắp xếp câu<div class="text-xs font-normal opacity-80 mt-1">Ghép từ thành câu đúng</div></button>
         <button onclick="startExercise('fill')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">✏️ Điền từ vào chỗ trống<div class="text-xs font-normal opacity-80 mt-1">Chọn từ phù hợp nhất</div></button>
-        <button onclick="startExercise('synonym')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left sm:col-span-2">🔁 Đồng nghĩa - Trái nghĩa<div class="text-xs font-normal opacity-80 mt-1">Tìm từ liên quan</div></button>
+        <button onclick="startExercise('synonym')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">🔁 Đồng nghĩa - Trái nghĩa<div class="text-xs font-normal opacity-80 mt-1">Tìm từ liên quan</div></button>
+        <button onclick="startExercise('typing')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">⌨️ Luyện gõ chữ Hán<div class="text-xs font-normal opacity-80 mt-1">Nghe/đọc gợi ý, gõ lại chữ Hán</div></button>
       </div>
     </div>
 
@@ -803,6 +829,29 @@
     <h3 class="text-lg font-bold">Luyện viết chữ Hán</h3>
     <div id="hanzi-writer-list" class="flex flex-wrap justify-center gap-4"></div>
     <button onclick="closeHanziModal()" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-xs font-semibold rounded-lg">Đóng</button>
+  </div>
+</div>
+
+<!-- ============ MODAL: SỔ TAY - FLASHCARD ÔN TẬP ============ -->
+<div id="notebook-flash-modal" class="hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-sm w-full text-center space-y-4 shadow-xl">
+    <div class="flex items-center justify-between">
+      <h3 class="text-sm font-bold">🎴 Flashcard - Sổ tay của tôi</h3>
+      <span id="notebook-flash-progress" class="text-xs text-gray-400"></span>
+    </div>
+    <div onclick="flipNotebookFlashcard()" class="cursor-pointer bg-gray-50 dark:bg-gray-900/50 rounded-2xl p-8 min-h-[160px] flex flex-col items-center justify-center gap-2 border border-gray-100 dark:border-gray-700">
+      <div id="notebook-flash-hanzi" class="text-4xl font-extrabold"></div>
+      <div id="notebook-flash-back" class="hidden space-y-1">
+        <div id="notebook-flash-pinyin" class="text-amber-600 font-medium text-sm"></div>
+        <div id="notebook-flash-meaning" class="text-sm text-gray-600 dark:text-gray-300"></div>
+      </div>
+      <p id="notebook-flash-hint" class="text-[11px] text-gray-400"></p>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="notebookFlashNav(-1)" class="flex-1 py-2 bg-gray-100 dark:bg-gray-700 text-xs font-bold rounded-lg">← Thẻ trước</button>
+      <button onclick="notebookFlashNav(1)" class="flex-1 py-2 bg-gray-100 dark:bg-gray-700 text-xs font-bold rounded-lg">Thẻ tiếp →</button>
+    </div>
+    <button onclick="closeNotebookFlashcards()" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-xs font-semibold rounded-lg">Đóng</button>
   </div>
 </div>
 
@@ -2283,7 +2332,7 @@ function getProgress(){
     streak: 0, lastStudyDate: '', wordsToday: 0, minutesToday: 0, totalMinutes: 0,
     totalWordsLearned: 0, learnedWordSet: [],
     quiz: { correct: 0, wrong: 0, byLevel: {} },
-    shadowing: [], reflex: [], history: []
+    shadowing: [], reflex: [], history: [], wordLabels: {}
   });
 }
 function setProgress(p){ saveJSON(uidKey('jc_progress'), p); }
@@ -2323,7 +2372,8 @@ function syncToCloud(){
     history: p.history || [],
     shadowDone: p.shadowDone || {},
     reflexDone: p.reflexDone || {},
-    levelQueue: p.levelQueue || {}
+    levelQueue: p.levelQueue || {},
+    wordLabels: p.wordLabels || {}
   }).catch(err => console.warn('Không thể đồng bộ dữ liệu học tập lên Firestore (có thể chưa bật Firestore Database trong Firebase Console):', err));
 }
 // Khi đăng nhập hoặc reload, tải lại 100% tiến trình từ Firestore (từ đã học, lịch sử làm bài,
@@ -2333,6 +2383,17 @@ function mergeProgressFromCloud(p, cloud){
   if (cloud.shadowDone) p.shadowDone = cloud.shadowDone;
   if (cloud.reflexDone) p.reflexDone = cloud.reflexDone;
   if (cloud.levelQueue) p.levelQueue = cloud.levelQueue;
+  // Gộp nhãn từ vựng cá nhân hoá ("Từ chưa thuộc"/"Từ hay sai") theo từng chữ Hán, không mất nhãn
+  // đã gắn ở thiết bị khác.
+  if (cloud.wordLabels) {
+    p.wordLabels = p.wordLabels || {};
+    Object.keys(cloud.wordLabels).forEach(hz => {
+      const cur = p.wordLabels[hz];
+      const remote = cloud.wordLabels[hz];
+      const labelSet = new Set([...(cur && cur.labels || []), ...(remote.labels||[])]);
+      p.wordLabels[hz] = { p: (cur&&cur.p)||remote.p, m: (cur&&cur.m)||remote.m, t: (cur&&cur.t)||remote.t, labels: Array.from(labelSet) };
+    });
+  }
   // Union danh sách từ đã học, không đánh mất từ đã học ở thiết bị khác
   const localSet = new Set(p.learnedWordSet || []);
   (cloud.learnedWordSet || []).forEach(h => localSet.add(h));
@@ -2400,6 +2461,86 @@ function pushHistory(entry){
   setProgress(p);
 }
 
+/* ===================== SỔ TAY TỪ VỰNG CÁ NHÂN HÓA (nhãn "Từ chưa thuộc" / "Từ hay sai") ===================== */
+const WORD_LABEL_META = {
+  unlearned: { text: 'Từ chưa thuộc', activeCls: 'bg-amber-500 text-white', icon: '📌' },
+  wrong: { text: 'Từ hay sai', activeCls: 'bg-red-600 text-white', icon: '⚠️' }
+};
+function hasWordLabel(hanzi, label){
+  const p = getProgress();
+  return !!(p.wordLabels && p.wordLabels[hanzi] && p.wordLabels[hanzi].labels.includes(label));
+}
+function toggleWordLabel(hanzi, pinyin, meaning, type, label){
+  if (gateInteraction()) return;
+  const p = getProgress();
+  if (!p.wordLabels) p.wordLabels = {};
+  const entry = p.wordLabels[hanzi] || { p: pinyin, m: meaning, t: type, labels: [] };
+  entry.p = pinyin; entry.m = meaning; entry.t = type;
+  const idx = entry.labels.indexOf(label);
+  if (idx >= 0) entry.labels.splice(idx, 1); else entry.labels.push(label);
+  if (entry.labels.length) p.wordLabels[hanzi] = entry; else delete p.wordLabels[hanzi];
+  setProgress(p);
+  syncToCloud();
+  if (currentVocabTab === 'notebook') renderNotebookView();
+  else renderVocabGrid(currentVocabTab);
+}
+function getNotebookWords(){
+  const p = getProgress();
+  return Object.keys(p.wordLabels || {}).map(hz => ({ h: hz, ...p.wordLabels[hz] }));
+}
+function renderNotebookView(){
+  const grid = document.getElementById('vocab-grid');
+  const pag = document.getElementById('vocab-pagination');
+  pag.classList.add('hidden'); pag.classList.remove('flex');
+  const words = getNotebookWords();
+  if (!words.length) {
+    grid.innerHTML = '<p class="text-sm text-gray-400 col-span-full text-center py-10">📓 Sổ tay của bạn đang trống.<br>Hãy lật thẻ từ vựng và bấm "📌 Từ chưa thuộc" hoặc "⚠️ Từ hay sai" để lưu vào đây.</p>';
+    return;
+  }
+  grid.innerHTML = `<div class="col-span-full flex flex-wrap items-center justify-between gap-2 mb-1">
+      <p class="text-xs text-gray-500">${words.length} từ đã lưu trong sổ tay của bạn</p>
+      <button onclick="startNotebookFlashcards()" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-lg">🎴 Ôn tập bằng Flashcard</button>
+    </div>` + words.map((w, i) => `
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 shadow-sm flex flex-col gap-2">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <div class="text-2xl font-extrabold">${w.h}</div>
+          <div class="text-xs text-amber-600 font-medium">${w.p}</div>
+          <div class="text-xs text-gray-600 dark:text-gray-300">${w.m}</div>
+        </div>
+        <button onclick="speakText('${w.h.replace(/'/g,"")}')" class="p-2 text-gray-400 hover:text-red-600 flex-shrink-0">🔊</button>
+      </div>
+      <div class="flex flex-wrap gap-1.5">
+        ${w.labels.map(l => `<button onclick="toggleWordLabel('${w.h.replace(/'/g,"")}','${escapeAttr(w.p)}','${escapeAttr(w.m)}','${escapeAttr(w.t)}','${l}')" class="px-2 py-1 rounded-full text-[10px] font-bold ${WORD_LABEL_META[l].activeCls}">${WORD_LABEL_META[l].icon} ${WORD_LABEL_META[l].text} ✕</button>`).join('')}
+      </div>
+    </div>`).join('');
+}
+let notebookFlashState = null;
+function startNotebookFlashcards(){
+  const words = getNotebookWords();
+  if (!words.length) return;
+  notebookFlashState = { words, idx: 0, flipped: false };
+  document.getElementById('notebook-flash-modal').classList.remove('hidden');
+  renderNotebookFlashcard();
+}
+function closeNotebookFlashcards(){ document.getElementById('notebook-flash-modal').classList.add('hidden'); }
+function renderNotebookFlashcard(){
+  const st = notebookFlashState;
+  const w = st.words[st.idx];
+  document.getElementById('notebook-flash-progress').textContent = `Thẻ ${st.idx+1}/${st.words.length}`;
+  document.getElementById('notebook-flash-hanzi').textContent = w.h;
+  document.getElementById('notebook-flash-back').classList.toggle('hidden', !st.flipped);
+  document.getElementById('notebook-flash-pinyin').textContent = w.p;
+  document.getElementById('notebook-flash-meaning').textContent = w.m;
+  document.getElementById('notebook-flash-hint').textContent = st.flipped ? '' : 'Bấm vào thẻ để xem nghĩa';
+}
+function flipNotebookFlashcard(){ notebookFlashState.flipped = !notebookFlashState.flipped; renderNotebookFlashcard(); }
+function notebookFlashNav(delta){
+  const st = notebookFlashState;
+  st.idx = (st.idx + delta + st.words.length) % st.words.length;
+  st.flipped = false;
+  renderNotebookFlashcard();
+}
 function recordWordLearned(hanzi){
   const p = touchDailyActivity();
   if (!p.learnedWordSet.includes(hanzi)) {
@@ -2464,7 +2605,8 @@ function showSection(id){
   if (id === 'culture' && !cultureInitDone) initCultureSection();
   if (id === 'games' && !gamesInitDone) initGamesSection();
   if (id === 'profile') renderProfile();
-  if (id === 'admin') renderAdmin();
+  if (id === 'admin') { renderAdmin(); startAdminAutoRefresh(); localStorage.setItem('jc_admin_last_open', '1'); }
+  else { stopAdminAutoRefresh(); if (currentUser && currentUser.email === ADMIN_EMAIL) localStorage.setItem('jc_admin_last_open', '0'); }
 }
 function toggleMobileNav(){ document.getElementById('mobile-nav').classList.toggle('hidden'); }
 
@@ -2490,15 +2632,42 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () 
 document.addEventListener('click', (e) => {
   const menu = document.getElementById('theme-menu');
   if (menu && !menu.classList.contains('hidden') && !e.target.closest('#theme-menu') && !e.target.closest('button[onclick="toggleThemeMenu()"]')) menu.classList.add('hidden');
+  const speedMenu = document.getElementById('speed-menu');
+  if (speedMenu && !speedMenu.classList.contains('hidden') && !e.target.closest('#speed-menu') && !e.target.closest('#speech-rate-btn')) speedMenu.classList.add('hidden');
 });
 
 /* ===================== SPEECH ===================== */
+// Bộ chỉnh tốc độ phát âm thanh (0.5x-1.5x), áp dụng ĐỒNG BỘ cho toàn bộ âm thanh trong app:
+// Từ vựng đơn, Câu ví dụ, Bài tập Phản xạ Nghe-Nói, Shadowing/Phát âm — mọi lệnh gọi speakText().
+let speechRateMultiplier = parseFloat(localStorage.getItem('jc_speech_rate')) || 1.0;
+function toggleSpeedMenu(){ document.getElementById('speed-menu').classList.toggle('hidden'); }
+function setSpeechRate(val){
+  speechRateMultiplier = parseFloat(val);
+  localStorage.setItem('jc_speech_rate', String(speechRateMultiplier));
+  document.getElementById('speech-rate-label').textContent = speechRateMultiplier.toFixed(2).replace(/0$/,'').replace(/\.$/,'.0') + 'x';
+  document.querySelectorAll('.speech-rate-opt').forEach(b => {
+    const active = parseFloat(b.dataset.rate) === speechRateMultiplier;
+    b.classList.toggle('bg-red-600', active);
+    b.classList.toggle('text-white', active);
+  });
+  document.getElementById('speed-menu').classList.add('hidden');
+}
+function initSpeechRateUI(){
+  document.getElementById('speech-rate-label').textContent = speechRateMultiplier.toFixed(2).replace(/0$/,'').replace(/\.$/,'.0') + 'x';
+  document.querySelectorAll('.speech-rate-opt').forEach(b => {
+    const active = parseFloat(b.dataset.rate) === speechRateMultiplier;
+    b.classList.toggle('bg-red-600', active);
+    b.classList.toggle('text-white', active);
+  });
+}
+function escapeAttr(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function speakExample(btn){ speakText(btn.dataset.speak, 0.8); }
 function speakText(text, rate){
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = 'zh-CN';
-  u.rate = rate || 0.85;
+  u.rate = Math.max(0.3, Math.min(2, (rate || 0.85) * speechRateMultiplier));
   window.speechSynthesis.speak(u);
 }
 const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -2527,11 +2696,18 @@ function similarityPct(target, heard){
 /* ===================== VOCAB SECTION (Flashcard) ===================== */
 let vocabInitDone = false;
 let currentVocabTab = 'hsk1';
+function renderCurrentVocabTab(){
+  const searchWrap = document.getElementById('vocab-search-wrap');
+  if (searchWrap) searchWrap.classList.toggle('hidden', currentVocabTab === 'notebook');
+  if (currentVocabTab === 'notebook') renderNotebookView();
+  else renderVocabGrid(currentVocabTab);
+}
 function initVocabSection(){
   vocabInitDone = true;
   const tabsEl = document.getElementById('vocab-tabs');
-  tabsEl.innerHTML = TAB_ORDER.map(key => `<button onclick="selectVocabTab('${key}')" data-tab="${key}" class="vocab-tab px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap ${key===currentVocabTab?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300'}">${VOCAB_DATA[key].label}</button>`).join('');
-  renderVocabGrid(currentVocabTab);
+  tabsEl.innerHTML = TAB_ORDER.map(key => `<button onclick="selectVocabTab('${key}')" data-tab="${key}" class="vocab-tab px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap ${key===currentVocabTab?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300'}">${VOCAB_DATA[key].label}</button>`).join('')
+    + `<button onclick="selectVocabTab('notebook')" data-tab="notebook" class="vocab-tab px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap ${currentVocabTab==='notebook'?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300'}">📓 Sổ tay của tôi</button>`;
+  renderCurrentVocabTab();
 }
 function selectVocabTab(key){
   currentVocabTab = key;
@@ -2544,9 +2720,9 @@ function selectVocabTab(key){
     b.classList.toggle('text-gray-700', b.dataset.tab !== key);
     b.classList.toggle('dark:text-gray-300', b.dataset.tab !== key);
   });
-  renderVocabGrid(key);
+  renderCurrentVocabTab();
 }
-function vocabSearchInput(){ vocabPageNum = 1; renderVocabGrid(currentVocabTab); }
+function vocabSearchInput(){ vocabPageNum = 1; renderCurrentVocabTab(); }
 function typeColor(t){
   const map = {'danh từ':'red','danh từ riêng':'blue','động từ':'green','tính từ':'amber','phó từ':'purple','liên từ':'pink','số từ':'indigo','cụm từ':'teal','thán từ':'orange'};
   return map[t] || 'gray';
@@ -2576,7 +2752,7 @@ function getVocabWordsForTab(key){
   }
   return VOCAB_DATA[key].words;
 }
-function vocabPage(delta){ vocabPageNum += delta; renderVocabGrid(currentVocabTab); }
+function vocabPage(delta){ vocabPageNum += delta; renderCurrentVocabTab(); }
 function renderVocabGrid(key){
   const grid = document.getElementById('vocab-grid');
   const pag = document.getElementById('vocab-pagination');
@@ -2606,7 +2782,7 @@ function renderVocabGrid(key){
     const exBlock = w.ex && w.ex.length
       ? `<div class="bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-xl space-y-1.5 text-[11px] flex-1">
            <p class="font-bold text-gray-500">Ví dụ:</p>
-           ${w.ex.map(e => `<p class="text-gray-800 dark:text-gray-200">${e[0]}<br><span class="text-gray-500">${e[1]}</span></p>`).join('')}
+           ${w.ex.map(e => `<p class="text-gray-800 dark:text-gray-200 flex items-start gap-1"><button onclick="event.stopPropagation();speakExample(this)" data-speak="${escapeAttr(e[0])}" class="flex-shrink-0 text-gray-400 hover:text-red-600 leading-none" title="Nghe câu ví dụ">🔊</button><span>${e[0]}<br><span class="text-gray-500">${e[1]}</span></span></p>`).join('')}
          </div>`
       : `<div class="bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-xl text-[11px] flex-1 flex items-center justify-center text-gray-400 text-center">Từ trong kho từ điển tra cứu (chưa có câu ví dụ minh hoạ riêng)</div>`;
     return `
@@ -2632,6 +2808,10 @@ function renderVocabGrid(key){
           <div class="flex gap-2">
             <button onclick="event.stopPropagation();openHanziWriterModal('${w.h}')" class="flex-1 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 text-[11px] font-bold rounded-lg transition">Luyện viết chữ Hán</button>
             <button onclick="event.stopPropagation();markWordLearned('${w.h}');flipCard('card-${key}-${i}')" class="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold rounded-lg transition">Đã thuộc ✓</button>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="event.stopPropagation();toggleWordLabel('${w.h.replace(/'/g,"")}','${escapeAttr(w.p)}','${escapeAttr(w.m)}','${escapeAttr(w.t)}','unlearned')" class="flex-1 py-1.5 ${hasWordLabel(w.h,'unlearned') ? WORD_LABEL_META.unlearned.activeCls : 'bg-gray-50 dark:bg-gray-900/50 text-gray-500'} text-[10px] font-bold rounded-lg transition">📌 Từ chưa thuộc</button>
+            <button onclick="event.stopPropagation();toggleWordLabel('${w.h.replace(/'/g,"")}','${escapeAttr(w.p)}','${escapeAttr(w.m)}','${escapeAttr(w.t)}','wrong')" class="flex-1 py-1.5 ${hasWordLabel(w.h,'wrong') ? WORD_LABEL_META.wrong.activeCls : 'bg-gray-50 dark:bg-gray-900/50 text-gray-500'} text-[10px] font-bold rounded-lg transition">⚠️ Từ hay sai</button>
           </div>
           <p class="text-center text-[10px] text-gray-400">Bấm để lật về mặt trước</p>
         </div>
@@ -2713,6 +2893,26 @@ function dictSelectLevel(l){
   dictRender();
 }
 function dictSearch(){ dictQuery = document.getElementById('dict-search').value.trim().toLowerCase(); dictPageNum = 1; dictRender(); }
+// Tra cứu từ điển bằng giọng nói: học viên bấm Micro, nói một từ tiếng Trung, hệ thống nhận diện
+// và tự động điền + tìm kiếm từ đó trong từ điển.
+function dictVoiceSearch(){
+  if (gateInteraction()) return;
+  if (!SpeechRec) { alert('Trình duyệt không hỗ trợ nhận diện giọng nói bằng Micro. Vui lòng dùng Chrome.'); return; }
+  const btn = document.getElementById('dict-voice-btn');
+  const rec = new SpeechRec();
+  rec.lang = 'zh-CN';
+  rec.interimResults = false;
+  rec.maxAlternatives = 1;
+  btn.classList.add('recording');
+  rec.onresult = (e) => {
+    const heard = e.results[0][0].transcript.trim();
+    document.getElementById('dict-search').value = heard;
+    dictSearch();
+  };
+  rec.onerror = () => { btn.classList.remove('recording'); };
+  rec.onend = () => { btn.classList.remove('recording'); };
+  rec.start();
+}
 function dictPage(delta){
   const results = dictGetFiltered();
   const maxPage = Math.max(1, Math.ceil(results.length / DICT_PAGE_SIZE));
@@ -2870,6 +3070,7 @@ function toggleShadowRecording(){
     else feedback = 'Chưa nhận diện được rõ câu nói. Hãy thử nói to, chậm và rõ ràng hơn.';
     document.getElementById('shadow-feedback').textContent = `Bạn đã nói: "${heard}". ${feedback}`;
     document.getElementById('shadow-result').classList.remove('hidden');
+    playScoreSound(pct);
     recordShadowingScore(currentShadowLevel, pct);
     markDone('shadowDone', currentShadowLevel, currentShadowIndex);
     document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Đã hoàn thành ${getDoneSet('shadowDone', currentShadowLevel).length}/${SHADOW_BANK[currentShadowLevel].length}`;
@@ -2933,6 +3134,7 @@ function toggleReflexRecording(){
     document.getElementById('reflex-feedback').innerHTML = `<span class="font-bold text-green-600">✅ Đã ghi nhận câu trả lời của bạn.</span><br>Câu gợi ý tham khảo: <span class="font-semibold">${currentReflexItem.sug}</span>`;
     document.getElementById('reflex-actions').innerHTML = `<button onclick="pickNewReflexQuestion()" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">Câu tiếp theo →</button>`;
     resultBox.classList.remove('hidden');
+    playScoreSound(heard.trim() ? 85 : 30);
     touchDailyActivity();
     markDone('reflexDone', currentReflexLevel, currentReflexIndex);
     pushHistory({type:'Phản xạ Nghe - Nói', detail:`${VOCAB_DATA[currentReflexLevel].label} · "${currentReflexItem.q}"`, score: 'Hoàn thành'});
@@ -3070,10 +3272,43 @@ function buildSynonymQuestions(level, count){
   return qs;
 }
 
+// Bài tập Luyện gõ chữ Hán: hiển thị Pinyin/nghĩa tiếng Việt (và phát âm thanh), học viên tự gõ
+// chữ Hán chính xác để tăng khả năng nhận diện mặt chữ. Trộn cả từ đơn (dictionary) và câu
+// (SENTENCE_TEMPLATES) để đáp ứng "cho cả Từ vựng và Câu".
+function buildTypingQuestions(level, count, usedSet){
+  const qs = [];
+  const dict = window.DICTIONARY_DATA[level] || [];
+  const templates = SENTENCE_TEMPLATES[level] || [];
+  let attempts = 0;
+  while (qs.length < count && attempts < count*25 && (dict.length || templates.length)){
+    attempts++;
+    const useSentence = templates.length && Math.random() < 0.35;
+    if (useSentence) {
+      const tIdx = Math.floor(Math.random()*templates.length);
+      const tpl = templates[tIdx];
+      const wIdx = Math.floor(Math.random()*tpl.words.length);
+      const [hanzi, meaning] = tpl.words[wIdx];
+      const key = 's|' + tIdx + '|' + wIdx;
+      if (usedSet.has(key)) continue;
+      usedSet.add(key);
+      const sentence = tpl.parts.map(p => p === '{s}' ? hanzi : p).join('');
+      qs.push({ kind:'typing', mode:'sentence', hint: tpl.trans(meaning), audioText: sentence, correct: sentence });
+    } else if (dict.length) {
+      const row = dict[Math.floor(Math.random()*dict.length)];
+      const key = 'w|' + row[0];
+      if (usedSet.has(key)) continue;
+      usedSet.add(key);
+      qs.push({ kind:'typing', mode:'word', hint: `${row[1]} — ${row[2]}`, audioText: row[0], correct: row[0] });
+    }
+  }
+  return qs;
+}
+
 function generateBatch(type, level, count, usedSet){
   if (type === 'meaning') return buildMeaningQuestions(level, count, usedSet);
   if (type === 'order') return buildOrderQuestions(level, count, usedSet);
   if (type === 'fill') return buildFillQuestions(level, count, usedSet);
+  if (type === 'typing') return buildTypingQuestions(level, count, usedSet);
   return buildSynonymQuestions(level, count);
 }
 
@@ -3123,6 +3358,15 @@ function renderQuizQuestion(){
       <p class="text-4xl font-extrabold text-center py-6 bg-gray-50 dark:bg-gray-900 rounded-xl mb-4">${q.word}</p>
       <div id="quiz-options" class="grid grid-cols-2 gap-3"></div>`;
     document.getElementById('quiz-options').innerHTML = q.options.map((opt,i) => `<button onclick="answerSynonym(${i})" data-i="${i}" class="quiz-opt p-4 border rounded-xl text-center hover:border-red-500 font-bold transition text-lg">${opt}</button>`).join('');
+  } else if (q.kind === 'typing') {
+    const label = q.mode === 'sentence' ? 'Nghe/đọc gợi ý và gõ lại CẢ CÂU bằng chữ Hán:' : 'Nghe/đọc gợi ý và gõ chữ Hán của từ này:';
+    body.innerHTML = `<h3 class="text-lg font-bold mb-2">${label}</h3>
+      <div class="text-center py-6 bg-gray-50 dark:bg-gray-900 rounded-xl mb-4 space-y-3">
+        <button onclick="speakText(quizState.questions[quizState.index].audioText, ${q.mode === 'sentence' ? 0.8 : 0.9})" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">🔊 Nghe phát âm</button>
+        <p class="text-sm text-gray-600 dark:text-gray-300">${q.hint}</p>
+      </div>
+      <input id="typing-input" type="text" placeholder="Gõ chữ Hán vào đây..." class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-2xl text-center font-bold" autocomplete="off" onkeydown="if(event.key==='Enter')submitTyping()">
+      <button onclick="submitTyping()" class="w-full mt-3 py-2.5 bg-red-600 text-white font-bold text-sm rounded-xl">Nộp bài</button>`;
   }
 }
 
@@ -3226,6 +3470,24 @@ function answerMeaning(i){
   pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
 }
 
+function submitTyping(){
+  if (gateInteraction()) return;
+  if (quizState.answered) return;
+  quizState.answered = true;
+  const q = quizState.questions[quizState.index];
+  const input = document.getElementById('typing-input');
+  const typed = (input.value || '').trim();
+  const normalize = s => s.replace(/[，。？！、\s]/g,'');
+  const isCorrect = normalize(typed) === normalize(q.correct) && typed.length > 0;
+  recordQuizAnswer(quizState.level, isCorrect);
+  if (isCorrect) { quizState.correctCount++; playCorrectSound(); } else { playWrongSound(); }
+  input.disabled = true;
+  input.classList.add(isCorrect ? 'border-green-500' : 'border-red-500');
+  document.getElementById('quiz-correct-line').textContent = `Đáp án đúng: ${q.correct}`;
+  document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Bạn đã gõ:</span> ${escapeAttr(typed) || '(để trống)'}</p><p class="mt-1"><span class="font-bold">Gợi ý:</span> ${escapeAttr(q.hint)}</p>`;
+  document.getElementById('quiz-explanation').classList.remove('hidden');
+  pushHistory({type:'Bài tập - Gõ chữ Hán', detail:`${VOCAB_DATA[quizState.level].label} · ${q.correct}`, score: isCorrect?'Đúng':'Sai'});
+}
 function showBatchToast(msg){
   const t = document.getElementById('quiz-batch-toast');
   t.textContent = msg;
@@ -3362,6 +3624,14 @@ function beep(freq, dur){
 /* Âm thanh phản hồi Đúng/Sai dùng chung cho mọi bài tập & trò chơi (Web Audio API, không cần file mp3). */
 function playCorrectSound(){ beep(880, 0.12); setTimeout(() => beep(1175, 0.16), 100); }
 function playWrongSound(){ beep(220, 0.28); }
+// Âm thanh chấm điểm sống động ngay sau khi học viên ghi âm ở Shadowing/Phản xạ Nghe - Nói,
+// chia theo 4 mức độ chính xác để tạo động lực học tập tức thì.
+function playScoreSound(pct){
+  if (pct >= 90) { beep(880,0.1); setTimeout(() => beep(1046,0.1), 90); setTimeout(() => beep(1318,0.2), 180); }
+  else if (pct >= 70) { beep(880,0.12); setTimeout(() => beep(1175,0.16), 100); }
+  else if (pct >= 40) { beep(660,0.16); }
+  else { beep(220,0.28); }
+}
 function initGamesSection(){
   gamesInitDone = true;
   selectGameTab('memory');
@@ -3866,12 +4136,18 @@ window.handleAuthLogin = function(user){
   // Tải tiến trình từ Firestore TRƯỚC khi đồng bộ ngược lên, tránh dữ liệu rỗng của thiết bị
   // mới ghi đè mất tiến trình thật đã có từ các thiết bị khác.
   loadCloudProgress();
+  // Nếu lần trước Admin đang ở trang Quản trị thì tự động mở lại và tải đầy đủ dữ liệu ngay khi
+  // đăng nhập hoặc Reload trang, không cần bấm lại vào menu Admin.
+  if (user.email === ADMIN_EMAIL && localStorage.getItem('jc_admin_last_open') === '1') {
+    showSection('admin');
+  }
   const onboarded = loadJSON(uidKey('jc_onboarded'), false);
   if (!onboarded) openOnboarding();
 };
 window.handleAuthLogout = function(){
   currentUser = null;
   sessionStartMs = null;
+  stopAdminAutoRefresh();
   document.getElementById('nav-login-btn').classList.remove('hidden');
   document.getElementById('nav-user-menu').classList.add('hidden');
   document.getElementById('nav-user-menu').classList.remove('flex');
@@ -3980,8 +4256,17 @@ function submitFeedback(){
 }
 
 /* ===================== ADMIN ===================== */
-function renderAdminRows(rows, sourceLabel){
-  const today = todayStr();
+// Cache lần tải cuối cùng vào localStorage để: (1) hiển thị ngay lập tức khi Admin mở lại trang
+// hoặc Reload, không bao giờ để bảng học viên "nhảy về 0" trong lúc chờ Firestore phản hồi;
+// (2) vẫn còn số liệu tham khảo gần nhất nếu một lần tải nào đó bị lỗi mạng.
+const ADMIN_CACHE_KEY = 'jc_admin_cache_v1';
+function saveAdminCache(rows, sourceLabel){
+  try { localStorage.setItem(ADMIN_CACHE_KEY, JSON.stringify({ rows, sourceLabel, ts: Date.now() })); } catch(e){}
+}
+function loadAdminCache(){
+  try { return JSON.parse(localStorage.getItem(ADMIN_CACHE_KEY) || 'null'); } catch(e){ return null; }
+}
+function renderAdminRows(rows, sourceLabel, opts){
   document.getElementById('admin-data-source-note').textContent = sourceLabel.text;
   document.getElementById('admin-data-source-note').className = 'text-[11px] font-semibold ' + sourceLabel.cls;
   document.getElementById('admin-account-count').textContent = rows.length;
@@ -3997,6 +4282,7 @@ function renderAdminRows(rows, sourceLabel){
         <td class="py-1.5 text-gray-500">${r.lastLogin}</td>
       </tr>`).join('')
     : '<tr><td colspan="7" class="py-4 text-center text-gray-400">Chưa có học viên nào.</td></tr>';
+  if (!(opts && opts.skipCache) && rows.length) saveAdminCache(rows, sourceLabel);
 }
 function renderAdminFromLocalStorage(){
   const users = loadJSON('jc_all_users', {});
@@ -4029,9 +4315,17 @@ async function renderAdmin(){
     ? feedback.map(f => `<div class="p-2 bg-gray-50 dark:bg-gray-900/50 rounded-lg"><p>${f.text}</p><p class="text-gray-400 mt-1">— ${f.by} · ${f.date}</p></div>`).join('')
     : '<p class="text-gray-400">Chưa có góp ý nào.</p>';
 
-  if (!(window.__FIREBASE_READY__ && window.fsStudents)) { renderAdminFromLocalStorage(); return; }
-  document.getElementById('admin-data-source-note').textContent = 'Đang tải dữ liệu từ tất cả thiết bị...';
-  document.getElementById('admin-data-source-note').className = 'text-[11px] font-semibold text-gray-400';
+  // Hiển thị NGAY dữ liệu đã lưu cache từ lần tải thành công gần nhất (nếu có), để bảng học viên
+  // không bao giờ hiện "0" trong lúc chờ Firestore phản hồi (kể cả sau khi Reload trang).
+  const cache = loadAdminCache();
+  if (cache && cache.rows && cache.rows.length) {
+    renderAdminRows(cache.rows, { text: '📦 Đang hiển thị số liệu đã lưu gần nhất — đang tải bản mới nhất...', cls: 'text-gray-400' }, { skipCache: true });
+  }
+  if (!(window.__FIREBASE_READY__ && window.fsStudents)) { if (!cache) renderAdminFromLocalStorage(); return; }
+  if (!cache) {
+    document.getElementById('admin-data-source-note').textContent = 'Đang tải dữ liệu từ tất cả thiết bị...';
+    document.getElementById('admin-data-source-note').className = 'text-[11px] font-semibold text-gray-400';
+  }
   try {
     const snap = await window.fsStudents.getAll();
     const today = todayStr();
@@ -4048,12 +4342,30 @@ async function renderAdmin(){
         lastLogin: d.lastLogin ? new Date(d.lastLogin).toLocaleString('vi-VN') : '—'
       });
     });
-    renderAdminRows(rows, { text: '✅ Dữ liệu tổng hợp từ mọi thiết bị (Firestore).', cls: 'text-green-600' });
+    // Chỉ ghi đè bảng nếu Firestore trả về có dữ liệu, hoặc chưa có cache nào trước đó —
+    // tuyệt đối không để một lần đọc rỗng/lỗi tạm thời xoá sạch số liệu đang hiển thị.
+    if (rows.length || !cache) {
+      renderAdminRows(rows, { text: '✅ Dữ liệu tổng hợp từ mọi thiết bị (Firestore).', cls: 'text-green-600' });
+    }
   } catch (err) {
     console.warn('Không thể tải dữ liệu Firestore cho Admin Dashboard:', err);
-    renderAdminFromLocalStorage();
+    if (!cache) renderAdminFromLocalStorage();
   }
 }
+let adminAutoRefreshTimer = null;
+// Tự động làm mới số liệu Admin Dashboard mỗi 30 giây trong lúc Admin đang mở trang này,
+// để luôn thấy dữ liệu học viên mới nhất mà không cần bấm "Tải lại số liệu" thủ công.
+function startAdminAutoRefresh(){
+  stopAdminAutoRefresh();
+  adminAutoRefreshTimer = setInterval(() => {
+    if (currentUser && currentUser.email === ADMIN_EMAIL && !document.getElementById('sec-admin').classList.contains('hidden')) {
+      renderAdmin();
+    } else {
+      stopAdminAutoRefresh();
+    }
+  }, 30000);
+}
+function stopAdminAutoRefresh(){ if (adminAutoRefreshTimer) { clearInterval(adminAutoRefreshTimer); adminAutoRefreshTimer = null; } }
 
 /* ===================== INIT ===================== */
 function fillHomepageStats(){
@@ -4066,6 +4378,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTeacherAvatar();
   refreshHomeStats();
   fillHomepageStats();
+  initSpeechRateUI();
 });
 
 </script>
