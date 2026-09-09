@@ -86,24 +86,18 @@
       <div class="relative group">
         <button onclick="showSection('shadowing')" class="nav-link hover:text-red-600 transition px-3 py-2">Shadowing/Phát âm</button>
         <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-40 z-50">
-          <button onclick="gotoShadowLevel('hsk1')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 1</button>
-          <button onclick="gotoShadowLevel('hsk2')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 2</button>
-          <button onclick="gotoShadowLevel('hsk3')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 3</button>
-          <button onclick="gotoShadowLevel('hsk4')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 4</button>
-          <button onclick="gotoShadowLevel('hsk5')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 5</button>
-          <button onclick="gotoShadowLevel('hsk6')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 6</button>
+          <button onclick="gotoShadowLevel('socap')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">Sơ cấp</button>
+          <button onclick="gotoShadowLevel('trungcap')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">Trung cấp</button>
+          <button onclick="gotoShadowLevel('caocap')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">Cao cấp</button>
         </div>
       </div>
 
       <div class="relative group">
         <button onclick="showSection('reflex')" class="nav-link hover:text-red-600 transition px-3 py-2">Phản xạ Nghe-Nói</button>
         <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-40 z-50">
-          <button onclick="gotoReflexLevel('hsk1')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 1</button>
-          <button onclick="gotoReflexLevel('hsk2')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 2</button>
-          <button onclick="gotoReflexLevel('hsk3')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 3</button>
-          <button onclick="gotoReflexLevel('hsk4')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 4</button>
-          <button onclick="gotoReflexLevel('hsk5')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 5</button>
-          <button onclick="gotoReflexLevel('hsk6')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 6</button>
+          <button onclick="gotoReflexLevel('socap')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">Sơ cấp</button>
+          <button onclick="gotoReflexLevel('trungcap')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">Trung cấp</button>
+          <button onclick="gotoReflexLevel('caocap')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">Cao cấp</button>
         </div>
       </div>
 
@@ -291,7 +285,7 @@
               <div class="text-xs text-gray-500 mt-1">Trả lời câu hỏi bằng giọng nói, rèn phản xạ tự nhiên</div>
             </button>
             <button onclick="showSection('practice')" class="text-left p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
-              <div class="text-2xl mb-1">📝</div><div class="font-bold text-sm">Bài tập theo cấp độ HSK</div>
+              <div class="text-2xl mb-1">📝</div><div class="font-bold text-sm">Bài tập theo Sơ - Trung - Cao cấp</div>
               <div class="text-xs text-gray-500 mt-1">Sắp xếp câu, điền từ, đồng/trái nghĩa, đặt câu có chấm chữa</div>
             </button>
             <button onclick="showSection('games')" class="text-left p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
@@ -408,7 +402,7 @@
     <div class="flex justify-center gap-2 flex-wrap" id="shadow-level-tabs"></div>
     <div class="max-w-xl mx-auto bg-white dark:bg-gray-800 rounded-2xl p-8 border border-gray-100 dark:border-gray-700 shadow-lg text-center space-y-6">
       <div class="space-y-2">
-        <span id="shadow-level-badge" class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 text-xs font-bold rounded-full">HSK 1</span>
+        <span id="shadow-level-badge" class="px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 text-xs font-bold rounded-full">Sơ cấp</span>
         <div id="shadow-sentence" class="text-3xl font-extrabold"></div>
         <div id="shadow-pinyin" class="text-amber-600 font-medium text-sm"></div>
         <button id="shadow-pinyin-toggle" onclick="toggleShadowPinyin()" class="hidden text-xs font-bold text-red-600 underline">Xem phiên âm</button>
@@ -465,9 +459,9 @@
   <!-- ============ 5. PRACTICE ============ -->
   <section id="sec-practice" class="hidden space-y-8">
     <div id="practice-menu" class="max-w-2xl mx-auto space-y-4">
-      <h2 class="text-2xl font-bold text-center">Bài tập theo cấp độ HSK</h2>
+      <h2 class="text-2xl font-bold text-center">Bài tập theo Sơ - Trung - Cao cấp</h2>
       <p class="text-sm text-gray-500 text-center">Chọn cấp độ để bắt đầu luyện tập</p>
-      <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="practice-level-grid"></div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="practice-level-grid"></div>
     </div>
 
     <div id="practice-type-menu" class="hidden max-w-2xl mx-auto space-y-4">
@@ -488,7 +482,7 @@
           <button onclick="backToTypeMenu()" class="flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-500 hover:text-red-600">← Quay lại danh mục</button>
           <button id="quiz-prev-btn" onclick="quizPrevQuestion()" class="hidden flex items-center gap-1 text-xs sm:text-sm font-semibold text-gray-500 hover:text-red-600">‹ Câu trước</button>
         </div>
-        <span id="quiz-progress-label" class="text-xs font-bold bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">Câu 1/8</span>
+        <span id="quiz-progress-label" class="text-xs font-bold bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full"></span>
       </div>
       <div id="quiz-batch-toast" class="hidden text-xs font-bold text-green-600 bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2 text-center"></div>
       <div id="quiz-body"></div>
@@ -1816,63 +1810,73 @@ const HSK_LEVELS = ['hsk1','hsk2','hsk3','hsk4','hsk5','hsk6'];
 /* Mỗi mẫu câu mang theo danh sách TỪ RIÊNG ĐÃ DUYỆT THỦ CÔNG (không lấy theo "loại từ" tự động
    phân loại từ từ điển lớn, vì việc phân loại tự động có thể sai và tạo câu vô nghĩa kiểu
    "他很先生"). Nhờ vậy mọi câu sinh ra đều đúng ngữ pháp lẫn ngữ nghĩa, không gây tranh cãi. */
+const PRACTICE_LEVELS = ['socap','trungcap','caocap'];
+const PRACTICE_LEVEL_LABELS = {socap:'Sơ cấp', trungcap:'Trung cấp', caocap:'Cao cấp'};
+const PRACTICE_LEVEL_TO_HSK = {socap:['hsk1','hsk2'], trungcap:['hsk3','hsk4'], caocap:['hsk5','hsk6']};
+
+/* ===================== MẪU CÂU (Sơ cấp / Trung cấp / Cao cấp) — dùng cho Sắp xếp câu, Điền từ, Gõ chữ Hán (câu) ===================== */
 const SENTENCE_TEMPLATES = {
-  hsk1: [
+  socap: [
     { parts:['我','喜欢','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 喜欢 + Tân ngữ (danh từ hoặc động từ) + 。', trans:m=>`Tôi thích ${m}.`,
       words:[['苹果','quả táo'],['水','nước'],['看书','đọc sách'],['唱歌','hát'],['跳舞','nhảy múa'],['游泳','bơi lội'],['踢足球','đá bóng'],['画画','vẽ tranh'],['旅游','du lịch'],['音乐','âm nhạc'],['猫','mèo'],['狗','chó']] },
     { parts:['他','是','我','的','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 是 + 我的 + Danh từ chỉ quan hệ + 。', trans:m=>`Anh ấy là ${m} của tôi.`,
       words:[['朋友','bạn'],['老师','thầy/cô giáo'],['同学','bạn học'],['哥哥','anh trai'],['弟弟','em trai'],['姐姐','chị gái'],['妹妹','em gái'],['邻居','hàng xóm'],['同事','đồng nghiệp'],['亲戚','họ hàng'],['客人','khách'],['爸爸','bố']] },
     { parts:['这个','东西','很','{s}','。'], grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Thứ này rất ${m}.`,
-      words:[['大','to'],['小','nhỏ'],['好','tốt'],['漂亮','đẹp'],['贵','đắt'],['便宜','rẻ'],['新','mới'],['旧','cũ'],['干净','sạch sẽ'],['有趣','thú vị'],['重要','quan trọng'],['方便','tiện lợi']] }
-  ],
-  hsk2: [
+      words:[['大','to'],['小','nhỏ'],['好','tốt'],['漂亮','đẹp'],['贵','đắt'],['便宜','rẻ'],['新','mới'],['旧','cũ'],['干净','sạch sẽ'],['有趣','thú vị'],['重要','quan trọng'],['方便','tiện lợi']] },
     { parts:['我','已经','{s}','了','。'], grammar:'Cấu trúc 已经...了: diễn tả hành động đã hoàn thành.', trans:m=>`Tôi đã ${m} rồi.`,
       words:[['吃饭','ăn cơm'],['睡觉','đi ngủ'],['回家','về nhà'],['毕业','tốt nghiệp'],['结婚','kết hôn'],['下班','tan làm'],['起床','thức dậy'],['洗澡','tắm rửa'],['完成','hoàn thành'],['休息','nghỉ ngơi'],['出发','xuất phát'],['准备好','chuẩn bị xong']] },
     { parts:['这个','{s}','很','有意思','。'], grammar:'Cấu trúc: 这个 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} này rất thú vị.`,
       words:[['电影','bộ phim'],['故事','câu chuyện'],['游戏','trò chơi'],['问题','câu hỏi'],['想法','ý tưởng'],['经历','trải nghiệm'],['新闻','tin tức'],['话题','chủ đề'],['小说','tiểu thuyết'],['节目','chương trình'],['活动','hoạt động'],['爱好','sở thích']] },
     { parts:['他','对','{s}','很','感兴趣','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 很感兴趣 (rất hứng thú với).', trans:m=>`Anh ấy rất hứng thú với ${m}.`,
-      words:[['音乐','âm nhạc'],['历史','lịch sử'],['运动','thể thao'],['科学','khoa học'],['艺术','nghệ thuật'],['旅游','du lịch'],['摄影','nhiếp ảnh'],['烹饪','nấu ăn'],['文学','văn học'],['电影','điện ảnh'],['心理学','tâm lý học'],['写作','viết lách']] }
+      words:[['音乐','âm nhạc'],['历史','lịch sử'],['运动','thể thao'],['科学','khoa học'],['艺术','nghệ thuật'],['旅游','du lịch'],['摄影','nhiếp ảnh'],['烹饪','nấu ăn'],['文学','văn học'],['电影','điện ảnh'],['心理学','tâm lý học'],['写作','viết lách']] },
+    { parts:["我","每天","都","{s}","。"], grammar:"Cấu trúc: 每天都 (mỗi ngày đều) + Cụm động từ.", trans:m=>`Tôi mỗi ngày đều ${m}.`,
+      words:[["喝牛奶","uống sữa"],["做作业","làm bài tập"],["看电视","xem tivi"],["听音乐","nghe nhạc"],["打篮球","chơi bóng rổ"],["骑自行车","đi xe đạp"],["浇花","tưới hoa"],["遛狗","dắt chó đi dạo"],["写日记","viết nhật ký"],["背单词","học từ vựng"],["整理房间","dọn phòng"],["出去散步","ra ngoài đi dạo"]] },
+    { parts:["{s}","的","时候","，","要","小心","。"], grammar:"Cấu trúc: 的时候 (khi...) + mệnh đề chính.", trans:m=>`Khi ${m}, phải cẩn thận.`,
+      words:[["过马路","qua đường"],["骑车","đi xe đạp"],["爬山","leo núi"],["做饭","nấu ăn"],["开车","lái xe"],["游泳","bơi lội"],["用刀","dùng dao"],["下雨","trời mưa"],["走夜路","đi đường đêm"],["滑冰","trượt băng"],["爬梯子","leo thang"],["坐船","đi thuyền"]] }
   ],
-  hsk3: [
+  trungcap: [
     { parts:['我们','应该','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + động từ năng nguyện 应该 + Cụm động từ + 。', trans:m=>`Chúng ta nên ${m}.`,
       words:[['保护环境','bảo vệ môi trường'],['互相帮助','giúp đỡ lẫn nhau'],['遵守规定','tuân thủ quy định'],['节约用水','tiết kiệm nước'],['按时完成','hoàn thành đúng giờ'],['多锻炼身体','rèn luyện thân thể nhiều hơn'],['尊重别人','tôn trọng người khác'],['提前预订','đặt trước'],['认真学习','học tập nghiêm túc'],['诚实守信','thành thật giữ chữ tín'],['合理安排时间','sắp xếp thời gian hợp lý'],['坚持锻炼','kiên trì rèn luyện']] },
     { parts:['这','件','事','很','{s}','。'], grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Việc này rất ${m}.`,
       words:[['重要','quan trọng'],['麻烦','phiền phức'],['简单','đơn giản'],['复杂','phức tạp'],['有趣','thú vị'],['奇怪','kỳ lạ'],['危险','nguy hiểm'],['困难','khó khăn'],['特别','đặc biệt'],['严重','nghiêm trọng'],['紧急','khẩn cấp'],['普通','bình thường']] },
     { parts:['你','有','什么','{s}','吗','？'], grammar:'Câu hỏi với 吗 luôn đứng cuối câu.', trans:m=>`Bạn có ${m} gì không?`,
-      words:[['问题','câu hỏi'],['建议','đề nghị'],['爱好','sở thích'],['计划','kế hoạch'],['要求','yêu cầu'],['经验','kinh nghiệm'],['想法','ý tưởng'],['意见','ý kiến'],['困难','khó khăn'],['目标','mục tiêu'],['兴趣','hứng thú'],['打算','dự định']] }
-  ],
-  hsk4: [
+      words:[['问题','câu hỏi'],['建议','đề nghị'],['爱好','sở thích'],['计划','kế hoạch'],['要求','yêu cầu'],['经验','kinh nghiệm'],['想法','ý tưởng'],['意见','ý kiến'],['困难','khó khăn'],['目标','mục tiêu'],['兴趣','hứng thú'],['打算','dự định']] },
     { parts:['尽管','很','难','，','他','还是','{s}','。'], grammar:'Cấu trúc nhượng bộ 尽管...还是...: dù A nhưng vẫn B.', trans:m=>`Mặc dù rất khó, anh ấy vẫn ${m}.`,
       words:[['坚持完成任务','kiên trì hoàn thành nhiệm vụ'],['努力克服困难','nỗ lực vượt qua khó khăn'],['决定继续尝试','quyết định tiếp tục thử'],['选择相信自己','chọn tin tưởng bản thân'],['愿意承担责任','sẵn lòng gánh vác trách nhiệm'],['努力提高成绩','nỗ lực nâng cao thành tích'],['坚持自己的原则','kiên trì nguyên tắc của mình'],['努力寻找办法','nỗ lực tìm cách giải quyết'],['决定重新开始','quyết định bắt đầu lại'],['努力适应环境','nỗ lực thích nghi với môi trường'],['坚持每天锻炼','kiên trì tập luyện mỗi ngày'],['努力实现目标','nỗ lực thực hiện mục tiêu']] },
     { parts:['这个','{s}','对','公司','非常','重要','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 非常 + Tính từ.', trans:m=>`${cap(m)} này vô cùng quan trọng đối với công ty.`,
       words:[['决定','quyết định'],['项目','dự án'],['客户','khách hàng'],['计划','kế hoạch'],['政策','chính sách'],['战略','chiến lược'],['合同','hợp đồng'],['产品','sản phẩm'],['团队','đội nhóm'],['市场','thị trường'],['投资','khoản đầu tư'],['制度','chế độ']] },
     { parts:['她','始终','保持','{s}','的','态度','。'], grammar:'Cấu trúc: 始终 (luôn luôn) + 保持 + Định ngữ + 态度.', trans:m=>`Cô ấy luôn giữ thái độ ${m}.`,
-      words:[['谦虚','khiêm tốn'],['乐观','lạc quan'],['冷静','bình tĩnh'],['认真','nghiêm túc'],['积极','tích cực'],['友好','thân thiện'],['耐心','kiên nhẫn'],['诚恳','chân thành'],['开放','cởi mở'],['客观','khách quan'],['自信','tự tin'],['谨慎','thận trọng']] }
+      words:[['谦虚','khiêm tốn'],['乐观','lạc quan'],['冷静','bình tĩnh'],['认真','nghiêm túc'],['积极','tích cực'],['友好','thân thiện'],['耐心','kiên nhẫn'],['诚恳','chân thành'],['开放','cởi mở'],['客观','khách quan'],['自信','tự tin'],['谨慎','thận trọng']] },
+    { parts:["只有","{s}","，","才能","取得","成功","。"], grammar:"Cấu trúc 只有...才能...: chỉ có...mới có thể... (điều kiện cần).", trans:m=>`Chỉ có ${m} mới có thể đạt được thành công.`,
+      words:[["坚持不懈","kiên trì không ngừng"],["认真准备","chuẩn bị kỹ càng"],["不断学习","không ngừng học hỏi"],["勇于创新","dám đổi mới"],["团结合作","đoàn kết hợp tác"],["脚踏实地","làm việc thực tế"],["善于沟通","giỏi giao tiếp"],["敢于冒险","dám mạo hiểm"],["保持耐心","giữ kiên nhẫn"],["虚心求教","khiêm tốn cầu học"],["积累经验","tích lũy kinh nghiệm"],["合理规划","lên kế hoạch hợp lý"]] },
+    { parts:["他","一","{s}","就","紧张","。"], grammar:"Cấu trúc 一...就...: vừa...thì liền... (hành động nối tiếp ngay lập tức).", trans:m=>`Anh ấy vừa ${m} là liền căng thẳng.`,
+      words:[["上台演讲","lên sân khấu diễn thuyết"],["见到老板","gặp sếp"],["考试","thi cử"],["面试","phỏng vấn"],["出差","đi công tác"],["开车上高速","lái xe lên cao tốc"],["接到电话","nhận điện thoại"],["看到成绩","nhìn thấy điểm số"],["遇到问题","gặp vấn đề"],["要发言","phải phát biểu"],["要签合同","phải ký hợp đồng"],["要做决定","phải đưa ra quyết định"]] }
   ],
-  hsk5: [
+  caocap: [
     { parts:['在','这个','问题','上','，','我们','应该','保持','{s}','。'], grammar:'Cấu trúc: 在...上 (về vấn đề...) làm trạng ngữ, theo sau là mệnh đề chính.', trans:m=>`Về vấn đề này, chúng ta nên giữ thái độ ${m}.`,
       words:[['冷静','bình tĩnh'],['理智','sáng suốt'],['谨慎','thận trọng'],['客观','khách quan'],['耐心','kiên nhẫn'],['克制','kiềm chế'],['乐观','lạc quan'],['清醒','tỉnh táo'],['坚定','kiên định'],['灵活','linh hoạt'],['开放','cởi mở'],['独立','độc lập']] },
     { parts:['他','对','{s}','有','独特','的','看法','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 有 + Định ngữ + 看法.', trans:m=>`Anh ấy có quan điểm độc đáo về ${m}.`,
       words:[['教育','giáo dục'],['婚姻','hôn nhân'],['成功','thành công'],['人生','cuộc đời'],['艺术','nghệ thuật'],['历史','lịch sử'],['经济','kinh tế'],['社会','xã hội'],['未来','tương lai'],['爱情','tình yêu'],['文化','văn hóa'],['政治','chính trị']] },
     { parts:['这','需要','长期','的','{s}','。'], grammar:'Cấu trúc: 长期的 + Danh từ trừu tượng làm tân ngữ.', trans:m=>`Việc này cần ${m} lâu dài.`,
-      words:[['努力','sự nỗ lực'],['投资','đầu tư'],['坚持','sự kiên trì'],['训练','huấn luyện'],['积累','sự tích lũy'],['规划','quy hoạch'],['合作','sự hợp tác'],['观察','sự quan sát'],['适应','sự thích nghi'],['准备','sự chuẩn bị'],['沟通','giao tiếp'],['支持','sự hỗ trợ']] }
-  ],
-  hsk6: [
+      words:[['努力','sự nỗ lực'],['投资','đầu tư'],['坚持','sự kiên trì'],['训练','huấn luyện'],['积累','sự tích lũy'],['规划','quy hoạch'],['合作','sự hợp tác'],['观察','sự quan sát'],['适应','sự thích nghi'],['准备','sự chuẩn bị'],['沟通','giao tiếp'],['支持','sự hỗ trợ']] },
     { parts:['这','项','政策','引发','了','广泛','的','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 引发了 + Định ngữ + Danh từ trừu tượng.', trans:m=>`Chính sách này đã gây ra ${m} rộng rãi.`,
       words:[['争议','tranh cãi'],['关注','sự quan tâm'],['讨论','thảo luận'],['质疑','sự nghi ngờ'],['批评','phê bình'],['支持','sự ủng hộ'],['反响','phản ứng'],['担忧','sự lo ngại'],['猜测','suy đoán'],['不满','sự bất mãn'],['赞誉','lời khen ngợi'],['抵制','sự tẩy chay']] },
     { parts:['他','始终','恪守','{s}','。'], grammar:'Cấu trúc: 始终 + 恪守 (tuân thủ nghiêm ngặt) + Tân ngữ.', trans:m=>`Anh ấy luôn tuân thủ nghiêm ngặt ${m}.`,
       words:[['诚信原则','nguyên tắc thành tín'],['职业道德','đạo đức nghề nghiệp'],['承诺','lời hứa'],['规定','quy định'],['底线','giới hạn cuối cùng'],['原则','nguyên tắc'],['准则','chuẩn tắc'],['纪律','kỷ luật'],['传统','truyền thống'],['法律','pháp luật'],['约定','giao ước'],['初心','tâm nguyện ban đầu']] },
     { parts:['他','的','决定','令','大家','感到','{s}','。'], grammar:'Cấu trúc 令 (khiến) + Tân ngữ + 感到 + Tính từ.', trans:m=>`Quyết định của anh ấy khiến mọi người cảm thấy ${m}.`,
-      words:[['意外','bất ngờ'],['震惊','sốc'],['欣慰','an ủi'],['失望','thất vọng'],['困惑','bối rối'],['兴奋','hào hứng'],['担忧','lo lắng'],['欣喜','vui mừng'],['不安','bất an'],['满意','hài lòng'],['惊讶','ngạc nhiên'],['感动','cảm động']] }
+      words:[['意外','bất ngờ'],['震惊','sốc'],['欣慰','an ủi'],['失望','thất vọng'],['困惑','bối rối'],['兴奋','hào hứng'],['担忧','lo lắng'],['欣喜','vui mừng'],['不安','bất an'],['满意','hài lòng'],['惊讶','ngạc nhiên'],['感动','cảm động']] },
+    { parts:["不管","{s}","，","他","都","坚持","自己","的","原则","。"], grammar:"Cấu trúc 不管...都...: dù thế nào...đều... (nhượng bộ vô điều kiện).", trans:m=>`Dù ${m}, anh ấy đều kiên trì nguyên tắc của mình.`,
+      words:[["外界如何评价","bên ngoài đánh giá thế nào"],["压力多大","áp lực lớn đến đâu"],["结果如何","kết quả ra sao"],["形势多么复杂","tình hình phức tạp đến đâu"],["别人怎么看","người khác nhìn nhận thế nào"],["付出多少代价","phải trả giá bao nhiêu"],["遇到什么困难","gặp khó khăn gì"],["时代如何变迁","thời đại biến đổi thế nào"],["舆论如何","dư luận ra sao"],["市场如何波动","thị trường biến động thế nào"],["前路多么艰难","con đường phía trước gian nan thế nào"],["竞争多么激烈","cạnh tranh khốc liệt đến đâu"]] },
+    { parts:["这","一","现象","的","背后","，","折射","出","{s}","的","问题","。"], grammar:"Cấu trúc: 折射出 (phản ánh ra) + Định ngữ + 问题 (văn phong học thuật/báo chí).", trans:m=>`Đằng sau hiện tượng này phản ánh vấn đề ${m}.`,
+      words:[["深层次","sâu xa"],["结构性","mang tính cấu trúc"],["长期存在","tồn tại lâu dài"],["亟待解决","cần giải quyết gấp"],["值得深思","đáng để suy ngẫm sâu"],["普遍存在","tồn tại phổ biến"],["根本性","mang tính căn bản"],["不容忽视","không thể xem nhẹ"],["复杂的社会","xã hội phức tạp"],["体制内","trong thể chế"],["亟需关注","cần được quan tâm gấp"],["难以回避","khó tránh khỏi"]] }
   ]
 };
 function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 
-/* Các cặp từ đồng nghĩa/trái nghĩa đã được kiểm chứng thủ công (không tự sinh bằng máy vì dễ sai
-   quan hệ ngữ nghĩa). Mỗi cặp sinh ra 2 câu hỏi (hỏi theo chiều A hoặc chiều B), nhiễu chọn ngẫu
-   nhiên từ từ điển mỗi lần nên vẫn đa dạng khi luyện lại nhiều lần. */
+/* Các cặp từ đồng nghĩa/trái nghĩa đã được kiểm chứng thủ công. */
+
 const WORD_PAIRS = {
-  hsk1: [
+  socap: [
     {type:'antonym', a:'大', am:'to, lớn', b:'小', bm:'nhỏ'},
     {type:'antonym', a:'多', am:'nhiều', b:'少', bm:'ít'},
     {type:'antonym', a:'高', am:'cao', b:'矮', bm:'thấp'},
@@ -1882,9 +1886,7 @@ const WORD_PAIRS = {
     {type:'antonym', a:'新', am:'mới', b:'旧', bm:'cũ'},
     {type:'antonym', a:'男', am:'nam', b:'女', bm:'nữ'},
     {type:'synonym', a:'喜欢', am:'thích', b:'爱', bm:'yêu, yêu thích'},
-    {type:'synonym', a:'漂亮', am:'xinh đẹp', b:'美', bm:'đẹp'}
-  ],
-  hsk2: [
+    {type:'synonym', a:'漂亮', am:'xinh đẹp', b:'美', bm:'đẹp'},
     {type:'antonym', a:'简单', am:'đơn giản', b:'复杂', bm:'phức tạp'},
     {type:'antonym', a:'早', am:'sớm', b:'晚', bm:'muộn'},
     {type:'antonym', a:'贵', am:'đắt', b:'便宜', bm:'rẻ'},
@@ -1893,9 +1895,14 @@ const WORD_PAIRS = {
     {type:'antonym', a:'安静', am:'yên tĩnh', b:'吵', bm:'ồn ào'},
     {type:'antonym', a:'胖', am:'béo', b:'瘦', bm:'gầy'},
     {type:'synonym', a:'高兴', am:'vui vẻ', b:'开心', bm:'vui vẻ'},
-    {type:'synonym', a:'马上', am:'ngay lập tức', b:'立刻', bm:'lập tức'}
+    {type:'synonym', a:'马上', am:'ngay lập tức', b:'立刻', bm:'lập tức'},
+    {type:"antonym", a:"长", am:"dài", b:"短", bm:"ngắn"},
+    {type:"antonym", a:"远", am:"xa", b:"近", bm:"gần"},
+    {type:"antonym", a:"难", am:"khó", b:"容易", bm:"dễ"},
+    {type:"antonym", a:"黑", am:"đen", b:"白", bm:"trắng"},
+    {type:"synonym", a:"马路", am:"đường phố", b:"街道", bm:"phố"}
   ],
-  hsk3: [
+  trungcap: [
     {type:'antonym', a:'保护', am:'bảo vệ', b:'破坏', bm:'phá hoại'},
     {type:'antonym', a:'成功', am:'thành công', b:'失败', bm:'thất bại'},
     {type:'antonym', a:'安全', am:'an toàn', b:'危险', bm:'nguy hiểm'},
@@ -1903,38 +1910,45 @@ const WORD_PAIRS = {
     {type:'antonym', a:'诚实', am:'thành thật', b:'虚假', bm:'giả dối'},
     {type:'synonym', a:'提高', am:'nâng cao', b:'提升', bm:'nâng lên'},
     {type:'synonym', a:'马虎', am:'cẩu thả', b:'粗心', bm:'bất cẩn'},
-    {type:'synonym', a:'突然', am:'đột nhiên', b:'忽然', bm:'bỗng nhiên'}
-  ],
-  hsk4: [
+    {type:'synonym', a:'突然', am:'đột nhiên', b:'忽然', bm:'bỗng nhiên'},
     {type:'antonym', a:'合作', am:'hợp tác', b:'竞争', bm:'cạnh tranh'},
     {type:'antonym', a:'谦虚', am:'khiêm tốn', b:'骄傲', bm:'kiêu ngạo'},
     {type:'antonym', a:'积极', am:'tích cực', b:'消极', bm:'tiêu cực'},
     {type:'antonym', a:'乐观', am:'lạc quan', b:'悲观', bm:'bi quan'},
     {type:'antonym', a:'具体', am:'cụ thể', b:'抽象', bm:'trừu tượng'},
     {type:'synonym', a:'挑战', am:'thử thách', b:'难题', bm:'vấn đề khó'},
-    {type:'synonym', a:'幽默', am:'hài hước', b:'诙谐', bm:'dí dỏm'}
+    {type:'synonym', a:'幽默', am:'hài hước', b:'诙谐', bm:'dí dỏm'},
+    {type:"antonym", a:"支持", am:"ủng hộ", b:"反对", bm:"phản đối"},
+    {type:"antonym", a:"扩大", am:"mở rộng", b:"缩小", bm:"thu hẹp"},
+    {type:"antonym", a:"增加", am:"tăng lên", b:"减少", bm:"giảm bớt"},
+    {type:"antonym", a:"主动", am:"chủ động", b:"被动", bm:"bị động"},
+    {type:"synonym", a:"解决", am:"giải quyết", b:"处理", bm:"xử lý"},
+    {type:"synonym", a:"重视", am:"coi trọng", b:"看重", bm:"coi trọng"}
   ],
-  hsk5: [
+  caocap: [
     {type:'antonym', a:'谨慎', am:'thận trọng', b:'草率', bm:'khinh suất'},
     {type:'antonym', a:'充裕', am:'dồi dào', b:'匮乏', bm:'thiếu thốn'},
     {type:'antonym', a:'坚强', am:'kiên cường', b:'脆弱', bm:'yếu đuối'},
     {type:'synonym', a:'疲惫', am:'mệt mỏi', b:'疲劳', bm:'mệt mỏi'},
     {type:'synonym', a:'谨慎', am:'thận trọng', b:'慎重', bm:'thận trọng'},
-    {type:'synonym', a:'潜力', am:'tiềm năng', b:'潜能', bm:'tiềm năng'}
-  ],
-  hsk6: [
+    {type:'synonym', a:'潜力', am:'tiềm năng', b:'潜能', bm:'tiềm năng'},
     {type:'antonym', a:'匮乏', am:'thiếu thốn', b:'充裕', bm:'dồi dào'},
     {type:'antonym', a:'颠覆', am:'lật đổ, đảo lộn', b:'巩固', bm:'củng cố'},
     {type:'antonym', a:'谦逊', am:'khiêm tốn', b:'傲慢', bm:'ngạo mạn'},
     {type:'synonym', a:'恪守', am:'tuân thủ nghiêm ngặt', b:'遵守', bm:'tuân thủ'},
     {type:'synonym', a:'沉淀', am:'lắng đọng, tích lũy', b:'积累', bm:'tích lũy'},
-    {type:'synonym', a:'韧性', am:'tính bền bỉ', b:'坚韧', bm:'kiên cường bền bỉ'}
+    {type:'synonym', a:'韧性', am:'tính bền bỉ', b:'坚韧', bm:'kiên cường bền bỉ'},
+    {type:"antonym", a:"繁荣", am:"phồn vinh", b:"衰退", bm:"suy thoái"},
+    {type:"antonym", a:"保守", am:"bảo thủ", b:"激进", bm:"cấp tiến"},
+    {type:"antonym", a:"透明", am:"minh bạch", b:"隐蔽", bm:"che giấu"},
+    {type:"antonym", a:"集权", am:"tập quyền", b:"分权", bm:"phân quyền"},
+    {type:"synonym", a:"亟待", am:"cần gấp", b:"急需", bm:"cấp thiết cần"}
   ]
 };
 
-/* ===================== SHADOWING SENTENCE BANK (30 câu/cấp độ HSK 1-6) ===================== */
+/* ===================== SHADOWING SENTENCE BANK (Sơ cấp / Trung cấp / Cao cấp) ===================== */
 const SHADOW_BANK = {
-  hsk1: [
+  socap: [
     ['我是学生。','Wǒ shì xuésheng.','Tôi là học sinh.'],
     ['你好吗？','Nǐ hǎo ma?','Bạn khỏe không?'],
     ['谢谢你的帮助。','Xièxie nǐ de bāngzhù.','Cảm ơn sự giúp đỡ của bạn.'],
@@ -1964,9 +1978,7 @@ const SHADOW_BANK = {
     ['我不喜欢下雨。','Wǒ bù xǐhuan xiàyǔ.','Tôi không thích trời mưa.'],
     ['他会说汉语。','Tā huì shuō Hànyǔ.','Anh ấy biết nói tiếng Trung.'],
     ['妈妈在做饭。','Māma zài zuò fàn.','Mẹ đang nấu cơm.'],
-    ['晚上好，再见！','Wǎnshang hǎo, zàijiàn!','Chào buổi tối, tạm biệt!']
-  ],
-  hsk2: [
+    ['晚上好，再见！','Wǎnshang hǎo, zàijiàn!','Chào buổi tối, tạm biệt!'],
     ['我已经吃过晚饭了。','Wǒ yǐjīng chīguò wǎnfàn le.','Tôi đã ăn tối rồi.'],
     ['这个问题比较简单。','Zhège wèntí bǐjiào jiǎndān.','Vấn đề này khá đơn giản.'],
     ['他每天开车上班。','Tā měitiān kāichē shàngbān.','Anh ấy ngày nào cũng lái xe đi làm.'],
@@ -1996,9 +2008,29 @@ const SHADOW_BANK = {
     ['我对这份工作很满意。','Wǒ duì zhè fèn gōngzuò hěn mǎnyì.','Tôi rất hài lòng với công việc này.'],
     ['你别担心，一切都会好的。','Nǐ bié dānxīn, yíqiè dōu huì hǎo de.','Bạn đừng lo lắng, mọi chuyện sẽ ổn thôi.'],
     ['这附近有没有银行？','Zhè fùjìn yǒu méiyǒu yínháng?','Gần đây có ngân hàng không?'],
-    ['时间过得真快啊。','Shíjiān guò de zhēn kuài a.','Thời gian trôi qua thật nhanh.']
+    ['时间过得真快啊。','Shíjiān guò de zhēn kuài a.','Thời gian trôi qua thật nhanh.'],
+    ["我叫王丽。","Wǒ jiào Wáng Lì.","Tôi tên là Vương Lệ."],
+    ["你几岁了？","Nǐ jǐ suì le?","Bạn mấy tuổi rồi?"],
+    ["我不认识他。","Wǒ bú rènshi tā.","Tôi không quen anh ấy."],
+    ["这是我的手机。","Zhè shì wǒ de shǒujī.","Đây là điện thoại của tôi."],
+    ["我们去公园玩吧。","Wǒmen qù gōngyuán wán ba.","Chúng ta đi công viên chơi nhé."],
+    ["今天我很忙。","Jīntiān wǒ hěn máng.","Hôm nay tôi rất bận."],
+    ["请坐，喝杯茶吧。","Qǐng zuò, hē bēi chá ba.","Mời ngồi, uống chén trà nhé."],
+    ["我的猫很可爱。","Wǒ de māo hěn kě'ài.","Con mèo của tôi rất đáng yêu."],
+    ["现在是夏天。","Xiànzài shì xiàtiān.","Bây giờ là mùa hè."],
+    ["我每天都刷牙。","Wǒ měitiān dōu shuā yá.","Tôi ngày nào cũng đánh răng."],
+    ["这个多少钱？","Zhège duōshao qián?","Cái này bao nhiêu tiền?"],
+    ["我姐姐在医院工作。","Wǒ jiějie zài yīyuàn gōngzuò.","Chị gái tôi làm việc ở bệnh viện."],
+    ["他跑得很快。","Tā pǎo de hěn kuài.","Anh ấy chạy rất nhanh."],
+    ["我想学游泳。","Wǒ xiǎng xué yóuyǒng.","Tôi muốn học bơi."],
+    ["外面在下雪。","Wàimiàn zài xiàxuě.","Bên ngoài đang có tuyết rơi."],
+    ["我的生日是五月。","Wǒ de shēngrì shì wǔyuè.","Sinh nhật tôi là tháng năm."],
+    ["请给我一杯水。","Qǐng gěi wǒ yì bēi shuǐ.","Xin cho tôi một cốc nước."],
+    ["我们是好朋友。","Wǒmen shì hǎo péngyou.","Chúng tôi là bạn tốt."],
+    ["他正在睡觉。","Tā zhèngzài shuìjiào.","Anh ấy đang ngủ."],
+    ["我喜欢这首歌。","Wǒ xǐhuan zhè shǒu gē.","Tôi thích bài hát này."]
   ],
-  hsk3: [
+  trungcap: [
     ['我们应该保护环境。','Wǒmen yīnggāi bǎohù huánjìng.','Chúng ta nên bảo vệ môi trường.'],
     ['他每天都去学校。','Tā měitiān dōu qù xuéxiào.','Anh ấy ngày nào cũng đến trường.'],
     ['这次旅行给了我很多经验。','Zhè cì lǚxíng gěile wǒ hěn duō jīngyàn.','Chuyến du lịch này cho tôi nhiều kinh nghiệm.'],
@@ -2028,9 +2060,7 @@ const SHADOW_BANK = {
     ['这个城市的夜景特别漂亮。','Zhège chéngshì de yèjǐng tèbié piàoliang.','Cảnh đêm của thành phố này đặc biệt đẹp.'],
     ['我们打算合作开一家公司。','Wǒmen dǎsuàn hézuò kāi yì jiā gōngsī.','Chúng tôi dự định hợp tác mở một công ty.'],
     ['他的意见值得我们参考。','Tā de yìjiàn zhídé wǒmen cānkǎo.','Ý kiến của anh ấy đáng để chúng ta tham khảo.'],
-    ['生活中难免会遇到困难。','Shēnghuó zhōng nánmiǎn huì yùdào kùnnan.','Trong cuộc sống khó tránh khỏi gặp phải khó khăn.']
-  ],
-  hsk4: [
+    ['生活中难免会遇到困难。','Shēnghuó zhōng nánmiǎn huì yùdào kùnnan.','Trong cuộc sống khó tránh khỏi gặp phải khó khăn.'],
     ['尽管很累，他还是坚持工作。','Jǐnguǎn hěn lèi, tā háishi jiānchí gōngzuò.','Mặc dù rất mệt, anh ấy vẫn kiên trì làm việc.'],
     ['这次合作对双方都有好处。','Zhè cì hézuò duì shuāngfāng dōu yǒu hǎochu.','Sự hợp tác lần này có lợi cho cả hai bên.'],
     ['他幽默的性格让大家都很喜欢他。','Tā yōumò de xìnggé ràng dàjiā dōu hěn xǐhuan tā.','Tính cách hài hước của anh ấy khiến mọi người đều rất thích anh ấy.'],
@@ -2060,9 +2090,29 @@ const SHADOW_BANK = {
     ['我们必须适应不断变化的环境。','Wǒmen bìxū shìyìng búduàn biànhuà de huánjìng.','Chúng ta phải thích nghi với môi trường luôn thay đổi.'],
     ['这个建议得到了老板的支持。','Zhège jiànyì dédàole lǎobǎn de zhīchí.','Đề nghị này đã nhận được sự ủng hộ của ông chủ.'],
     ['他从小就对音乐充满热情。','Tā cóngxiǎo jiù duì yīnyuè chōngmǎn rèqíng.','Từ nhỏ anh ấy đã tràn đầy nhiệt huyết với âm nhạc.'],
-    ['良好的沟通可以避免很多误会。','Liánghǎo de gōutōng kěyǐ bìmiǎn hěn duō wùhuì.','Giao tiếp tốt có thể tránh được nhiều hiểu lầm.']
+    ['良好的沟通可以避免很多误会。','Liánghǎo de gōutōng kěyǐ bìmiǎn hěn duō wùhuì.','Giao tiếp tốt có thể tránh được nhiều hiểu lầm.'],
+    ["这次出差让我学到了很多东西。","Zhè cì chūchāi ràng wǒ xuédàole hěn duō dōngxi.","Chuyến công tác này giúp tôi học được rất nhiều điều."],
+    ["我打算这个周末去爬山放松一下。","Wǒ dǎsuàn zhège zhōumò qù páshān fàngsōng yíxià.","Tôi định cuối tuần này đi leo núi để thư giãn."],
+    ["他因为工作太忙，很少有时间陪家人。","Tā yīnwèi gōngzuò tài máng, hěn shǎo yǒu shíjiān péi jiārén.","Vì công việc quá bận, anh ấy ít có thời gian ở bên gia đình."],
+    ["这家餐厅的服务态度非常好。","Zhè jiā cāntīng de fúwù tàidu fēicháng hǎo.","Thái độ phục vụ của nhà hàng này rất tốt."],
+    ["我们应该提前订机票，不然会更贵。","Wǒmen yīnggāi tíqián dìng jīpiào, bùrán huì gèng guì.","Chúng ta nên đặt vé máy bay trước, nếu không sẽ đắt hơn."],
+    ["他的汉语水平进步得很快。","Tā de Hànyǔ shuǐpíng jìnbù de hěn kuài.","Trình độ tiếng Trung của anh ấy tiến bộ rất nhanh."],
+    ["我觉得跟同事保持良好关系很重要。","Wǒ juéde gēn tóngshì bǎochí liánghǎo guānxi hěn zhòngyào.","Tôi thấy việc giữ mối quan hệ tốt với đồng nghiệp rất quan trọng."],
+    ["这个城市的公共交通很方便。","Zhège chéngshì de gōnggòng jiāotōng hěn fāngbiàn.","Giao thông công cộng của thành phố này rất tiện lợi."],
+    ["我们公司下个月要举办一个大型活动。","Wǒmen gōngsī xià gè yuè yào jǔbàn yí gè dàxíng huódòng.","Công ty chúng tôi tháng sau sẽ tổ chức một sự kiện lớn."],
+    ["旅行的时候，我喜欢尝试当地的美食。","Lǚxíng de shíhou, wǒ xǐhuan chángshì dāngdì de měishí.","Khi đi du lịch, tôi thích thử món ăn địa phương."],
+    ["他向老板提出了一个新的建议。","Tā xiàng lǎobǎn tíchūle yí gè xīn de jiànyì.","Anh ấy đã đưa ra một đề nghị mới với sếp."],
+    ["由于交通堵塞，我上班迟到了。","Yóuyú jiāotōng dǔsè, wǒ shàngbān chídào le.","Do tắc đường, tôi đi làm bị muộn."],
+    ["这份工作虽然辛苦，但是很有成就感。","Zhè fèn gōngzuò suīrán xīnkǔ, dànshì hěn yǒu chéngjiùgǎn.","Công việc này tuy vất vả nhưng rất có cảm giác thành tựu."],
+    ["我们需要多沟通才能避免误会。","Wǒmen xūyào duō gōutōng cái néng bìmiǎn wùhuì.","Chúng ta cần giao tiếp nhiều hơn mới tránh được hiểu lầm."],
+    ["他打算辞职去国外留学。","Tā dǎsuàn cízhí qù guówài liúxué.","Anh ấy định nghỉ việc đi du học nước ngoài."],
+    ["这次会议讨论了公司未来的发展方向。","Zhè cì huìyì tǎolùnle gōngsī wèilái de fāzhǎn fāngxiàng.","Cuộc họp lần này đã thảo luận về hướng phát triển tương lai của công ty."],
+    ["我周末喜欢和朋友一起逛街购物。","Wǒ zhōumò xǐhuan hé péngyou yìqǐ guàngjiē gòuwù.","Cuối tuần tôi thích cùng bạn bè đi dạo phố mua sắm."],
+    ["他对这份合同的条款有些疑问。","Tā duì zhè fèn hétong de tiáokuǎn yǒuxiē yíwèn.","Anh ấy có một số thắc mắc về điều khoản của hợp đồng này."],
+    ["适应新的工作环境需要一段时间。","Shìyìng xīn de gōngzuò huánjìng xūyào yí duàn shíjiān.","Thích nghi với môi trường làm việc mới cần một khoảng thời gian."],
+    ["我们计划明年在上海开一家分店。","Wǒmen jìhuà míngnián zài Shànghǎi kāi yì jiā fēndiàn.","Chúng tôi dự định năm sau mở một chi nhánh ở Thượng Hải."]
   ],
-  hsk5: [
+  caocap: [
     ['做决定的时候要谨慎。','Zuò juédìng de shíhou yào jǐnshèn.','Khi đưa ra quyết định cần phải thận trọng.'],
     ['每个孩子都有自己的潜力。','Měi gè háizi dōu yǒu zìjǐ de qiánlì.','Mỗi đứa trẻ đều có tiềm năng riêng.'],
     ['在原则问题上，我们不能妥协。','Zài yuánzé wèntí shàng, wǒmen bùnéng tuǒxié.','Về vấn đề nguyên tắc, chúng ta không thể thỏa hiệp.'],
@@ -2092,9 +2142,7 @@ const SHADOW_BANK = {
     ['这个理论至今仍存在争议。','Zhège lǐlùn zhìjīn réng cúnzài zhēngyì.','Lý thuyết này cho đến nay vẫn còn gây tranh cãi.'],
     ['他善于从失败中总结经验。','Tā shànyú cóng shībài zhōng zǒngjié jīngyàn.','Anh ấy giỏi rút kinh nghiệm từ thất bại.'],
     ['这种材料具有很强的韧性。','Zhè zhǒng cáiliào jùyǒu hěn qiáng de rènxìng.','Loại vật liệu này có tính bền bỉ rất mạnh.'],
-    ['他始终以谦虚的态度对待成就。','Tā shǐzhōng yǐ qiānxū de tàidu duìdài chéngjiù.','Anh ấy luôn đối xử với thành tựu bằng thái độ khiêm tốn.']
-  ],
-  hsk6: [
+    ['他始终以谦虚的态度对待成就。','Tā shǐzhōng yǐ qiānxū de tàidu duìdài chéngjiù.','Anh ấy luôn đối xử với thành tựu bằng thái độ khiêm tốn.'],
     ['经验需要时间来沉淀。','Jīngyàn xūyào shíjiān lái chéndiàn.','Kinh nghiệm cần có thời gian để lắng đọng.'],
     ['员工应该恪守公司规定。','Yuángōng yīnggāi kèshǒu gōngsī guīdìng.','Nhân viên nên tuân thủ nghiêm ngặt quy định công ty.'],
     ['这项技术颠覆了传统行业。','Zhè xiàng jìshù diānfùle chuántǒng hángyè.','Công nghệ này đã đảo lộn ngành truyền thống.'],
@@ -2124,13 +2172,34 @@ const SHADOW_BANK = {
     ['他将多年的经验沉淀成宝贵的智慧。','Tā jiāng duōnián de jīngyàn chéndiàn chéng bǎoguì de zhìhuì.','Anh ấy đã tích lũy kinh nghiệm nhiều năm thành trí tuệ quý báu.'],
     ['面对压力，她始终保持内心的韧性。','Miànduì yālì, tā shǐzhōng bǎochí nèixīn de rènxìng.','Đối mặt với áp lực, cô ấy luôn giữ vững sự bền bỉ trong tâm hồn.'],
     ['恪守底线是职业道德的基本要求。','Kèshǒu dǐxiàn shì zhíyè dàodé de jīběn yāoqiú.','Giữ vững giới hạn cuối cùng là yêu cầu cơ bản của đạo đức nghề nghiệp.'],
-    ['这场危机暴露的悖论令人深思。','Zhè chǎng wēijī bàolù de bèilùn lìng rén shēnsī.','Nghịch lý mà cuộc khủng hoảng này phơi bày khiến người ta phải suy ngẫm sâu sắc.']
+    ['这场危机暴露的悖论令人深思。','Zhè chǎng wēijī bàolù de bèilùn lìng rén shēnsī.','Nghịch lý mà cuộc khủng hoảng này phơi bày khiến người ta phải suy ngẫm sâu sắc.'],
+    ["这场突如其来的疫情彻底改变了人们的生活方式。","Zhè chǎng túrúqílái de yìqíng chèdǐ gǎibiànle rénmen de shēnghuó fāngshì.","Đại dịch bất ngờ này đã thay đổi hoàn toàn phương thức sống của con người."],
+    ["俗话说得好，一分耕耘，一分收获，成功从来都不是偶然的。","Súhuà shuō de hǎo, yì fēn gēngyún, yì fēn shōuhuò, chénggōng cónglái dōu bú shì ǒurán de.","Tục ngữ có câu một phần cày cấy, một phần thu hoạch, thành công chưa bao giờ là ngẫu nhiên."],
+    ["随着人工智能技术的迅猛发展，许多传统行业面临着前所未有的挑战。","Suízhe réngōng zhìnéng jìshù de xùnměng fāzhǎn, xǔduō chuántǒng hángyè miànlínzhe qiánsuǒwèiyǒu de tiǎozhàn.","Cùng với sự phát triển vũ bão của công nghệ trí tuệ nhân tạo, nhiều ngành truyền thống đang đối mặt với thách thức chưa từng có."],
+    ["这位企业家白手起家，最终成为业界数一数二的人物。","Zhè wèi qǐyèjiā báishǒuqǐjiā, zuìzhōng chéngwéi yèjiè shǔyīshǔ'èr de rénwù.","Doanh nhân này khởi nghiệp từ hai bàn tay trắng, cuối cùng trở thành nhân vật hàng đầu trong ngành."],
+    ["专家指出，全球气候变暖问题亟待各国携手解决。","Zhuānjiā zhǐchū, quánqiú qìhòu biànnuǎn wèntí jídài gèguó xiéshǒu jiějué.","Các chuyên gia chỉ ra rằng vấn đề nóng lên toàn cầu cần các nước chung tay giải quyết gấp."],
+    ["他为人处事向来低调，从不炫耀自己的成就。","Tā wéirén chǔshì xiànglái dīdiào, cóng bù xuànyào zìjǐ de chéngjiù.","Cách đối nhân xử thế của anh ấy luôn kín đáo, chưa bao giờ khoe khoang thành tựu của mình."],
+    ["这部纪录片深刻揭示了传统文化在现代社会中的传承困境。","Zhè bù jìlùpiàn shēnkè jiēshìle chuántǒng wénhuà zài xiàndài shèhuì zhōng de chuánchéng kùnjìng.","Bộ phim tài liệu này đã khắc họa sâu sắc khó khăn trong việc kế thừa văn hóa truyền thống trong xã hội hiện đại."],
+    ["在经济全球化的背景下，各国之间的联系日益紧密。","Zài jīngjì quánqiúhuà de bèijǐng xià, gèguó zhījiān de liánxì rìyì jǐnmì.","Trong bối cảnh toàn cầu hóa kinh tế, mối liên hệ giữa các quốc gia ngày càng chặt chẽ."],
+    ["这项政策的出台可谓一石激起千层浪，引发社会各界热议。","Zhè xiàng zhèngcè de chūtái kěwèi yìshíjīqǐqiāncénglàng, yǐnfā shèhuì gèjiè rèyì.","Việc ban hành chính sách này giống như một hòn đá ném xuống làm dậy sóng ngàn lớp, gây tranh luận sôi nổi trong toàn xã hội."],
+    ["他坚信只要脚踏实地，梦想终将照进现实。","Tā jiānxìn zhǐyào jiǎotàshídì, mèngxiǎng zhōng jiāng zhàojìn xiànshí.","Anh ấy tin chắc rằng chỉ cần làm việc thực tế, ước mơ cuối cùng sẽ trở thành hiện thực."],
+    ["这家科技公司凭借自主研发的核心技术占据了市场领先地位。","Zhè jiā kējì gōngsī píngjiè zìzhǔ yánfā de héxīn jìshù zhànjùle shìchǎng lǐngxiān dìwèi.","Công ty công nghệ này nhờ công nghệ cốt lõi tự nghiên cứu phát triển đã chiếm vị trí dẫn đầu thị trường."],
+    ["面对舆论压力，该公司发表声明澄清事实真相。","Miànduì yúlùn yālì, gāi gōngsī fābiǎo shēngmíng chéngqīng shìshí zhēnxiàng.","Đối mặt với áp lực dư luận, công ty đó đã ra tuyên bố làm rõ sự thật."],
+    ["中华文化博大精深，值得我们用一生去探索。","Zhōnghuá wénhuà bódàjīngshēn, zhídé wǒmen yòng yìshēng qù tànsuǒ.","Văn hóa Trung Hoa uyên thâm rộng lớn, đáng để chúng ta dành cả đời khám phá."],
+    ["这场辩论赛双方唇枪舌剑，场面十分激烈。","Zhè chǎng biànlùnsài shuāngfāng chúnqiāngshéjiàn, chǎngmiàn shífēn jīliè.","Trận tranh biện này hai bên đấu khẩu quyết liệt, tình hình vô cùng gay cấn."],
+    ["数据显示，该行业在过去十年间发生了翻天覆地的变化。","Shùjù xiǎnshì, gāi hángyè zài guòqù shí nián jiān fāshēngle fāntiānfùdì de biànhuà.","Số liệu cho thấy, ngành này trong mười năm qua đã có sự thay đổi long trời lở đất."],
+    ["他即便身处逆境，也始终保持乐观豁达的心态。","Tā jíbiàn shēnchǔ nìjìng, yě shǐzhōng bǎochí lèguān huòdá de xīntài.","Dù ở trong nghịch cảnh, anh ấy vẫn luôn giữ tâm thái lạc quan, khoáng đạt."],
+    ["这项改革措施旨在从根本上解决效率低下的问题。","Zhè xiàng gǎigé cuòshī zhǐzài cónggēnběnshàng jiějué xiàolǜ dīxià de wèntí.","Biện pháp cải cách này nhằm giải quyết tận gốc vấn đề hiệu suất thấp."],
+    ["舆论普遍认为，这一决策将对市场产生深远影响。","Yúlùn pǔbiàn rènwéi, zhè yī juécè jiāng duì shìchǎng chǎnshēng shēnyuǎn yǐngxiǎng.","Dư luận nhìn chung cho rằng quyết sách này sẽ tạo ảnh hưởng sâu rộng đến thị trường."],
+    ["这位学者穷尽一生心血，只为还原历史的真相。","Zhè wèi xuézhě qióngjìn yìshēng xīnxuè, zhǐ wèi huányuán lìshǐ de zhēnxiàng.","Học giả này dồn hết tâm huyết cả đời chỉ để khôi phục lại sự thật lịch sử."],
+    ["在瞬息万变的市场环境中，企业必须与时俱进才能立于不败之地。","Zài shùnxīwànbiàn de shìchǎng huánjìng zhōng, qǐyè bìxū yǔshíjùjìn cáinéng lìyúbúbàizhīdì.","Trong môi trường thị trường biến đổi chóng mặt, doanh nghiệp phải tiến cùng thời đại mới có thể đứng vững bất bại."],
+    ["这场变革不仅涉及技术层面，更牵动着整个行业的格局。","Zhè chǎng biàngé bùjǐn shèjí jìshù céngmiàn, gèng qiāndòngzhe zhěnggè hángyè de géjú.","Cuộc biến cách này không chỉ liên quan đến phương diện kỹ thuật mà còn tác động đến cục diện toàn ngành."]
   ]
 };
 
-/* ===================== REFLEX QUESTION BANK (HSK 1-4, câu hỏi + từ khóa nhận diện câu trả lời hợp lý) ===================== */
+/* ===================== REFLEX QUESTION BANK (Sơ cấp / Trung cấp / Cao cấp) ===================== */
 const REFLEX_BANK = {
-  hsk1: [
+  socap: [
     {q:'你叫什么名字？', p:'Nǐ jiào shénme míngzi?', m:'Bạn tên là gì?', kw:['我叫','叫'], sug:'我叫玛丽。(Tôi tên là Mary.)'},
     {q:'你好吗？', p:'Nǐ hǎo ma?', m:'Bạn khỏe không?', kw:['我很好','好','不错'], sug:'我很好，谢谢。'},
     {q:'你是哪国人？', p:'Nǐ shì nǎ guó rén?', m:'Bạn là người nước nào?', kw:['我是','人'], sug:'我是越南人。'},
@@ -2145,9 +2214,7 @@ const REFLEX_BANK = {
     {q:'你喜欢什么颜色？', p:'Nǐ xǐhuan shénme yánsè?', m:'Bạn thích màu gì?', kw:['喜欢','颜色'], sug:'我喜欢红色。'},
     {q:'你的生日是几月几号？', p:'Nǐ de shēngrì shì jǐ yuè jǐ hào?', m:'Sinh nhật bạn là ngày mấy tháng mấy?', kw:['生日','月','号'], sug:'我的生日是五月十号。'},
     {q:'你有兄弟姐妹吗？', p:'Nǐ yǒu xiōngdì jiěmèi ma?', m:'Bạn có anh chị em không?', kw:['有','哥哥','姐姐','弟弟','妹妹'], sug:'我有一个哥哥。'},
-    {q:'你在哪儿工作？', p:'Nǐ zài nǎr gōngzuò?', m:'Bạn làm việc ở đâu?', kw:['工作','在'], sug:'我在学校工作。'}
-  ],
-  hsk2: [
+    {q:'你在哪儿工作？', p:'Nǐ zài nǎr gōngzuò?', m:'Bạn làm việc ở đâu?', kw:['工作','在'], sug:'我在学校工作。'},
     {q:'你周末一般做什么？', p:'Nǐ zhōumò yìbān zuò shénme?', m:'Cuối tuần bạn thường làm gì?', kw:['我','做','休息','运动'], sug:'我周末一般在家休息。'},
     {q:'你觉得汉语难不难？', p:'Nǐ juéde Hànyǔ nán bu nán?', m:'Bạn thấy tiếng Trung có khó không?', kw:['难','不难','觉得'], sug:'我觉得汉语有点儿难，但是很有意思。'},
     {q:'你已经吃饭了吗？', p:'Nǐ yǐjīng chīfàn le ma?', m:'Bạn đã ăn cơm chưa?', kw:['已经','还没','吃'], sug:'我已经吃过了。'},
@@ -2162,9 +2229,20 @@ const REFLEX_BANK = {
     {q:'你更喜欢夏天还是冬天？', p:'Nǐ gèng xǐhuan xiàtiān háishi dōngtiān?', m:'Bạn thích mùa hè hay mùa đông hơn?', kw:['喜欢','夏天','冬天'], sug:'我更喜欢夏天。'},
     {q:'你常常运动吗？', p:'Nǐ chángcháng yùndòng ma?', m:'Bạn có thường xuyên vận động không?', kw:['常常','运动'], sug:'我常常去健身房运动。'},
     {q:'你觉得这个城市怎么样？', p:'Nǐ juéde zhège chéngshì zěnmeyàng?', m:'Bạn thấy thành phố này thế nào?', kw:['觉得','方便','不错'], sug:'我觉得这个城市很方便。'},
-    {q:'你一般几点起床？', p:'Nǐ yìbān jǐ diǎn qǐchuáng?', m:'Bạn thường dậy lúc mấy giờ?', kw:['点','起床'], sug:'我一般七点起床。'}
+    {q:'你一般几点起床？', p:'Nǐ yìbān jǐ diǎn qǐchuáng?', m:'Bạn thường dậy lúc mấy giờ?', kw:['点','起床'], sug:'我一般七点起床。'},
+    {q:"现在几点？", p:"Xiànzài jǐ diǎn?", m:"Bây giờ mấy giờ?", kw:["点","现在"], sug:"现在三点。(Bây giờ là 3 giờ.)"},
+    {q:"今天星期几？", p:"Jīntiān xīngqī jǐ?", m:"Hôm nay thứ mấy?", kw:["星期"], sug:"今天星期三。(Hôm nay thứ tư.)"},
+    {q:"你想喝咖啡还是茶？", p:"Nǐ xiǎng hē kāfēi háishi chá?", m:"Bạn muốn uống cà phê hay trà?", kw:["咖啡","茶"], sug:"我想喝茶。(Tôi muốn uống trà.)"},
+    {q:"你的爱好是什么？", p:"Nǐ de àihào shì shénme?", m:"Sở thích của bạn là gì?", kw:["爱好"], sug:"我的爱好是看书。(Sở thích của tôi là đọc sách.)"},
+    {q:"你今天穿得很漂亮，去哪儿？", p:"Nǐ jīntiān chuān de hěn piàoliang, qù nǎr?", m:"Hôm nay bạn mặc đẹp thế, đi đâu vậy?", kw:["去","漂亮"], sug:"我要去参加朋友的生日会。(Tôi đi dự sinh nhật bạn.)"},
+    {q:"你会说英语吗？", p:"Nǐ huì shuō Yīngyǔ ma?", m:"Bạn biết nói tiếng Anh không?", kw:["会说","英语"], sug:"我会说一点儿英语。(Tôi biết nói một chút tiếng Anh.)"},
+    {q:"这个周末你有什么计划？", p:"Zhège zhōumò nǐ yǒu shénme jìhuà?", m:"Cuối tuần này bạn có kế hoạch gì?", kw:["周末","计划"], sug:"我打算在家休息。(Tôi định ở nhà nghỉ ngơi.)"},
+    {q:"你最喜欢吃什么水果？", p:"Nǐ zuì xǐhuan chī shénme shuǐguǒ?", m:"Bạn thích ăn quả gì nhất?", kw:["水果","喜欢"], sug:"我最喜欢吃西瓜。(Tôi thích ăn dưa hấu nhất.)"},
+    {q:"你几点起床？", p:"Nǐ jǐ diǎn qǐchuáng?", m:"Mấy giờ bạn thức dậy?", kw:["点","起床"], sug:"我七点起床。(Tôi thức dậy lúc 7 giờ.)"},
+    {q:"你的学校在哪儿？", p:"Nǐ de xuéxiào zài nǎr?", m:"Trường của bạn ở đâu?", kw:["在","学校"], sug:"我的学校在市中心。(Trường tôi ở trung tâm thành phố.)"},
+    {q:"你今天累不累？", p:"Nǐ jīntiān lèi bu lèi?", m:"Hôm nay bạn có mệt không?", kw:["累","不累"], sug:"我今天有点儿累。(Hôm nay tôi hơi mệt.)"}
   ],
-  hsk3: [
+  trungcap: [
     {q:'你觉得保护环境重要吗？', p:'Nǐ juéde bǎohù huánjìng zhòngyào ma?', m:'Bạn thấy bảo vệ môi trường có quan trọng không?', kw:['重要','觉得'], sug:'我觉得保护环境非常重要。'},
     {q:'你平时怎么提高口语水平？', p:'Nǐ píngshí zěnme tígāo kǒuyǔ shuǐpíng?', m:'Bình thường bạn nâng cao trình độ nói như thế nào?', kw:['练习','提高'], sug:'我平时多听多说来提高口语水平。'},
     {q:'你们公司最近在做什么广告？', p:'Nǐmen gōngsī zuìjìn zài zuò shénme guǎnggào?', m:'Công ty bạn dạo này đang làm quảng cáo gì?', kw:['广告','公司'], sug:'我们公司最近在做一个新产品的广告。'},
@@ -2179,9 +2257,7 @@ const REFLEX_BANK = {
     {q:'你最近学到了什么新东西？', p:'Nǐ zuìjìn xuédàole shénme xīn dōngxi?', m:'Gần đây bạn học được điều gì mới?', kw:['学到','知识'], sug:'我最近学到了很多关于文化的知识。'},
     {q:'你觉得读书重要吗？', p:'Nǐ juéde dúshū zhòngyào ma?', m:'Bạn thấy đọc sách có quan trọng không?', kw:['读书','重要'], sug:'我觉得读书对提高自己很重要。'},
     {q:'你怎么安排周末的时间？', p:'Nǐ zěnme ānpái zhōumò de shíjiān?', m:'Bạn sắp xếp thời gian cuối tuần thế nào?', kw:['安排','周末'], sug:'我一般会安排时间学习和休息。'},
-    {q:'你觉得交朋友难吗？', p:'Nǐ juéde jiāo péngyou nán ma?', m:'Bạn thấy kết bạn có khó không?', kw:['交朋友','真诚'], sug:'我觉得交朋友不难，只要真诚就可以。'}
-  ],
-  hsk4: [
+    {q:'你觉得交朋友难吗？', p:'Nǐ juéde jiāo péngyou nán ma?', m:'Bạn thấy kết bạn có khó không?', kw:['交朋友','真诚'], sug:'我觉得交朋友不难，只要真诚就可以。'},
     {q:'面对挑战，你会怎么应对？', p:'Miànduì tiǎozhàn, nǐ huì zěnme yìngduì?', m:'Đối mặt thử thách, bạn sẽ ứng phó thế nào?', kw:['信心','面对','解决'], sug:'面对挑战，我会保持信心并努力解决。'},
     {q:'你觉得团队合作重要吗？', p:'Nǐ juéde tuánduì hézuò zhòngyào ma?', m:'Bạn thấy hợp tác nhóm có quan trọng không?', kw:['合作','重要'], sug:'我觉得团队合作非常重要。'},
     {q:'你怎么看待失败？', p:'Nǐ zěnme kàndài shībài?', m:'Bạn nhìn nhận thất bại như thế nào?', kw:['经验','失败','学习'], sug:'我觉得失败是学习的一部分，能让我们吸取经验。'},
@@ -2196,9 +2272,23 @@ const REFLEX_BANK = {
     {q:'你觉得终身学习重要吗？', p:'Nǐ juéde zhōngshēn xuéxí zhòngyào ma?', m:'Bạn thấy học tập suốt đời có quan trọng không?', kw:['终身学习','重要'], sug:'我觉得终身学习非常重要，能让人不断进步。'},
     {q:'你怎么看待创业？', p:'Nǐ zěnme kàndài chuàngyè?', m:'Bạn nhìn nhận thế nào về khởi nghiệp?', kw:['创业','挑战'], sug:'我觉得创业充满挑战，但也是很好的锻炼机会。'},
     {q:'你最欣赏什么样的人？', p:'Nǐ zuì xīnshǎng shénme yàng de rén?', m:'Bạn ngưỡng mộ kiểu người như thế nào?', kw:['欣赏','诚实','努力'], sug:'我最欣赏诚实又努力的人。'},
-    {q:'面对失败，你通常怎么调整心态？', p:'Miànduì shībài, nǐ tōngcháng zěnme tiáozhěng xīntài?', m:'Đối mặt thất bại, bạn thường điều chỉnh tâm lý thế nào?', kw:['失败','调整','心态'], sug:'我会把失败当作学习的机会，重新调整方向。'}
+    {q:'面对失败，你通常怎么调整心态？', p:'Miànduì shībài, nǐ tōngcháng zěnme tiáozhěng xīntài?', m:'Đối mặt thất bại, bạn thường điều chỉnh tâm lý thế nào?', kw:['失败','调整','心态'], sug:'我会把失败当作学习的机会，重新调整方向。'},
+    {q:"你觉得学外语最难的地方是什么？", p:"Nǐ juéde xué wàiyǔ zuì nán de dìfang shì shénme?", m:"Bạn thấy điều khó nhất khi học ngoại ngữ là gì?", kw:["觉得","难"], sug:"我觉得最难的是听力。(Tôi thấy khó nhất là nghe.)"},
+    {q:"如果老板让你加班，你会怎么办？", p:"Rúguǒ lǎobǎn ràng nǐ jiābān, nǐ huì zěnme bàn?", m:"Nếu sếp bảo bạn tăng ca, bạn sẽ làm thế nào?", kw:["加班","会"], sug:"如果不影响健康，我会同意加班。(Nếu không ảnh hưởng sức khỏe, tôi sẽ đồng ý tăng ca.)"},
+    {q:"你更喜欢住在城市还是农村？为什么？", p:"Nǐ gèng xǐhuan zhù zài chéngshì háishi nóngcūn? Wèishénme?", m:"Bạn thích sống ở thành phố hay nông thôn hơn? Vì sao?", kw:["喜欢","因为"], sug:"我更喜欢城市，因为生活方便。(Tôi thích thành phố hơn vì sinh hoạt tiện lợi.)"},
+    {q:"旅行的时候，你觉得最重要的是什么？", p:"Lǚxíng de shíhou, nǐ juéde zuì zhòngyào de shì shénme?", m:"Khi đi du lịch, bạn thấy điều quan trọng nhất là gì?", kw:["旅行","重要"], sug:"我觉得安全最重要。(Tôi thấy an toàn là quan trọng nhất.)"},
+    {q:"你怎么看待网上购物？", p:"Nǐ zěnme kàndài wǎngshàng gòuwù?", m:"Bạn nhìn nhận việc mua sắm online thế nào?", kw:["网上购物","方便"], sug:"我觉得网上购物很方便，但要注意质量。(Tôi thấy mua online tiện lợi nhưng cần chú ý chất lượng.)"},
+    {q:"压力大的时候，你一般怎么放松自己？", p:"Yālì dà de shíhou, nǐ yìbān zěnme fàngsōng zìjǐ?", m:"Khi áp lực lớn, bạn thường thư giãn bản thân thế nào?", kw:["放松","压力"], sug:"我一般听音乐或者运动来放松。(Tôi thường nghe nhạc hoặc vận động để thư giãn.)"},
+    {q:"你认为一个好领导应该具备什么条件？", p:"Nǐ rènwéi yí gè hǎo lǐngdǎo yīnggāi jùbèi shénme tiáojiàn?", m:"Bạn nghĩ một người lãnh đạo tốt cần có điều kiện gì?", kw:["领导","应该"], sug:"我认为好领导应该懂得倾听员工的意见。(Tôi nghĩ lãnh đạo tốt cần biết lắng nghe ý kiến nhân viên.)"},
+    {q:"你觉得社交媒体对年轻人的影响是好是坏？", p:"Nǐ juéde shèjiāo méitǐ duì niánqīngrén de yǐngxiǎng shì hǎo shì huài?", m:"Bạn thấy ảnh hưởng của mạng xã hội với giới trẻ là tốt hay xấu?", kw:["社交媒体","影响"], sug:"我觉得有好有坏，关键在于怎么使用。(Tôi thấy có tốt có xấu, quan trọng là cách sử dụng.)"},
+    {q:"如果你的朋友遇到了困难，你会怎么帮助他？", p:"Rúguǒ nǐ de péngyou yùdàole kùnnan, nǐ huì zěnme bāngzhù tā?", m:"Nếu bạn của bạn gặp khó khăn, bạn sẽ giúp đỡ thế nào?", kw:["帮助","朋友"], sug:"我会先听他说，再想办法帮他解决。(Tôi sẽ nghe anh ấy nói trước, rồi tìm cách giúp giải quyết.)"},
+    {q:"你觉得学历重要还是能力重要？", p:"Nǐ juéde xuélì zhòngyào háishi nénglì zhòngyào?", m:"Bạn thấy bằng cấp quan trọng hay năng lực quan trọng hơn?", kw:["学历","能力"], sug:"我觉得两者都重要，但能力更关键。(Tôi thấy cả hai đều quan trọng, nhưng năng lực then chốt hơn.)"},
+    {q:"你怎么安排自己的业余时间？", p:"Nǐ zěnme ānpái zìjǐ de yèyú shíjiān?", m:"Bạn sắp xếp thời gian rảnh của mình thế nào?", kw:["业余时间","安排"], sug:"我一般用业余时间学习新技能。(Tôi thường dùng thời gian rảnh để học kỹ năng mới.)"},
+    {q:"你认为环保对我们的生活有多重要？", p:"Nǐ rènwéi huánbǎo duì wǒmen de shēnghuó yǒu duō zhòngyào?", m:"Bạn nghĩ bảo vệ môi trường quan trọng thế nào với cuộc sống chúng ta?", kw:["环保","重要"], sug:"环保非常重要，关系到我们的未来。(Bảo vệ môi trường rất quan trọng, liên quan đến tương lai của chúng ta.)"},
+    {q:"你有没有因为语言不通而遇到过麻烦？", p:"Nǐ yǒu méiyǒu yīnwèi yǔyán bùtōng ér yùdàoguo máfan?", m:"Bạn đã từng gặp rắc rối vì bất đồng ngôn ngữ chưa?", kw:["语言","麻烦"], sug:"有，有一次我在国外问路时遇到了麻烦。(Có, một lần tôi hỏi đường ở nước ngoài đã gặp rắc rối.)"},
+    {q:"你觉得团队合作最重要的是什么？", p:"Nǐ juéde tuánduì hézuò zuì zhòngyào de shì shénme?", m:"Bạn thấy điều quan trọng nhất trong làm việc nhóm là gì?", kw:["团队合作","重要"], sug:"我觉得互相信任最重要。(Tôi thấy tin tưởng lẫn nhau là quan trọng nhất.)"}
   ],
-  hsk5: [
+  caocap: [
     {q:'你如何看待当代年轻人的价值观？', p:'Nǐ rúhé kàndài dāngdài niánqīngrén de jiàzhíguān?', m:'Bạn nhìn nhận thế nào về giá trị quan của giới trẻ hiện đại?', kw:['价值观','年轻人'], sug:'我觉得当代年轻人更注重自我实现和多元发展。'},
     {q:'你觉得社交媒体对人际关系有什么影响？', p:'Nǐ juéde shèjiāo méitǐ duì rénjì guānxì yǒu shénme yǐngxiǎng?', m:'Bạn thấy mạng xã hội ảnh hưởng thế nào đến quan hệ giữa người với người?', kw:['社交媒体','影响'], sug:'我认为社交媒体有利也有弊，既拉近了距离，也可能造成疏离感。'},
     {q:'你如何看待终身教育的趋势？', p:'Nǐ rúhé kàndài zhōngshēn jiàoyù de qūshì?', m:'Bạn nhìn nhận thế nào về xu hướng giáo dục suốt đời?', kw:['终身教育','趋势'], sug:'我认为终身教育顺应了时代发展的需要。'},
@@ -2213,9 +2303,7 @@ const REFLEX_BANK = {
     {q:'你如何看待创新与传统之间的关系？', p:'Nǐ rúhé kàndài chuàngxīn yǔ chuántǒng zhījiān de guānxi?', m:'Bạn nhìn nhận thế nào về mối quan hệ giữa đổi mới và truyền thống?', kw:['创新','传统'], sug:'我认为创新应该建立在尊重传统的基础上。'},
     {q:'你觉得阅读经典著作有什么意义？', p:'Nǐ juéde yuèdú jīngdiǎn zhùzuò yǒu shénme yìyì?', m:'Bạn thấy đọc các tác phẩm kinh điển có ý nghĩa gì?', kw:['经典著作','意义'], sug:'阅读经典著作能让我们获得深刻的人生智慧。'},
     {q:'你如何评价自己过去一年的成长？', p:'Nǐ rúhé píngjià zìjǐ guòqù yì nián de chéngzhǎng?', m:'Bạn đánh giá thế nào về sự trưởng thành của mình trong năm qua?', kw:['成长','评价'], sug:'过去一年我在专业能力和心态上都有很大的成长。'},
-    {q:'你觉得国际交流对个人发展有什么帮助？', p:'Nǐ juéde guójì jiāoliú duì gèrén fāzhǎn yǒu shénme bāngzhù?', m:'Bạn thấy giao lưu quốc tế giúp ích gì cho sự phát triển cá nhân?', kw:['国际交流','发展'], sug:'国际交流能拓宽视野，提升跨文化沟通能力。'}
-  ],
-  hsk6: [
+    {q:'你觉得国际交流对个人发展有什么帮助？', p:'Nǐ juéde guójì jiāoliú duì gèrén fāzhǎn yǒu shénme bāngzhù?', m:'Bạn thấy giao lưu quốc tế giúp ích gì cho sự phát triển cá nhân?', kw:['国际交流','发展'], sug:'国际交流能拓宽视野，提升跨文化沟通能力。'},
     {q:'你如何看待人工智能对就业市场的冲击？', p:'Nǐ rúhé kàndài réngōng zhìnéng duì jiùyè shìchǎng de chōngjī?', m:'Bạn nhìn nhận thế nào về tác động của trí tuệ nhân tạo đến thị trường việc làm?', kw:['人工智能','就业'], sug:'我认为人工智能会淘汰部分岗位，但也会创造新的机遇。'},
     {q:'你怎么理解"知易行难"这句话？', p:'Nǐ zěnme lǐjiě "zhī yì xíng nán" zhè jù huà?', m:'Bạn hiểu câu "biết thì dễ, làm mới khó" như thế nào?', kw:['知易行难','道理'], sug:'这句话说明懂得道理容易，真正付诸行动却很难。'},
     {q:'你觉得一个社会的进步应该如何衡量？', p:'Nǐ juéde yí gè shèhuì de jìnbù yīnggāi rúhé héngliáng?', m:'Bạn thấy sự tiến bộ của một xã hội nên được đo lường thế nào?', kw:['社会','进步','衡量'], sug:'我认为应该从民众的幸福感和公平程度来衡量。'},
@@ -2230,9 +2318,25 @@ const REFLEX_BANK = {
     {q:'你觉得科技发展是否会削弱人与人之间的情感联系？', p:'Nǐ juéde kējì fāzhǎn shìfǒu huì xuēruò rén yǔ rén zhījiān de qínggǎn liánxì?', m:'Bạn thấy sự phát triển công nghệ có làm suy yếu mối liên kết tình cảm giữa con người không?', kw:['科技','情感联系'], sug:'科技本身是中性的，关键在于我们如何运用它来维系情感。'},
     {q:'你如何看待历史对当代社会的借鉴意义？', p:'Nǐ rúhé kàndài lìshǐ duì dāngdài shèhuì de jièjiàn yìyì?', m:'Bạn nhìn nhận thế nào về ý nghĩa tham khảo của lịch sử đối với xã hội đương đại?', kw:['历史','借鉴'], sug:'历史蕴含着丰富的经验教训，值得当代社会认真借鉴。'},
     {q:'你怎么理解"众口难调"这句俗语？', p:'Nǐ zěnme lǐjiě "zhòng kǒu nán tiáo" zhè jù súyǔ?', m:'Bạn hiểu câu tục ngữ "chúng khẩu nan điều" (khó chiều lòng tất cả) như thế nào?', kw:['众口难调','决策'], sug:'这句话说明很难让所有人都满意，做决策时要抓住主要矛盾。'},
-    {q:'你觉得一个人应该如何面对时代的变迁？', p:'Nǐ juéde yí gè rén yīnggāi rúhé miànduì shídài de biànqiān?', m:'Bạn thấy một người nên đối mặt thế nào với sự biến chuyển của thời đại?', kw:['时代','变迁'], sug:'我认为应该保持开放的心态，不断学习以适应时代的变迁。'}
+    {q:'你觉得一个人应该如何面对时代的变迁？', p:'Nǐ juéde yí gè rén yīnggāi rúhé miànduì shídài de biànqiān?', m:'Bạn thấy một người nên đối mặt thế nào với sự biến chuyển của thời đại?', kw:['时代','变迁'], sug:'我认为应该保持开放的心态，不断学习以适应时代的变迁。'},
+    {q:"你如何看待人工智能取代部分人类工作这一现象？", p:"Nǐ rúhé kàndài réngōng zhìnéng qǔdài bùfen rénlèi gōngzuò zhè yī xiànxiàng?", m:"Bạn nhìn nhận thế nào về việc AI thay thế một phần công việc con người?", kw:["人工智能","看待"], sug:"我认为这既是挑战也是机遇，我们需要不断提升自己的核心竞争力。"},
+    {q:"有人说经济发展和环境保护难以兼顾，你怎么看？", p:"Yǒurén shuō jīngjì fāzhǎn hé huánjìng bǎohù nányǐ jiāngù, nǐ zěnme kàn?", m:"Có người nói phát triển kinh tế và bảo vệ môi trường khó có thể song hành, bạn nghĩ sao?", kw:["经济","环境保护"], sug:"我认为两者并非不能兼顾，关键在于寻找可持续发展的路径。"},
+    {q:"请谈谈你对全球化利弊的看法。", p:"Qǐng tántán nǐ duì quánqiúhuà lìbì de kànfǎ.", m:"Xin hãy nói về quan điểm của bạn đối với lợi và hại của toàn cầu hóa.", kw:["全球化","利弊"], sug:"全球化促进了经济发展，但也带来了文化同质化的隐忧。"},
+    {q:"你认为传统文化在现代社会中应该如何传承？", p:"Nǐ rènwéi chuántǒng wénhuà zài xiàndài shèhuì zhōng yīnggāi rúhé chuánchéng?", m:"Bạn nghĩ văn hóa truyền thống nên được kế thừa thế nào trong xã hội hiện đại?", kw:["传统文化","传承"], sug:"我认为应该结合现代科技手段，让年轻人更容易接触和了解传统文化。"},
+    {q:"对于年轻人频繁跳槽这一现象，你有什么看法？", p:"Duìyú niánqīngrén pínfán tiàocáo zhè yī xiànxiàng, nǐ yǒu shénme kànfǎ?", m:"Về hiện tượng người trẻ nhảy việc thường xuyên, bạn có quan điểm gì?", kw:["跳槽","看法"], sug:"我认为适度的跳槽有助于个人成长，但过于频繁可能不利于职业发展。"},
+    {q:"贫富差距扩大是当今社会面临的一大问题，你认为原因是什么？", p:"Pínfù chājù kuòdà shì dāngjīn shèhuì miànlín de yí dà wèntí, nǐ rènwéi yuányīn shì shénme?", m:"Khoảng cách giàu nghèo gia tăng là vấn đề lớn xã hội hiện nay đối mặt, bạn nghĩ nguyên nhân là gì?", kw:["贫富差距","原因"], sug:"我认为原因是多方面的，包括教育资源分配不均和机会不平等。"},
+    {q:"你怎么看待内卷这种社会现象？", p:"Nǐ zěnme kàndài nèijuǎn zhè zhǒng shèhuì xiànxiàng?", m:"Bạn nhìn nhận thế nào về hiện tượng xã hội nội quyển (cạnh tranh nội bộ khốc liệt)?", kw:["内卷","现象"], sug:"我认为内卷反映了资源有限而竞争过度激烈的社会现实，需要制度层面的调整。"},
+    {q:"请谈谈你对当前就业市场竞争激烈这一现状的看法。", p:"Qǐng tántán nǐ duì dāngqián jiùyè shìchǎng jìngzhēng jīliè zhè yī xiànzhuàng de kànfǎ.", m:"Xin hãy nói quan điểm của bạn về tình trạng cạnh tranh thị trường việc làm khốc liệt hiện nay.", kw:["就业市场","竞争"], sug:"我认为年轻人应该不断提升自身技能，以适应快速变化的就业市场。"},
+    {q:"你认为一个国家的软实力体现在哪些方面？", p:"Nǐ rènwéi yí gè guójiā de ruǎn shílì tǐxiàn zài nǎxiē fāngmiàn?", m:"Bạn nghĩ sức mạnh mềm của một quốc gia thể hiện ở những phương diện nào?", kw:["软实力","体现"], sug:"我认为软实力体现在文化影响力、教育水平和国际形象等方面。"},
+    {q:"如何看待躺平这一年轻人中流行的生活态度？", p:"Rúhé kàndài tǎngpíng zhè yī niánqīngrén zhōng liúxíng de shēnghuó tàidu?", m:"Nhìn nhận thế nào về thái độ sống nằm thẳng (buông bỏ, không cạnh tranh) đang thịnh hành trong giới trẻ?", kw:["躺平","态度"], sug:"我认为这反映了年轻人面对高压社会的一种无奈选择，社会应给予更多理解和支持。"},
+    {q:"你如何评价社交媒体对公众舆论的影响？", p:"Nǐ rúhé píngjià shèjiāo méitǐ duì gōngzhòng yúlùn de yǐngxiǎng?", m:"Bạn đánh giá thế nào về ảnh hưởng của mạng xã hội đối với dư luận công chúng?", kw:["社交媒体","舆论"], sug:"社交媒体加快了信息传播速度，但也容易导致舆论极端化和虚假信息泛滥。"},
+    {q:"你认为企业在追求利润的同时，应该承担哪些社会责任？", p:"Nǐ rènwéi qǐyè zài zhuīqiú lìrùn de tóngshí, yīnggāi chéngdān nǎxiē shèhuì zérèn?", m:"Bạn nghĩ doanh nghiệp khi theo đuổi lợi nhuận nên gánh vác trách nhiệm xã hội nào?", kw:["企业","社会责任"], sug:"企业应当关注环境保护、员工福利以及对社区的贡献。"},
+    {q:"你怎么看待人口老龄化对社会经济带来的挑战？", p:"Nǐ zěnme kàndài rénkǒu lǎolínghuà duì shèhuì jīngjì dàilái de tiǎozhàn?", m:"Bạn nhìn nhận thế nào về thách thức mà già hóa dân số mang lại cho kinh tế xã hội?", kw:["老龄化","挑战"], sug:"人口老龄化会加重社会保障负担，需要通过完善养老体系来应对。"},
+    {q:"请谈谈你对终身学习这一理念的理解。", p:"Qǐng tántán nǐ duì zhōngshēn xuéxí zhè yī lǐniàn de lǐjiě.", m:"Xin hãy nói về sự hiểu biết của bạn đối với khái niệm học tập suốt đời.", kw:["终身学习","理念"], sug:"我认为在知识快速更新的时代，终身学习已经成为每个人的必修课。"},
+    {q:"你认为文化自信对一个民族的发展意味着什么？", p:"Nǐ rènwéi wénhuà zìxìn duì yí gè mínzú de fāzhǎn yìwèizhe shénme?", m:"Bạn nghĩ tự tin văn hóa mang ý nghĩa gì đối với sự phát triển của một dân tộc?", kw:["文化自信","意味着"], sug:"文化自信是一个民族保持独立精神和创新活力的重要基础。"}
   ]
 };
+;
 
 /* ===================== CULTURE MODULE: 7 phần trắc nghiệm Văn hóa Trung Quốc trích nguyên vẹn từ file CONTENT ===================== */
 const CULTURE_PARTS = [
@@ -2954,7 +3058,7 @@ function dictRender(){
 
 /* ===================== SHADOWING ===================== */
 let shadowInitDone = false;
-let currentShadowLevel = 'hsk1';
+let currentShadowLevel = 'socap';
 let currentShadowIndex = 0;
 let shadowRecognition = null;
 let shadowRecording = false;
@@ -2979,7 +3083,7 @@ function pickUndoneIndex(field, level, bankLength, levelLabel, activityName){
   for (let i=0;i<bankLength;i++) if (!done.has(i)) remaining.push(i);
   if (!remaining.length) {
     const p = getProgress(); p[field][level] = []; setProgress(p); syncToCloud();
-    setTimeout(() => alert(`🎉 Chúc mừng! Bạn đã hoàn thành hết ${bankLength} câu ${activityName} của ${levelLabel}. Vòng luyện tập mới cho cấp độ này bắt đầu lại!`), 50);
+    setTimeout(() => alert(`🎉 Bạn luyện tập rất chăm chỉ! Tiếp tục với một vòng câu ${activityName} mới của ${levelLabel} nhé!`), 50);
     return Math.floor(Math.random()*bankLength);
   }
   return remaining[Math.floor(Math.random()*remaining.length)];
@@ -2988,9 +3092,9 @@ function pickUndoneIndex(field, level, bankLength, levelLabel, activityName){
 function initShadowingSection(){
   shadowInitDone = true;
   const tabsEl = document.getElementById('shadow-level-tabs');
-  tabsEl.innerHTML = HSK_LEVELS.map(k => `<button onclick="selectShadowLevel('${k}')" data-lvl="${k}" class="shadow-lvl px-3 py-1.5 rounded-lg text-xs font-bold ${k===currentShadowLevel?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800'}">${VOCAB_DATA[k].label}</button>`).join('');
+  tabsEl.innerHTML = PRACTICE_LEVELS.map(k => `<button onclick="selectShadowLevel('${k}')" data-lvl="${k}" class="shadow-lvl px-3 py-1.5 rounded-lg text-xs font-bold ${k===currentShadowLevel?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800'}">${PRACTICE_LEVEL_LABELS[k]}</button>`).join('');
   if (!SpeechRec) document.getElementById('shadow-support-note').classList.remove('hidden');
-  currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, VOCAB_DATA[currentShadowLevel].label, 'mẫu Shadowing');
+  currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, PRACTICE_LEVEL_LABELS[currentShadowLevel], 'mẫu Shadowing');
   renderShadowSentence();
 }
 function selectShadowLevel(lvl){
@@ -3005,24 +3109,17 @@ function selectShadowLevel(lvl){
 let shadowPinyinRevealed = false;
 function renderShadowSentence(){
   const item = SHADOW_BANK[currentShadowLevel][currentShadowIndex];
-  const doneCount = getDoneSet('shadowDone', currentShadowLevel).length;
-  document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Đã hoàn thành ${doneCount}/${SHADOW_BANK[currentShadowLevel].length}`;
+  document.getElementById('shadow-level-badge').textContent = PRACTICE_LEVEL_LABELS[currentShadowLevel];
   document.getElementById('shadow-sentence').textContent = item[0];
   document.getElementById('shadow-meaning').textContent = item[2];
+  // Mặc định KHÔNG hiển thị phiên âm ở cả 3 cấp độ — học viên phải bấm nút mới xem được.
   const pinyinEl = document.getElementById('shadow-pinyin');
   const toggleBtn = document.getElementById('shadow-pinyin-toggle');
-  const alwaysShow = (currentShadowLevel === 'hsk1' || currentShadowLevel === 'hsk2');
   shadowPinyinRevealed = false;
-  if (alwaysShow) {
-    pinyinEl.textContent = item[1];
-    pinyinEl.classList.remove('hidden');
-    toggleBtn.classList.add('hidden');
-  } else {
-    pinyinEl.textContent = '';
-    pinyinEl.classList.add('hidden');
-    toggleBtn.classList.remove('hidden');
-    toggleBtn.textContent = 'Xem phiên âm';
-  }
+  pinyinEl.textContent = '';
+  pinyinEl.classList.add('hidden');
+  toggleBtn.classList.remove('hidden');
+  toggleBtn.textContent = 'Xem phiên âm';
   document.getElementById('shadow-result').classList.add('hidden');
 }
 function toggleShadowPinyin(){
@@ -3041,7 +3138,7 @@ function toggleShadowPinyin(){
   }
 }
 function pickNewShadowSentence(){
-  currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, VOCAB_DATA[currentShadowLevel].label, 'mẫu Shadowing');
+  currentShadowIndex = pickUndoneIndex('shadowDone', currentShadowLevel, SHADOW_BANK[currentShadowLevel].length, PRACTICE_LEVEL_LABELS[currentShadowLevel], 'mẫu Shadowing');
   renderShadowSentence();
 }
 function nextShadowSentence(){ pickNewShadowSentence(); }
@@ -3073,8 +3170,7 @@ function toggleShadowRecording(){
     playScoreSound(pct);
     recordShadowingScore(currentShadowLevel, pct);
     markDone('shadowDone', currentShadowLevel, currentShadowIndex);
-    document.getElementById('shadow-level-badge').textContent = `${VOCAB_DATA[currentShadowLevel].label} · Đã hoàn thành ${getDoneSet('shadowDone', currentShadowLevel).length}/${SHADOW_BANK[currentShadowLevel].length}`;
-    pushHistory({type:'Shadowing / Phát âm', detail:`${VOCAB_DATA[currentShadowLevel].label} · "${targetSentence}"`, score: pct + '%'});
+    pushHistory({type:'Shadowing / Phát âm', detail:`${PRACTICE_LEVEL_LABELS[currentShadowLevel]} · "${targetSentence}"`, score: pct + '%'});
   };
   shadowRecognition.onerror = () => { shadowRecording = false; btn.classList.remove('recording'); };
   shadowRecognition.onend = () => { shadowRecording = false; btn.classList.remove('recording'); };
@@ -3083,7 +3179,7 @@ function toggleShadowRecording(){
 
 /* ===================== REFLEX (Nghe - Nói, hệ thống chỉ hỏi bằng âm thanh) ===================== */
 let reflexInitDone = false;
-let currentReflexLevel = 'hsk1';
+let currentReflexLevel = 'socap';
 let currentReflexItem = null;
 let currentReflexIndex = 0;
 let reflexRecognition = null;
@@ -3092,8 +3188,7 @@ let reflexRecording = false;
 function initReflexSection(){
   reflexInitDone = true;
   const tabsEl = document.getElementById('reflex-level-tabs');
-  const levels = HSK_LEVELS;
-  tabsEl.innerHTML = levels.map(k => `<button onclick="selectReflexLevel('${k}')" data-lvl="${k}" class="reflex-lvl px-3 py-1.5 rounded-lg text-xs font-bold ${k===currentReflexLevel?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800'}">${VOCAB_DATA[k].label}</button>`).join('');
+  tabsEl.innerHTML = PRACTICE_LEVELS.map(k => `<button onclick="selectReflexLevel('${k}')" data-lvl="${k}" class="reflex-lvl px-3 py-1.5 rounded-lg text-xs font-bold ${k===currentReflexLevel?'bg-red-600 text-white':'bg-gray-200 dark:bg-gray-800'}">${PRACTICE_LEVEL_LABELS[k]}</button>`).join('');
   pickNewReflexQuestion();
 }
 function selectReflexLevel(lvl){
@@ -3107,7 +3202,7 @@ function selectReflexLevel(lvl){
 }
 function pickNewReflexQuestion(){
   const pool = REFLEX_BANK[currentReflexLevel];
-  currentReflexIndex = pickUndoneIndex('reflexDone', currentReflexLevel, pool.length, VOCAB_DATA[currentReflexLevel].label, 'hỏi Phản xạ Nghe - Nói');
+  currentReflexIndex = pickUndoneIndex('reflexDone', currentReflexLevel, pool.length, PRACTICE_LEVEL_LABELS[currentReflexLevel], 'hỏi Phản xạ Nghe - Nói');
   currentReflexItem = pool[currentReflexIndex];
   document.getElementById('reflex-sub').textContent = currentReflexItem.q + ' (' + currentReflexItem.p + ' - ' + currentReflexItem.m + ')';
   document.getElementById('reflex-sub').classList.add('hidden');
@@ -3137,7 +3232,7 @@ function toggleReflexRecording(){
     playScoreSound(heard.trim() ? 85 : 30);
     touchDailyActivity();
     markDone('reflexDone', currentReflexLevel, currentReflexIndex);
-    pushHistory({type:'Phản xạ Nghe - Nói', detail:`${VOCAB_DATA[currentReflexLevel].label} · "${currentReflexItem.q}"`, score: 'Hoàn thành'});
+    pushHistory({type:'Phản xạ Nghe - Nói', detail:`${PRACTICE_LEVEL_LABELS[currentReflexLevel]} · "${currentReflexItem.q}"`, score: 'Hoàn thành'});
   };
   reflexRecognition.onerror = () => { reflexRecording = false; btn.classList.remove('recording'); };
   reflexRecognition.onend = () => { reflexRecording = false; btn.classList.remove('recording'); };
@@ -3154,13 +3249,13 @@ function renderPracticeMenu(){
   document.getElementById('practice-type-menu').classList.add('hidden');
   document.getElementById('practice-quiz').classList.add('hidden');
   const grid = document.getElementById('practice-level-grid');
-  grid.innerHTML = HSK_LEVELS.map(l => `<button onclick="selectPracticeLevel('${l}')" class="py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">${VOCAB_DATA[l].label}</button>`).join('');
+  grid.innerHTML = PRACTICE_LEVELS.map(l => `<button onclick="selectPracticeLevel('${l}')" class="py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">${PRACTICE_LEVEL_LABELS[l]}</button>`).join('');
 }
 function selectPracticeLevel(level){
   practiceLevel = level;
   document.getElementById('practice-menu').classList.add('hidden');
   document.getElementById('practice-type-menu').classList.remove('hidden');
-  document.getElementById('practice-type-title').textContent = `Chọn dạng bài tập - ${VOCAB_DATA[level].label}`;
+  document.getElementById('practice-type-title').textContent = `Chọn dạng bài tập - ${PRACTICE_LEVEL_LABELS[level]}`;
 }
 function backToTypeMenu(){
   document.getElementById('practice-quiz').classList.add('hidden');
@@ -3168,11 +3263,22 @@ function backToTypeMenu(){
 }
 
 const QUIZ_BATCH_SIZE = 40;
+// Bài tập dùng bộ 3 cấp độ Sơ/Trung/Cao thay vì HSK 1-6; mỗi cấp gộp kho từ điển/ ví dụ biên soạn
+// của 2 cấp HSK tương ứng (xem PRACTICE_LEVEL_TO_HSK) để tận dụng toàn bộ dữ liệu đã có.
+function getPracticeDictPool(level){
+  const hsks = PRACTICE_LEVEL_TO_HSK[level] || [level];
+  let pool = [];
+  hsks.forEach(h => { pool = pool.concat(window.DICTIONARY_DATA[h] || []); });
+  return pool;
+}
 const CURATED_BY_LEVEL_HANZI = {};
-HSK_LEVELS.forEach(l => { CURATED_BY_LEVEL_HANZI[l] = {}; VOCAB_DATA[l].words.forEach(w => { CURATED_BY_LEVEL_HANZI[l][w.h] = w; }); });
+PRACTICE_LEVELS.forEach(l => {
+  CURATED_BY_LEVEL_HANZI[l] = {};
+  PRACTICE_LEVEL_TO_HSK[l].forEach(h => { VOCAB_DATA[h].words.forEach(w => { CURATED_BY_LEVEL_HANZI[l][w.h] = w; }); });
+});
 
 function pickRandomDistractors(level, excludeHanzi, count){
-  const pool = (window.DICTIONARY_DATA[level]||[]).filter(w => w[0] !== excludeHanzi);
+  const pool = getPracticeDictPool(level).filter(w => w[0] !== excludeHanzi);
   const picked = [];
   const used = new Set();
   let attempts = 0;
@@ -3187,7 +3293,7 @@ function pickRandomDistractors(level, excludeHanzi, count){
 
 function buildMeaningQuestions(level, count, usedSet){
   const qs = [];
-  const dict = window.DICTIONARY_DATA[level] || [];
+  const dict = getPracticeDictPool(level);
   let attempts = 0;
   while (qs.length < count && attempts < count*20 && dict.length){
     attempts++;
@@ -3250,7 +3356,7 @@ function buildFillQuestions(level, count, usedSet){
 
 function buildSynonymQuestions(level, count){
   const pairs = WORD_PAIRS[level] || [];
-  const dict = window.DICTIONARY_DATA[level] || [];
+  const dict = getPracticeDictPool(level);
   const combos = [];
   pairs.forEach(pr => { combos.push({pr, dir:'ab'}); combos.push({pr, dir:'ba'}); });
   const shuffled = combos.sort(() => Math.random()-0.5);
@@ -3277,7 +3383,7 @@ function buildSynonymQuestions(level, count){
 // (SENTENCE_TEMPLATES) để đáp ứng "cho cả Từ vựng và Câu".
 function buildTypingQuestions(level, count, usedSet){
   const qs = [];
-  const dict = window.DICTIONARY_DATA[level] || [];
+  const dict = getPracticeDictPool(level);
   const templates = SENTENCE_TEMPLATES[level] || [];
   let attempts = 0;
   while (qs.length < count && attempts < count*25 && (dict.length || templates.length)){
@@ -3325,7 +3431,8 @@ function startExercise(type){
 function renderQuizQuestion(){
   const q = quizState.questions[quizState.index];
   quizState.answered = false;
-  document.getElementById('quiz-progress-label').textContent = `Câu ${quizState.index+1}/${quizState.questions.length}`;
+  // Không hiển thị số đếm câu dạng "X/Y" — học viên luyện tập liên tục không giới hạn.
+  document.getElementById('quiz-progress-label').textContent = PRACTICE_LEVEL_LABELS[quizState.level] || '';
   document.getElementById('quiz-prev-btn').classList.toggle('hidden', quizState.index === 0);
   document.getElementById('quiz-explanation').classList.add('hidden');
   const body = document.getElementById('quiz-body');
@@ -3401,7 +3508,7 @@ function submitOrder(){
   if (!isCorrect) bodyHtml = `<p class="mb-1"><span class="font-bold">Bạn đã sắp xếp:</span> ${quizState.picked.join(' ')} (chưa đúng)</p>` + bodyHtml;
   document.getElementById('quiz-explain-body').innerHTML = bodyHtml;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Sắp xếp câu', detail:`${VOCAB_DATA[quizState.level].label}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Sắp xếp câu', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function answerFill(i){
@@ -3423,7 +3530,7 @@ function answerFill(i){
     <p class="mt-1 font-bold">Vì sao không chọn các đáp án khác:</p>
     <ul class="list-disc pl-5">${wrongOpts.map((o,idx) => `<li><b>${o}</b>: ${q.why[idx] || 'không phù hợp về nghĩa/ngữ pháp trong câu này.'}</li>`).join('')}</ul>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Điền từ', detail:`${VOCAB_DATA[quizState.level].label} · ${q.sentence}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Điền từ', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.sentence}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function answerSynonym(i){
@@ -3443,7 +3550,7 @@ function answerSynonym(i){
   const distractorLines = (q.distractorWhy||[]).map(w => `<li>${w}</li>`).join('');
   document.getElementById('quiz-explain-body').innerHTML = `<p>${q.explain}</p>${distractorLines ? `<p class="mt-1 font-bold">Vì sao các từ còn lại không phù hợp:</p><ul class="list-disc pl-5">${distractorLines}</ul>` : ''}`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Đồng/Trái nghĩa', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Đồng/Trái nghĩa', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.word}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function answerMeaning(i){
@@ -3467,7 +3574,7 @@ function answerMeaning(i){
     <p class="mt-1 font-bold">Mở rộng vốn từ - các đáp án còn lại thực ra là nghĩa của từ nào:</p>
     <ul class="list-disc pl-5">${wrongLines}</ul>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function submitTyping(){
@@ -3486,7 +3593,7 @@ function submitTyping(){
   document.getElementById('quiz-correct-line').textContent = `Đáp án đúng: ${q.correct}`;
   document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Bạn đã gõ:</span> ${escapeAttr(typed) || '(để trống)'}</p><p class="mt-1"><span class="font-bold">Gợi ý:</span> ${escapeAttr(q.hint)}</p>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Gõ chữ Hán', detail:`${VOCAB_DATA[quizState.level].label} · ${q.correct}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Gõ chữ Hán', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.correct}`, score: isCorrect?'Đúng':'Sai'});
 }
 function showBatchToast(msg){
   const t = document.getElementById('quiz-batch-toast');
