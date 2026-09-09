@@ -57,16 +57,82 @@
       </div>
     </a>
 
-    <nav class="hidden lg:flex items-center gap-4 text-sm font-medium">
-      <button onclick="showSection('home')" class="nav-link hover:text-red-600 transition">Trang chủ</button>
-      <button onclick="showSection('vocab')" class="nav-link hover:text-red-600 transition">Từ vựng</button>
-      <button onclick="showSection('dictionary')" class="nav-link hover:text-red-600 transition">Từ điển</button>
-      <button onclick="showSection('shadowing')" class="nav-link hover:text-red-600 transition">Shadowing/Phát âm</button>
-      <button onclick="showSection('reflex')" class="nav-link hover:text-red-600 transition">Phản xạ Nghe-Nói</button>
-      <button onclick="showSection('practice')" class="nav-link hover:text-red-600 transition">Bài tập</button>
-      <button onclick="showSection('culture')" class="nav-link hover:text-red-600 transition">Văn hóa</button>
-      <button onclick="showSection('games')" class="nav-link hover:text-red-600 transition">Trò chơi</button>
-      <button id="admin-tab-btn" onclick="showSection('admin')" class="hidden text-amber-600 font-bold hover:text-amber-700">Admin</button>
+    <nav class="hidden lg:flex items-center gap-1 text-sm font-medium">
+      <button onclick="showSection('home')" class="nav-link hover:text-red-600 transition px-3 py-2">Trang chủ</button>
+
+      <div class="relative group">
+        <button onclick="showSection('vocab')" class="nav-link hover:text-red-600 transition px-3 py-2">Từ vựng</button>
+        <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-52 z-50">
+          <button onclick="gotoVocabTab('hsk1')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 1</button>
+          <button onclick="gotoVocabTab('hsk2')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 2</button>
+          <button onclick="gotoVocabTab('hsk3')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 3</button>
+          <button onclick="gotoVocabTab('hsk4')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 4</button>
+          <button onclick="gotoVocabTab('hsk5')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 5</button>
+          <button onclick="gotoVocabTab('hsk6')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 6</button>
+          <div class="border-t border-gray-100 dark:border-gray-700 my-1"></div>
+          <button onclick="gotoVocabTab('t_greeting')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">15 Chủ đề giao tiếp</button>
+        </div>
+      </div>
+
+      <button onclick="showSection('dictionary')" class="nav-link hover:text-red-600 transition px-3 py-2">Từ điển</button>
+
+      <div class="relative group">
+        <button onclick="showSection('shadowing')" class="nav-link hover:text-red-600 transition px-3 py-2">Shadowing/Phát âm</button>
+        <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-40 z-50">
+          <button onclick="gotoShadowLevel('hsk1')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 1</button>
+          <button onclick="gotoShadowLevel('hsk2')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 2</button>
+          <button onclick="gotoShadowLevel('hsk3')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 3</button>
+          <button onclick="gotoShadowLevel('hsk4')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 4</button>
+          <button onclick="gotoShadowLevel('hsk5')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 5</button>
+          <button onclick="gotoShadowLevel('hsk6')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 6</button>
+        </div>
+      </div>
+
+      <div class="relative group">
+        <button onclick="showSection('reflex')" class="nav-link hover:text-red-600 transition px-3 py-2">Phản xạ Nghe-Nói</button>
+        <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-40 z-50">
+          <button onclick="gotoReflexLevel('hsk1')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 1</button>
+          <button onclick="gotoReflexLevel('hsk2')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 2</button>
+          <button onclick="gotoReflexLevel('hsk3')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 3</button>
+          <button onclick="gotoReflexLevel('hsk4')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 4</button>
+          <button onclick="gotoReflexLevel('hsk5')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 5</button>
+          <button onclick="gotoReflexLevel('hsk6')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">HSK 6</button>
+        </div>
+      </div>
+
+      <div class="relative group">
+        <button onclick="showSection('practice')" class="nav-link hover:text-red-600 transition px-3 py-2">Bài tập</button>
+        <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-56 z-50">
+          <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">📚 Nghĩa từ vựng</button>
+          <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">🔀 Sắp xếp câu</button>
+          <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">✏️ Điền từ vào chỗ trống</button>
+          <button onclick="showSection('practice')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">🔁 Đồng nghĩa - Trái nghĩa</button>
+        </div>
+      </div>
+
+      <div class="relative group">
+        <button onclick="showSection('culture')" class="nav-link hover:text-red-600 transition px-3 py-2">Văn hóa</button>
+        <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-64 z-50 max-h-80 overflow-y-auto">
+          <button onclick="gotoCulturePart(0)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN I: Chủ đề Dân tộc</button>
+          <button onclick="gotoCulturePart(1)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN II: Tứ đại & Văn hóa cổ đại</button>
+          <button onclick="gotoCulturePart(2)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN III: Địa lý Trung Quốc</button>
+          <button onclick="gotoCulturePart(3)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN IV: Công trình & Kỷ lục</button>
+          <button onclick="gotoCulturePart(4)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN V: Tỉnh thành & Thành phố</button>
+          <button onclick="gotoCulturePart(5)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN VI: Văn hóa mạng & Gen Z</button>
+          <button onclick="gotoCulturePart(6)" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">PHẦN VII: Giao tiếp & Kiêng kỵ</button>
+        </div>
+      </div>
+
+      <div class="relative group">
+        <button onclick="showSection('games')" class="nav-link hover:text-red-600 transition px-3 py-2">Trò chơi</button>
+        <div class="absolute left-0 top-full hidden group-hover:block bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-100 dark:border-gray-700 py-2 w-48 z-50">
+          <button onclick="gotoGame('memory')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">🖼️ Lật hình ghi nhớ</button>
+          <button onclick="gotoGame('match')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">🔗 Nối từ</button>
+          <button onclick="gotoGame('dash')" class="block w-full text-left px-4 py-2 text-xs hover:bg-gray-100 dark:hover:bg-gray-700">⚡ Đoán nhanh từ vựng</button>
+        </div>
+      </div>
+
+      <button id="admin-tab-btn" onclick="showSection('admin')" class="hidden text-amber-600 font-bold hover:text-amber-700 px-3 py-2">Admin</button>
     </nav>
 
     <div class="flex items-center gap-2">
@@ -141,8 +207,8 @@
         <div class="text-xs text-gray-500 mt-1">Cấp độ HSK 1-6</div>
       </div>
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center border border-gray-100 dark:border-gray-700 shadow-sm">
-        <div class="text-2xl sm:text-3xl font-black text-red-600">200</div>
-        <div class="text-xs text-gray-500 mt-1">Câu hỏi Văn hóa Trung Quốc</div>
+        <div class="text-2xl sm:text-3xl font-black text-red-600">60</div>
+        <div class="text-xs text-gray-500 mt-1">Câu hỏi Văn hóa Trung Quốc (7 phần)</div>
       </div>
       <div class="bg-white dark:bg-gray-800 rounded-2xl p-5 text-center border border-gray-100 dark:border-gray-700 shadow-sm">
         <div class="text-2xl sm:text-3xl font-black text-red-600">15</div>
@@ -412,7 +478,7 @@
   <section id="sec-culture" class="hidden space-y-6">
     <div class="text-center max-w-2xl mx-auto space-y-2">
       <h2 class="text-2xl font-bold">Văn hóa Trung Quốc</h2>
-      <p class="text-sm text-gray-500">200 câu trắc nghiệm về văn hóa, phong tục, ẩm thực, nghệ thuật Trung Hoa.</p>
+      <p class="text-sm text-gray-500">7 phần trắc nghiệm về dân tộc, lịch sử, địa lý, đời sống và văn hóa giao tiếp Trung Hoa.</p>
     </div>
     <div id="culture-menu" class="max-w-3xl mx-auto space-y-4">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="culture-topic-grid"></div>
@@ -631,7 +697,7 @@
         <li><button onclick="showSection('shadowing')" class="hover:text-red-400 transition text-left">Luyện Phát âm (Shadowing)</button></li>
         <li><button onclick="showSection('reflex')" class="hover:text-red-400 transition text-left">Luyện Phản xạ Nghe - Nói</button></li>
         <li><button onclick="showSection('practice')" class="hover:text-red-400 transition text-left">Ngân hàng Bài tập & Giải thích chi tiết</button></li>
-        <li><button onclick="showSection('culture')" class="hover:text-red-400 transition text-left">200 Câu hỏi Văn hóa Trung Quốc</button></li>
+        <li><button onclick="showSection('culture')" class="hover:text-red-400 transition text-left">Trắc nghiệm Văn hóa Trung Quốc (7 phần)</button></li>
         <li><button onclick="showSection('games')" class="hover:text-red-400 transition text-left">Game học từ vựng</button></li>
         <li><button onclick="showSection('dictionary')" class="hover:text-red-400 transition text-left">Tra cứu từ vựng Trung - Việt</button></li>
         <li><button onclick="showSection('profile')" class="hover:text-red-400 transition text-left">Phân tích lộ trình học tập</button></li>
@@ -2119,429 +2185,84 @@ const REFLEX_BANK = {
   ]
 };
 
-/* ===================== CULTURE MODULE: 10 chủ đề x 20 câu trắc nghiệm Văn hóa Trung Quốc ===================== */
-const CULTURE_TOPICS = {
-  t_festival: {
-    label: 'Lễ hội truyền thống',
-    pool: [
-      {h:'春节', p:'Chūnjié', m:'Tết Nguyên Đán', desc:'Lễ hội quan trọng nhất trong năm, đón năm mới âm lịch, cả nhà sum họp, lì xì và dán câu đối đỏ.'},
-      {h:'元宵节', p:'Yuánxiāojié', m:'Tết Nguyên Tiêu', desc:'Ngày 15 tháng Giêng âm lịch, ăn bánh trôi (汤圆), ngắm đèn lồng, kết thúc chuỗi ngày Tết.'},
-      {h:'清明节', p:'Qīngmíngjié', m:'Tiết Thanh Minh', desc:'Đầu tháng 4 dương lịch, con cháu đi tảo mộ, tưởng nhớ tổ tiên.'},
-      {h:'端午节', p:'Duānwǔjié', m:'Tết Đoan Ngọ', desc:'Mùng 5 tháng 5 âm lịch, ăn bánh ú (粽子), đua thuyền rồng, tưởng nhớ nhà thơ Khuất Nguyên.'},
-      {h:'中秋节', p:'Zhōngqiūjié', m:'Tết Trung Thu', desc:'Rằm tháng 8 âm lịch, ăn bánh trung thu (月饼), ngắm trăng, đoàn viên gia đình.'},
-      {h:'重阳节', p:'Chóngyángjié', m:'Tết Trùng Cửu', desc:'Mùng 9 tháng 9 âm lịch, phong tục leo núi, tôn vinh và chúc thọ người cao tuổi.'},
-      {h:'七夕节', p:'Qīxìjié', m:'Lễ Thất Tịch', desc:'Mùng 7 tháng 7 âm lịch, ngày lễ tình nhân truyền thống, gắn với tích Ngưu Lang - Chức Nữ.'},
-      {h:'腊八节', p:'Làbājié', m:'Tết Lạp Bát', desc:'Mùng 8 tháng Chạp âm lịch, có tục ăn cháo Lạp Bát (腊八粥) nấu từ nhiều loại ngũ cốc, đậu.'},
-      {h:'除夕', p:'Chúxī', m:'Đêm Giao thừa', desc:'Đêm cuối năm âm lịch, cả nhà quây quần ăn bữa cơm tất niên (年夜饭).'},
-      {h:'元旦', p:'Yuándàn', m:'Tết Dương lịch', desc:'Ngày 1 tháng 1 dương lịch, khác với Tết Nguyên Đán (âm lịch).'},
-      {h:'龙抬头', p:'Lóngtáitóu', m:'Tết Long Đầu', desc:'Mùng 2 tháng 2 âm lịch - "rồng ngẩng đầu", dân gian có tục cắt tóc đầu năm để cầu may mắn.'},
-      {h:'寒食节', p:'Hánshíjié', m:'Tết Hàn Thực', desc:'Trước Thanh Minh 1-2 ngày, kiêng đốt lửa, chỉ ăn đồ nguội, gắn với tích Giới Tử Thôi.'},
-      {h:'冬至', p:'Dōngzhì', m:'Tiết Đông Chí', desc:'Người miền Bắc Trung Quốc ăn sủi cảo (饺子) vào ngày này, dân gian coi trọng như một cái Tết nhỏ.'},
-      {h:'泼水节', p:'Pōshuǐjié', m:'Lễ hội té nước', desc:'Lễ mừng năm mới của dân tộc Thái (Tây Song Bản Nạp, Vân Nam), té nước để cầu may mắn, gột rửa điều xui.'},
-      {h:'火把节', p:'Huǒbǎjié', m:'Lễ hội đuốc lửa', desc:'Lễ hội của người Di, Bạch ở Vân Nam, cầm đuốc diễu hành ban đêm để xua đuổi tà ma, cầu mùa màng bội thu.'}
-    ],
-    questions: [
-      {q:'Lễ hội nào là lễ hội quan trọng nhất trong năm, đánh dấu năm mới âm lịch của người Trung Quốc?', correct:'春节'},
-      {q:'Vào ngày 15 tháng Giêng âm lịch, người Trung Quốc ăn bánh trôi và ngắm đèn lồng. Đây là lễ hội nào?', correct:'元宵节'},
-      {q:'Lễ hội nào diễn ra vào đầu tháng 4 dương lịch, là dịp con cháu tảo mộ, tưởng nhớ tổ tiên?', correct:'清明节'},
-      {q:'Mùng 5 tháng 5 âm lịch, người dân ăn bánh ú và đua thuyền rồng để tưởng nhớ nhà thơ Khuất Nguyên. Đây là lễ hội gì?', correct:'端午节'},
-      {q:'Rằm tháng 8 âm lịch là dịp lễ hội nào, gắn liền với việc ăn bánh nướng và ngắm trăng?', correct:'中秋节'},
-      {q:'Tết Trùng Cửu (mùng 9 tháng 9 âm lịch) có phong tục đặc trưng là leo núi và chúc thọ ai?', correct:'重阳节'},
-      {q:'Lễ hội nào gắn với truyền thuyết Ngưu Lang - Chức Nữ, được coi là ngày lễ tình nhân của Trung Quốc?', correct:'七夕节'},
-      {q:'Vào mùng 8 tháng Chạp âm lịch, người Trung Quốc có tục ăn một loại cháo đặc biệt. Đó là lễ hội nào?', correct:'腊八节'},
-      {q:'Đêm cuối cùng của năm âm lịch, khi cả gia đình quây quần ăn bữa cơm tất niên, được gọi là gì?', correct:'除夕'},
-      {q:'Ngày đầu tiên của năm dương lịch (1/1) trong tiếng Trung gọi là gì?', correct:'元旦'},
-      {q:'Mùng 2 tháng 2 âm lịch, dân gian Trung Quốc có tục cắt tóc đầu năm để cầu may mắn. Đây là ngày lễ nào?', correct:'龙抬头'},
-      {q:'Lễ hội nào diễn ra trước Tiết Thanh Minh 1-2 ngày, có tục kiêng đốt lửa và chỉ ăn đồ nguội?', correct:'寒食节'},
-      {q:'Vào ngày Đông Chí, người miền Bắc Trung Quốc thường ăn sủi cảo theo quan niệm dân gian. Đây là tiết gì?', correct:'冬至'},
-      {q:'Lễ hội té nước để cầu may mắn đầu năm mới là phong tục đặc trưng của dân tộc nào ở Trung Quốc?', correct:'泼水节'},
-      {q:'Lễ hội cầm đuốc diễu hành ban đêm để xua đuổi tà ma là phong tục của dân tộc nào ở Vân Nam?', correct:'火把节'},
-      {q:'Lễ hội nào kéo dài từ đêm Giao thừa đến Tết Nguyên Tiêu, được coi là chuỗi ngày lễ dài và quan trọng nhất trong năm?', correct:'春节'},
-      {q:'Bánh trung thu (月饼) là món ăn đặc trưng không thể thiếu trong dịp lễ hội nào?', correct:'中秋节'},
-      {q:'Phong tục đua thuyền rồng (赛龙舟) gắn liền với lễ hội truyền thống nào của Trung Quốc?', correct:'端午节'},
-      {q:'Món cháo Lạp Bát (腊八粥) nấu từ nhiều loại ngũ cốc được ăn vào dịp lễ hội nào trong năm?', correct:'腊八节'},
-      {q:'Lễ hội nào gắn với câu chuyện tình yêu giữa chàng chăn trâu Ngưu Lang và nàng tiên dệt vải Chức Nữ?', correct:'七夕节'}
-    ]
-  },
-  t_custom: {
-    label: 'Phong tục tập quán',
-    pool: [
-      {h:'红包', p:'Hóngbāo', m:'Bao lì xì', desc:'Phong bao màu đỏ đựng tiền mừng tuổi, tặng vào dịp Tết hoặc lễ cưới, tượng trưng cho may mắn.'},
-      {h:'舞龙舞狮', p:'Wǔlóng wǔshī', m:'Múa lân sư rồng', desc:'Biểu diễn truyền thống trong lễ hội và khai trương, mang ý nghĩa xua đuổi tà ma, cầu thịnh vượng.'},
-      {h:'拜年', p:'Bàinián', m:'Chúc Tết', desc:'Phong tục đến nhà người thân, bạn bè chúc mừng năm mới vào đầu xuân.'},
-      {h:'敬茶', p:'Jìngchá', m:'Dâng trà', desc:'Nghi thức con cháu/con dâu dâng trà cho ông bà, cha mẹ để tỏ lòng hiếu kính, phổ biến trong lễ cưới.'},
-      {h:'三跪九叩', p:'Sānguì jiǔkòu', m:'Ba quỳ chín lạy', desc:'Nghi lễ bái lạy trang trọng nhất thời phong kiến, thể hiện sự tôn kính tối cao với vua chúa hoặc tổ tiên.'},
-      {h:'缠足', p:'Chánzú', m:'Tục bó chân', desc:'Tập tục cổ (nay đã bị bãi bỏ) bó chân phụ nữ từ nhỏ, từng được coi là chuẩn mực thẩm mỹ thời phong kiến.'},
-      {h:'相亲', p:'Xiāngqīn', m:'Xem mắt', desc:'Phong tục mai mối, hai gia đình sắp xếp cho nam nữ gặp gỡ tìm hiểu để tiến tới hôn nhân.'},
-      {h:'满月酒', p:'Mǎnyuèjiǔ', m:'Tiệc đầy tháng', desc:'Tiệc mừng được tổ chức khi em bé tròn một tháng tuổi.'},
-      {h:'送礼禁忌', p:'Sònglǐ jìnjì', m:'Kiêng kỵ tặng quà', desc:'Khi tặng quà nên tránh tặng đồng hồ (钟) vì "送钟" đồng âm với "送终" (đưa đám, tiễn biệt người chết).'},
-      {h:'守岁', p:'Shǒusuì', m:'Thức đón giao thừa', desc:'Phong tục thức suốt đêm giao thừa để đón năm mới, cầu mong sức khỏe, trường thọ cho cha mẹ.'},
-      {h:'放鞭炮', p:'Fàng biānpào', m:'Đốt pháo', desc:'Theo truyền thuyết, đốt pháo vào dịp Tết để xua đuổi con quái vật tên "Niên" (年兽).'},
-      {h:'祭祖', p:'Jìzǔ', m:'Cúng tổ tiên', desc:'Nghi lễ thờ cúng, tưởng nhớ tổ tiên, thường thực hiện vào dịp Tết, Thanh Minh, giỗ chạp.'},
-      {h:'生辰八字', p:'Shēngchén bāzì', m:'Bát tự', desc:'Cách tính giờ, ngày, tháng, năm sinh để xem vận mệnh và độ hợp tuổi trong hôn nhân.'},
-      {h:'入乡随俗', p:'Rùxiāng suísú', m:'Nhập gia tùy tục', desc:'Thành ngữ khuyên con người nên sống hòa nhập theo phong tục địa phương khi đến nơi mới.'},
-      {h:'压岁钱', p:'Yāsuìqián', m:'Tiền mừng tuổi', desc:'Tiền người lớn mừng cho trẻ nhỏ dịp Tết, đựng trong bao lì xì, mang ý nghĩa trấn an, xua đuổi vận xấu.'}
-    ],
-    questions: [
-      {q:'Phong bao màu đỏ đựng tiền mừng tuổi vào dịp Tết hoặc lễ cưới ở Trung Quốc gọi là gì?', correct:'红包'},
-      {q:'Trong lễ hội và dịp khai trương, người Trung Quốc thường tổ chức múa gì để xua đuổi tà ma, cầu thịnh vượng?', correct:'舞龙舞狮'},
-      {q:'Phong tục đến nhà người thân, bạn bè để chúc mừng năm mới vào đầu xuân gọi là gì?', correct:'拜年'},
-      {q:'Trong lễ cưới truyền thống, con dâu/con rể thường thực hiện nghi thức nào để tỏ lòng hiếu kính với cha mẹ?', correct:'敬茶'},
-      {q:'Nghi lễ bái lạy trang trọng nhất thời phong kiến, thể hiện sự tôn kính tối cao với vua chúa gọi là gì?', correct:'三跪九叩'},
-      {q:'Tập tục bó chân phụ nữ từ nhỏ, từng được coi là chuẩn mực thẩm mỹ thời phong kiến Trung Quốc, gọi là gì?', correct:'缠足'},
-      {q:'Phong tục mai mối, hai gia đình sắp xếp cho nam nữ gặp gỡ tìm hiểu để tiến tới hôn nhân được gọi là gì?', correct:'相亲'},
-      {q:'Khi em bé tròn một tháng tuổi, gia đình Trung Quốc thường tổ chức sự kiện gì?', correct:'满月酒'},
-      {q:'Khi tặng quà cho người Trung Quốc, nên tránh tặng đồng hồ vì lý do đồng âm nào?', correct:'送礼禁忌'},
-      {q:'Phong tục thức suốt đêm giao thừa để đón năm mới, cầu sức khỏe cho cha mẹ gọi là gì?', correct:'守岁'},
-      {q:'Theo truyền thuyết, người Trung Quốc đốt pháo vào dịp Tết để xua đuổi con quái vật nào?', correct:'放鞭炮'},
-      {q:'Nghi lễ thờ cúng, tưởng nhớ tổ tiên thường được thực hiện vào các dịp lễ Tết, Thanh Minh gọi là gì?', correct:'祭祖'},
-      {q:'Việc xem giờ, ngày, tháng, năm sinh để đoán vận mệnh, hợp tuổi trong hôn nhân gọi là gì?', correct:'生辰八字'},
-      {q:'Thành ngữ nào khuyên con người nên sống hòa nhập theo phong tục địa phương khi đến nơi mới?', correct:'入乡随俗'},
-      {q:'Tiền người lớn mừng cho trẻ nhỏ vào dịp Tết, mang ý nghĩa trấn an và xua đuổi vận xấu, gọi là gì?', correct:'压岁钱'},
-      {q:'Phong bao lì xì (红包) thường có màu đỏ vì màu này tượng trưng cho điều gì trong văn hóa Trung Quốc?', correct:'红包'},
-      {q:'拜年 (bàinián - chúc Tết) thường diễn ra vào thời điểm nào trong năm?', correct:'拜年'},
-      {q:'敬茶 (jìngchá - dâng trà) là nghi thức phổ biến trong dịp trọng đại nào của đời người?', correct:'敬茶'},
-      {q:'压岁钱 (yāsuìqián) thường được đựng trong vật gì để trao cho trẻ nhỏ?', correct:'压岁钱'},
-      {q:'祭祖 (jìzǔ) thể hiện giá trị đạo đức truyền thống nào được coi trọng trong văn hóa Trung Quốc?', correct:'祭祖'}
-    ]
-  },
-  t_food: {
-    label: 'Ẩm thực vùng miền',
-    pool: [
-      {h:'川菜', p:'Chuāncài', m:'Ẩm thực Tứ Xuyên', desc:'Nổi tiếng vị cay tê đặc trưng nhờ ớt và hạt tiêu Tứ Xuyên (花椒), món tiêu biểu: 麻婆豆腐 (đậu phụ Ma Bà).'},
-      {h:'粤菜', p:'Yuècài', m:'Ẩm thực Quảng Đông', desc:'Chú trọng vị tươi, thanh đạm, ít dầu mỡ; nổi tiếng với món điểm tâm (点心) và các món hải sản hấp.'},
-      {h:'鲁菜', p:'Lǔcài', m:'Ẩm thực Sơn Đông', desc:'Một trong Tứ đại菜系ẩm thực cổ nhất, vị đậm đà, nổi tiếng với món 糖醋鲤鱼 (cá chép chua ngọt).'},
-      {h:'苏菜', p:'Sūcài', m:'Ẩm thực Giang Tô', desc:'Chú trọng hình thức trình bày tinh tế, vị thanh nhẹ hơi ngọt, nổi tiếng món 松鼠鳜鱼 (cá quế sóc).'},
-      {h:'北京烤鸭', p:'Běijīng kǎoyā', m:'Vịt quay Bắc Kinh', desc:'Món ăn nổi tiếng nhất Bắc Kinh, da giòn vàng óng, ăn kèm bánh tráng mỏng, hành và tương ngọt.'},
-      {h:'火锅', p:'Huǒguō', m:'Lẩu Trung Quốc', desc:'Món ăn nhúng phổ biến khắp Trung Quốc, đặc trưng nhất là lẩu cay Tứ Xuyên - Trùng Khánh.'},
-      {h:'饺子', p:'Jiǎozi', m:'Sủi cảo/Bánh chẻo', desc:'Món ăn truyền thống ngày Tết ở miền Bắc, hình dáng giống thỏi vàng bạc, tượng trưng cho tài lộc.'},
-      {h:'月饼', p:'Yuèbǐng', m:'Bánh trung thu', desc:'Bánh nhân thập cẩm hoặc đậu sen, ăn vào dịp Tết Trung Thu, hình tròn tượng trưng cho sự đoàn viên.'},
-      {h:'小笼包', p:'Xiǎolóngbāo', m:'Bánh bao súp Thượng Hải', desc:'Đặc sản Thượng Hải, bên trong có nước súp nóng, ăn kèm giấm và gừng thái sợi.'},
-      {h:'担担面', p:'Dàndànmiàn', m:'Mì Đảm Đảm', desc:'Món mì cay đặc trưng của Tứ Xuyên, nước sốt làm từ tương ớt, vừng và thịt băm.'},
-      {h:'兰州拉面', p:'Lánzhōu lāmiàn', m:'Mì kéo tay Lan Châu', desc:'Đặc sản vùng Lan Châu (Cam Túc), sợi mì kéo tay dai, nước dùng trong từ xương bò.'},
-      {h:'八大菜系', p:'Bā dà càixì', m:'Bát đại ẩm thực', desc:'Tám trường phái ẩm thực lớn của Trung Quốc: Tứ Xuyên, Quảng Đông, Sơn Đông, Giang Tô, Chiết Giang, Phúc Kiến, Hồ Nam, An Huy.'},
-      {h:'豆汁儿', p:'Dòuzhīr', m:'Nước đậu lên men', desc:'Đặc sản Bắc Kinh có vị chua nồng đặc trưng, thường ăn kèm bánh 焦圈 (bánh chiên giòn).'},
-      {h:'筷子文化', p:'Kuàizi wénhuà', m:'Văn hóa đôi đũa', desc:'Đũa là dụng cụ ăn truyền thống; kiêng cắm đũa thẳng đứng vào bát cơm vì giống nhang thờ người chết.'},
-      {h:'茶点', p:'Chádiǎn', m:'Điểm tâm (dimsum)', desc:'Các món ăn nhỏ dùng kèm trà, đặc trưng của văn hóa "uống trà" (饮茶) vùng Quảng Đông - Hồng Kông.'}
-    ],
-    questions: [
-      {q:'Trường phái ẩm thực nào của Trung Quốc nổi tiếng với vị cay tê đặc trưng nhờ ớt và hạt tiêu Tứ Xuyên?', correct:'川菜'},
-      {q:'Ẩm thực vùng nào chú trọng vị tươi, thanh đạm, ít dầu mỡ, nổi tiếng với các món điểm tâm và hải sản hấp?', correct:'粤菜'},
-      {q:'Món 糖醋鲤鱼 (cá chép chua ngọt) là món ăn tiêu biểu của trường phái ẩm thực nào?', correct:'鲁菜'},
-      {q:'Trường phái ẩm thực nào chú trọng hình thức trình bày tinh tế, nổi tiếng với món cá quế sóc (松鼠鳜鱼)?', correct:'苏菜'},
-      {q:'Món ăn nào nổi tiếng nhất của Bắc Kinh, có lớp da giòn vàng óng, ăn kèm bánh tráng mỏng?', correct:'北京烤鸭'},
-      {q:'Món ăn nhúng phổ biến khắp Trung Quốc, nổi tiếng nhất với vị cay ở vùng Tứ Xuyên - Trùng Khánh, gọi là gì?', correct:'火锅'},
-      {q:'Món ăn có hình dáng giống thỏi vàng bạc, được người miền Bắc Trung Quốc ăn vào ngày Tết để cầu tài lộc, gọi là gì?', correct:'饺子'},
-      {q:'Loại bánh hình tròn tượng trưng cho sự đoàn viên, được ăn vào dịp Tết Trung Thu, gọi là gì?', correct:'月饼'},
-      {q:'Đặc sản Thượng Hải có nước súp nóng bên trong, thường ăn kèm giấm và gừng thái sợi, gọi là gì?', correct:'小笼包'},
-      {q:'Món mì cay đặc trưng của Tứ Xuyên với nước sốt từ tương ớt, vừng và thịt băm, gọi là gì?', correct:'担担面'},
-      {q:'Loại mì kéo tay nổi tiếng, đặc sản của vùng Lan Châu (Cam Túc), có nước dùng từ xương bò, gọi là gì?', correct:'兰州拉面'},
-      {q:'Tám trường phái ẩm thực lớn nhất của Trung Quốc thường được gọi chung là gì?', correct:'八大菜系'},
-      {q:'Đặc sản Bắc Kinh có vị chua nồng đặc trưng, thường ăn kèm bánh chiên giòn, gọi là gì?', correct:'豆汁儿'},
-      {q:'Theo văn hóa ăn uống Trung Quốc, tại sao không nên cắm đũa thẳng đứng vào bát cơm?', correct:'筷子文化'},
-      {q:'Các món ăn nhỏ dùng kèm trà, đặc trưng của văn hóa "uống trà" vùng Quảng Đông - Hồng Kông, gọi chung là gì?', correct:'茶点'},
-      {q:'Vịt quay Bắc Kinh thường được ăn kèm với những gì?', correct:'北京烤鸭'},
-      {q:'Sủi cảo (饺子) là món ăn không thể thiếu trong dịp lễ nào của người miền Bắc Trung Quốc?', correct:'饺子'},
-      {q:'Ẩm thực Tứ Xuyên (川菜) đặc trưng bởi hai loại gia vị chủ đạo nào?', correct:'川菜'},
-      {q:'Bát đại ẩm thực Trung Quốc gồm những trường phái tiêu biểu nào, ngoài Tứ Xuyên, Quảng Đông, Sơn Đông, Giang Tô?', correct:'八大菜系'},
-      {q:'Món ăn nào của Thượng Hải nổi tiếng vì phải cắn nhẹ một góc trước để húp nước súp bên trong, tránh bị bỏng?', correct:'小笼包'}
-    ]
-  },
-  t_symbol: {
-    label: 'Ý nghĩa biểu tượng & Con số',
-    pool: [
-      {h:'八', p:'bā', m:'Số 8', desc:'Phát âm gần giống "phát" (发 - phát tài), là con số may mắn nhất, được ưa chuộng trong số điện thoại, biển số xe.'},
-      {h:'四', p:'sì', m:'Số 4', desc:'Phát âm gần giống "tử" (死 - chết), bị coi là con số xui xẻo, nhiều tòa nhà không có tầng 4.'},
-      {h:'六', p:'liù', m:'Số 6', desc:'Mang nghĩa "lộc, thuận lợi" (六六大顺 - mọi việc suôn sẻ), là con số được yêu thích.'},
-      {h:'九', p:'jiǔ', m:'Số 9', desc:'Đồng âm với "cửu" (久 - lâu dài, vĩnh cửu), tượng trưng cho sự trường tồn, gắn với hoàng đế thời phong kiến.'},
-      {h:'红色', p:'Hóngsè', m:'Màu đỏ', desc:'Tượng trưng cho may mắn, hạnh phúc, hỷ sự; dùng trong lễ cưới, Tết, phong bao lì xì.'},
-      {h:'龙', p:'Lóng', m:'Rồng', desc:'Biểu tượng của quyền lực, hoàng đế và dân tộc Trung Hoa; người Trung Quốc tự hào gọi mình là "con cháu rồng".'},
-      {h:'凤凰', p:'Fènghuáng', m:'Phượng hoàng', desc:'Biểu tượng của hoàng hậu, sự cao quý và tái sinh; thường đi kèm với rồng trong hôn lễ (龙凤呈祥).'},
-      {h:'蝙蝠', p:'Biānfú', m:'Con dơi', desc:'Đồng âm với chữ "phúc" (福), nên hình ảnh con dơi được dùng làm biểu tượng may mắn trong nghệ thuật trang trí.'},
-      {h:'鱼', p:'Yú', m:'Con cá', desc:'Đồng âm với "dư" (余 - dư dả, sung túc), câu chúc "年年有余" (năm nào cũng dư dả) luôn có hình ảnh cá.'},
-      {h:'梅兰竹菊', p:'Méi lán zhú jú', m:'Tứ quân tử', desc:'Mai, Lan, Trúc, Cúc - bốn loài cây tượng trưng cho phẩm chất cao quý, thanh liêm của người quân tử.'},
-      {h:'白色', p:'Báisè', m:'Màu trắng', desc:'Tượng trưng cho tang lễ, sự chết chóc trong văn hóa truyền thống Trung Quốc, tránh dùng trong dịp vui.'},
-      {h:'玉', p:'Yù', m:'Ngọc bích', desc:'Biểu tượng của sự tinh khiết, cao quý và may mắn; người xưa tin ngọc có thể xua đuổi tà khí.'},
-      {h:'金元宝', p:'Jīn yuánbǎo', m:'Thỏi vàng', desc:'Biểu tượng của tài lộc, sự giàu có, thường xuất hiện trong trang trí ngày Tết.'},
-      {h:'喜鹊', p:'Xǐquè', m:'Chim khách', desc:'Đồng âm gần với chữ "hỷ" (喜 - vui mừng), được coi là điềm báo tin vui khi kêu trước nhà.'},
-      {h:'五行', p:'Wǔxíng', m:'Ngũ hành', desc:'Kim, Mộc, Thủy, Hỏa, Thổ - năm yếu tố cơ bản trong triết học cổ Trung Hoa, chi phối vũ trụ và vận mệnh con người.'}
-    ],
-    questions: [
-      {q:'Con số nào được coi là may mắn nhất trong văn hóa Trung Quốc vì phát âm gần giống với từ "phát tài"?', correct:'八'},
-      {q:'Con số nào bị coi là xui xẻo trong văn hóa Trung Quốc vì phát âm gần giống với từ "chết"?', correct:'四'},
-      {q:'Con số nào mang ý nghĩa "lộc, thuận lợi" và xuất hiện trong thành ngữ "mọi việc suôn sẻ"?', correct:'六'},
-      {q:'Con số nào đồng âm với chữ "trường tồn, vĩnh cửu" và thường gắn liền với hoàng đế thời phong kiến?', correct:'九'},
-      {q:'Màu sắc nào tượng trưng cho may mắn, hạnh phúc và được dùng phổ biến trong lễ cưới, Tết ở Trung Quốc?', correct:'红色'},
-      {q:'Con vật nào là biểu tượng của quyền lực, hoàng đế và được xem là tổ tiên huyền thoại của dân tộc Trung Hoa?', correct:'龙'},
-      {q:'Con vật nào tượng trưng cho hoàng hậu, sự cao quý, thường xuất hiện cùng rồng trong hôn lễ truyền thống?', correct:'凤凰'},
-      {q:'Con vật nào, dù không được ưa chuộng ở phương Tây, lại là biểu tượng may mắn ở Trung Quốc vì đồng âm với chữ "phúc"?', correct:'蝙蝠'},
-      {q:'Con vật nào luôn xuất hiện trong tranh Tết với ý nghĩa chúc "năm nào cũng dư dả, sung túc"?', correct:'鱼'},
-      {q:'Bốn loài cây Mai, Lan, Trúc, Cúc tượng trưng cho điều gì trong văn hóa Trung Quốc?', correct:'梅兰竹菊'},
-      {q:'Màu sắc nào trong văn hóa truyền thống Trung Quốc gắn liền với tang lễ và nên tránh dùng trong dịp vui?', correct:'白色'},
-      {q:'Loại đá quý nào được người Trung Quốc xem là biểu tượng của sự tinh khiết, cao quý và có thể xua đuổi tà khí?', correct:'玉'},
-      {q:'Vật phẩm nào tượng trưng cho tài lộc, sự giàu có, thường được trang trí vào dịp Tết Nguyên Đán?', correct:'金元宝'},
-      {q:'Loài chim nào được coi là điềm báo tin vui khi kêu trước nhà, vì tên gọi đồng âm với chữ "hỷ"?', correct:'喜鹊'},
-      {q:'Kim, Mộc, Thủy, Hỏa, Thổ là năm yếu tố cơ bản trong triết học cổ Trung Hoa, được gọi chung là gì?', correct:'五行'},
-      {q:'Vì sao nhiều tòa nhà ở Trung Quốc không đánh số tầng 4?', correct:'四'},
-      {q:'Số 8 thường được người Trung Quốc ưa chuộng chọn cho những vật dụng nào trong đời sống?', correct:'八'},
-      {q:'Hình ảnh con dơi (蝙蝠) thường được chạm khắc ở đâu trong văn hóa trang trí truyền thống Trung Quốc?', correct:'蝙蝠'},
-      {q:'Câu chúc "年年有余" (năm nào cũng dư dả) thường đi kèm với hình ảnh con vật nào?', correct:'鱼'},
-      {q:'Màu đỏ (红色) xuất hiện phổ biến nhất trong những dịp nào của người Trung Quốc?', correct:'红色'}
-    ]
-  },
-  t_tea: {
-    label: 'Trà đạo & Văn hóa sinh hoạt',
-    pool: [
-      {h:'茶道', p:'Chádào', m:'Trà đạo', desc:'Nghệ thuật pha và thưởng trà mang tính nghi thức, chú trọng sự tĩnh tâm, thanh lọc tâm hồn.'},
-      {h:'绿茶', p:'Lǜchá', m:'Trà xanh', desc:'Loại trà không lên men, giữ nguyên màu xanh của lá, vị thanh nhẹ, phổ biến nhất ở Trung Quốc.'},
-      {h:'乌龙茶', p:'Wūlóngchá', m:'Trà Ô Long', desc:'Trà bán lên men, hương vị đậm đà giữa trà xanh và trà đen, nổi tiếng vùng Phúc Kiến.'},
-      {h:'普洱茶', p:'Pǔ\'ěrchá', m:'Trà Phổ Nhĩ', desc:'Trà lên men để càng lâu càng có giá trị, đặc sản vùng Vân Nam, thường được ép thành bánh.'},
-      {h:'功夫茶', p:'Gōngfu chá', m:'Trà công phu', desc:'Nghệ thuật pha trà cầu kỳ, tỉ mỉ của vùng Triều Sán (Quảng Đông), dùng ấm chén nhỏ.'},
-      {h:'茶馆', p:'Cháguǎn', m:'Quán trà', desc:'Không gian sinh hoạt cộng đồng truyền thống, nơi người dân uống trà, trò chuyện, nghe kể chuyện, xem kịch.'},
-      {h:'盖碗', p:'Gàiwǎn', m:'Chén trà có nắp', desc:'Dụng cụ pha trà truyền thống gồm chén, nắp và đế, dùng phổ biến trong các nghi thức trà đạo.'},
-      {h:'茶艺', p:'Cháyì', m:'Nghệ thuật trà', desc:'Kỹ thuật và nghệ thuật trình diễn các bước pha trà một cách đẹp mắt, có tính biểu diễn.'},
-      {h:'书法', p:'Shūfǎ', m:'Thư pháp', desc:'Nghệ thuật viết chữ Hán bằng bút lông, được coi là một phần không thể thiếu trong sinh hoạt tao nhã truyền thống.'},
-      {h:'太极拳', p:'Tàijíquán', m:'Thái Cực Quyền', desc:'Môn võ thuật - dưỡng sinh truyền thống, động tác chậm rãi, thường luyện tập vào buổi sáng ở công viên.'},
-      {h:'麻将', p:'Májiàng', m:'Mạt chược', desc:'Trò chơi giải trí truyền thống phổ biến trong sinh hoạt gia đình và cộng đồng Trung Quốc.'},
-      {h:'二胡', p:'Èrhú', m:'Đàn nhị', desc:'Nhạc cụ dây kéo truyền thống hai dây, âm thanh du dương, thường xuất hiện trong nhạc cổ điển Trung Hoa.'},
-      {h:'风水', p:'Fēngshuǐ', m:'Phong thủy', desc:'Học thuyết về sự hài hòa giữa con người và môi trường sống, ảnh hưởng đến cách bài trí nhà cửa.'},
-      {h:'中医养生', p:'Zhōngyī yǎngshēng', m:'Dưỡng sinh theo y học cổ truyền', desc:'Quan niệm chăm sóc sức khỏe theo mùa, cân bằng âm dương, kết hợp ăn uống và vận động điều độ.'},
-      {h:'茶点心', p:'Chá diǎnxin', m:'Bánh dùng kèm trà', desc:'Các loại bánh nhỏ, mứt được dùng kèm khi uống trà để tăng hương vị và tránh say trà.'}
-    ],
-    questions: [
-      {q:'Nghệ thuật pha và thưởng trà mang tính nghi thức, chú trọng sự tĩnh tâm của người Trung Quốc gọi là gì?', correct:'茶道'},
-      {q:'Loại trà không lên men, giữ nguyên màu xanh của lá, có vị thanh nhẹ và phổ biến nhất Trung Quốc là loại trà nào?', correct:'绿茶'},
-      {q:'Loại trà bán lên men, hương vị đậm đà nằm giữa trà xanh và trà đen, nổi tiếng ở vùng Phúc Kiến, gọi là gì?', correct:'乌龙茶'},
-      {q:'Loại trà càng để lâu càng có giá trị, đặc sản Vân Nam, thường được ép thành bánh tròn, gọi là gì?', correct:'普洱茶'},
-      {q:'Nghệ thuật pha trà cầu kỳ, tỉ mỉ với ấm chén nhỏ, đặc trưng của vùng Triều Sán (Quảng Đông), gọi là gì?', correct:'功夫茶'},
-      {q:'Không gian sinh hoạt cộng đồng truyền thống, nơi người dân uống trà, trò chuyện, xem kịch, gọi là gì?', correct:'茶馆'},
-      {q:'Dụng cụ pha trà truyền thống gồm chén, nắp và đế, dùng phổ biến trong nghi thức trà đạo, gọi là gì?', correct:'盖碗'},
-      {q:'Kỹ thuật và nghệ thuật trình diễn các bước pha trà một cách đẹp mắt, có tính biểu diễn, gọi là gì?', correct:'茶艺'},
-      {q:'Nghệ thuật viết chữ Hán bằng bút lông, một phần không thể thiếu trong sinh hoạt tao nhã truyền thống, gọi là gì?', correct:'书法'},
-      {q:'Môn võ thuật - dưỡng sinh với động tác chậm rãi, thường được luyện tập vào buổi sáng ở công viên, gọi là gì?', correct:'太极拳'},
-      {q:'Trò chơi giải trí truyền thống rất phổ biến trong sinh hoạt gia đình Trung Quốc, thường chơi 4 người, gọi là gì?', correct:'麻将'},
-      {q:'Nhạc cụ dây kéo truyền thống hai dây, âm thanh du dương, thường xuất hiện trong nhạc cổ điển Trung Hoa, gọi là gì?', correct:'二胡'},
-      {q:'Học thuyết về sự hài hòa giữa con người và môi trường sống, ảnh hưởng đến cách bài trí nhà cửa, gọi là gì?', correct:'风水'},
-      {q:'Quan niệm chăm sóc sức khỏe theo mùa, cân bằng âm dương trong y học cổ truyền Trung Quốc gọi là gì?', correct:'中医养生'},
-      {q:'Các loại bánh nhỏ, mứt dùng kèm khi uống trà để tăng hương vị và tránh say trà, gọi chung là gì?', correct:'茶点心'},
-      {q:'功夫茶 (trà công phu) là nét văn hóa uống trà đặc trưng của vùng nào?', correct:'功夫茶'},
-      {q:'普洱茶 (trà Phổ Nhĩ) có đặc điểm gì khác biệt so với các loại trà khác về thời gian bảo quản?', correct:'普洱茶'},
-      {q:'太极拳 (Thái Cực Quyền) thường được người Trung Quốc luyện tập vào thời điểm nào trong ngày?', correct:'太极拳'},
-      {q:'茶馆 (quán trà) đóng vai trò gì trong đời sống cộng đồng truyền thống Trung Quốc?', correct:'茶馆'},
-      {q:'风水 (phong thủy) ảnh hưởng chủ yếu đến lĩnh vực nào trong đời sống người Trung Quốc?', correct:'风水'}
-    ]
-  },
-  t_art: {
-    label: 'Nghệ thuật truyền thống',
-    pool: [
-      {h:'京剧', p:'Jīngjù', m:'Kinh kịch', desc:'Loại hình kịch hát truyền thống nổi tiếng nhất Trung Quốc, kết hợp hát, múa, võ thuật và hóa trang mặt nạ đặc sắc.'},
-      {h:'脸谱', p:'Liǎnpǔ', m:'Mặt nạ hóa trang', desc:'Nghệ thuật vẽ mặt trong Kinh kịch, mỗi màu sắc tượng trưng cho một tính cách nhân vật (đỏ: trung nghĩa, trắng: gian trá).'},
-      {h:'剪纸', p:'Jiǎnzhǐ', m:'Cắt giấy', desc:'Nghệ thuật cắt hình trên giấy, thường dùng giấy đỏ trang trí cửa sổ vào dịp Tết.'},
-      {h:'书法', p:'Shūfǎ', m:'Thư pháp', desc:'Nghệ thuật viết chữ Hán bằng bút lông, coi trọng thần thái và bố cục của nét chữ.'},
-      {h:'水墨画', p:'Shuǐmòhuà', m:'Tranh thủy mặc', desc:'Tranh vẽ bằng mực nho trên giấy hoặc lụa, chú trọng ý cảnh, thường vẽ phong cảnh núi non, hoa điểu.'},
-      {h:'刺绣', p:'Cìxiù', m:'Thêu tay', desc:'Nghệ thuật thêu truyền thống, nổi tiếng với Tứ đại danh thêu: Tô, Thục, Tương, Việt.'},
-      {h:'陶瓷', p:'Táocí', m:'Đồ gốm sứ', desc:'Nghệ thuật làm gốm sứ nổi tiếng thế giới, đặc biệt là gốm sứ Cảnh Đức Trấn (景德镇).'},
-      {h:'皮影戏', p:'Píyǐngxì', m:'Múa rối bóng', desc:'Loại hình nghệ thuật dùng con rối da thú, chiếu bóng lên màn vải để kể chuyện.'},
-      {h:'中国结', p:'Zhōngguójié', m:'Nút thắt Trung Hoa', desc:'Nghệ thuật thắt dây trang trí truyền thống, tượng trưng cho sự đoàn kết, may mắn, hạnh phúc.'},
-      {h:'古筝', p:'Gǔzhēng', m:'Đàn tranh cổ', desc:'Nhạc cụ dây gảy truyền thống có nhiều dây, âm thanh trong trẻo, được xem là biểu tượng âm nhạc cổ điển Trung Hoa.'},
-      {h:'太极', p:'Tàijí', m:'Thái Cực', desc:'Biểu tượng triết học Âm - Dương, thể hiện sự cân bằng và vận động tuần hoàn của vũ trụ.'},
-      {h:'武术', p:'Wǔshù', m:'Võ thuật Trung Hoa', desc:'Hệ thống các môn võ truyền thống Trung Quốc như Thiếu Lâm, Võ Đang, kết hợp rèn luyện thân - tâm.'},
-      {h:'灯笼', p:'Dēnglong', m:'Đèn lồng', desc:'Vật trang trí truyền thống, thường có màu đỏ, treo vào dịp lễ Tết, tượng trưng cho sự sum vầy, ấm no.'},
-      {h:'风筝', p:'Fēngzheng', m:'Diều', desc:'Trò chơi dân gian có lịch sử lâu đời, Trung Quốc được coi là nơi phát minh ra diều.'},
-      {h:'相声', p:'Xiàngsheng', m:'Nói chuyện hài (tương thanh)', desc:'Loại hình biểu diễn hài kịch bằng lời nói, thường do hai người đối đáp dí dỏm với nhau.'}
-    ],
-    questions: [
-      {q:'Loại hình kịch hát truyền thống nổi tiếng nhất Trung Quốc, kết hợp hát, múa và võ thuật, gọi là gì?', correct:'京剧'},
-      {q:'Nghệ thuật vẽ mặt trong Kinh kịch, mỗi màu sắc tượng trưng cho một tính cách nhân vật, gọi là gì?', correct:'脸谱'},
-      {q:'Nghệ thuật cắt hình trên giấy đỏ để trang trí cửa sổ vào dịp Tết Nguyên Đán, gọi là gì?', correct:'剪纸'},
-      {q:'Nghệ thuật viết chữ Hán bằng bút lông, coi trọng thần thái và bố cục của nét chữ, gọi là gì?', correct:'书法'},
-      {q:'Loại tranh vẽ bằng mực nho, chú trọng ý cảnh, thường vẽ phong cảnh núi non, hoa điểu, gọi là gì?', correct:'水墨画'},
-      {q:'Nghệ thuật thêu tay truyền thống nổi tiếng với "Tứ đại danh thêu": Tô, Thục, Tương, Việt, gọi là gì?', correct:'刺绣'},
-      {q:'Loại hình nghệ thuật làm gốm sứ nổi tiếng thế giới, đặc biệt ở vùng Cảnh Đức Trấn, gọi là gì?', correct:'陶瓷'},
-      {q:'Loại hình nghệ thuật dùng con rối da thú, chiếu bóng lên màn vải để kể chuyện, gọi là gì?', correct:'皮影戏'},
-      {q:'Nghệ thuật thắt dây trang trí truyền thống, tượng trưng cho sự đoàn kết, may mắn, gọi là gì?', correct:'中国结'},
-      {q:'Nhạc cụ dây gảy truyền thống có nhiều dây, âm thanh trong trẻo, biểu tượng âm nhạc cổ điển Trung Hoa, gọi là gì?', correct:'古筝'},
-      {q:'Biểu tượng triết học Âm - Dương thể hiện sự cân bằng và vận động tuần hoàn của vũ trụ, gọi là gì?', correct:'太极'},
-      {q:'Hệ thống các môn võ truyền thống như Thiếu Lâm, Võ Đang, kết hợp rèn luyện thân - tâm, gọi chung là gì?', correct:'武术'},
-      {q:'Vật trang trí truyền thống màu đỏ, treo vào dịp lễ Tết, tượng trưng cho sự sum vầy, ấm no, gọi là gì?', correct:'灯笼'},
-      {q:'Trung Quốc được coi là nơi phát minh ra trò chơi dân gian nào, có hình dáng bay trên trời nhờ gió?', correct:'风筝'},
-      {q:'Loại hình biểu diễn hài kịch bằng lời nói, thường do hai người đối đáp dí dỏm với nhau, gọi là gì?', correct:'相声'},
-      {q:'Trong nghệ thuật hóa trang Kinh kịch, màu đỏ trên mặt nạ tượng trưng cho tính cách nào của nhân vật?', correct:'脸谱'},
-      {q:'Tứ đại danh thêu của Trung Quốc gồm Tô, Thục, Tương và loại thêu nào nữa?', correct:'刺绣'},
-      {q:'京剧 (Kinh kịch) được coi là quốc túy (tinh hoa văn hóa) của quốc gia nào?', correct:'京剧'},
-      {q:'中国结 (nút thắt Trung Hoa) thường được treo ở đâu để trang trí và cầu may mắn?', correct:'中国结'},
-      {q:'武术 (võ thuật Trung Hoa) nổi tiếng nhất với hai môn phái nào gắn liền với các ngôi chùa/đạo quán?', correct:'武术'}
-    ]
-  },
-  t_place: {
-    label: 'Địa danh & Danh thắng',
-    pool: [
-      {h:'长城', p:'Chángchéng', m:'Vạn Lý Trường Thành', desc:'Công trình phòng thủ cổ đại vĩ đại nhất thế giới, biểu tượng nổi tiếng nhất của Trung Quốc, dài hàng nghìn km.'},
-      {h:'故宫', p:'Gùgōng', m:'Tử Cấm Thành', desc:'Cung điện hoàng gia thời Minh - Thanh tại Bắc Kinh, nơi ở của 24 vị hoàng đế, nay là Bảo tàng Cố Cung.'},
-      {h:'兵马俑', p:'Bīngmǎyǒng', m:'Đội quân đất nung', desc:'Hàng nghìn tượng binh lính, ngựa bằng đất nung chôn cùng Tần Thủy Hoàng, phát hiện tại Tây An.'},
-      {h:'桂林山水', p:'Guìlín shānshuǐ', m:'Sơn thủy Quế Lâm', desc:'Phong cảnh núi non sông nước nổi tiếng, được ca ngợi là "đẹp nhất thiên hạ" (桂林山水甲天下).'},
-      {h:'黄山', p:'Huángshān', m:'Núi Hoàng Sơn', desc:'Dãy núi nổi tiếng với biển mây, đá kỳ và thông cổ thụ, được UNESCO công nhận di sản thế giới.'},
-      {h:'西湖', p:'Xīhú', m:'Tây Hồ', desc:'Hồ nước nổi tiếng tại Hàng Châu, cảnh đẹp nên thơ, gắn với nhiều truyền thuyết và thơ ca cổ.'},
-      {h:'长江', p:'Chángjiāng', m:'Trường Giang', desc:'Con sông dài nhất Trung Quốc và châu Á (Dương Tử Giang), cái nôi của nền văn minh Trung Hoa.'},
-      {h:'黄河', p:'Huánghé', m:'Hoàng Hà', desc:'Con sông được coi là "cái nôi của văn minh Trung Hoa", nước sông có màu vàng do phù sa.'},
-      {h:'九寨沟', p:'Jiǔzhàigōu', m:'Cửu Trại Câu', desc:'Khu bảo tồn thiên nhiên ở Tứ Xuyên nổi tiếng với hồ nước nhiều màu sắc và thác nước tuyệt đẹp.'},
-      {h:'丽江古城', p:'Lìjiāng gǔchéng', m:'Cổ trấn Lệ Giang', desc:'Thành cổ ở Vân Nam với kiến trúc cổ kính, kênh nước len lỏi, di sản văn hóa thế giới.'},
-      {h:'天安门', p:'Tiān\'ānmén', m:'Thiên An Môn', desc:'Quảng trường trung tâm thủ đô Bắc Kinh, một trong những quảng trường lớn nhất thế giới.'},
-      {h:'颐和园', p:'Yíhéyuán', m:'Di Hòa Viên', desc:'Khu vườn hoàng gia lớn nhất còn được bảo tồn ở Bắc Kinh, từng là nơi nghỉ dưỡng của Từ Hi Thái hậu.'},
-      {h:'泰山', p:'Tàishān', m:'Núi Thái Sơn', desc:'Một trong Ngũ nhạc danh sơn, được coi là ngọn núi linh thiêng nhất, nơi các hoàng đế xưa lên tế trời.'},
-      {h:'乐山大佛', p:'Lèshān dàfó', m:'Đại Phật Lạc Sơn', desc:'Tượng Phật bằng đá khắc vào vách núi lớn nhất thế giới, tọa lạc tại Tứ Xuyên.'},
-      {h:'外滩', p:'Wàitān', m:'Bến Thượng Hải (The Bund)', desc:'Khu phố ven sông nổi tiếng của Thượng Hải, nơi giao thoa kiến trúc cổ điển châu Âu và hiện đại.'}
-    ],
-    questions: [
-      {q:'Công trình phòng thủ cổ đại vĩ đại nhất thế giới, biểu tượng nổi tiếng nhất của Trung Quốc, gọi là gì?', correct:'长城'},
-      {q:'Cung điện hoàng gia thời Minh - Thanh tại Bắc Kinh, nơi ở của 24 vị hoàng đế, gọi là gì?', correct:'故宫'},
-      {q:'Hàng nghìn tượng binh lính, ngựa bằng đất nung chôn cùng Tần Thủy Hoàng, được phát hiện ở đâu?', correct:'兵马俑'},
-      {q:'Phong cảnh núi non sông nước nào được ca ngợi là "đẹp nhất thiên hạ" trong câu thành ngữ nổi tiếng?', correct:'桂林山水'},
-      {q:'Dãy núi nổi tiếng với biển mây, đá kỳ và thông cổ thụ, được UNESCO công nhận di sản thế giới, gọi là gì?', correct:'黄山'},
-      {q:'Hồ nước nổi tiếng tại Hàng Châu, cảnh đẹp nên thơ, gắn với nhiều truyền thuyết và thơ ca cổ, gọi là gì?', correct:'西湖'},
-      {q:'Con sông dài nhất Trung Quốc và châu Á, còn được gọi là Dương Tử Giang, tên tiếng Trung là gì?', correct:'长江'},
-      {q:'Con sông được coi là "cái nôi của văn minh Trung Hoa", có nước màu vàng do phù sa, gọi là gì?', correct:'黄河'},
-      {q:'Khu bảo tồn thiên nhiên ở Tứ Xuyên nổi tiếng với hồ nước nhiều màu sắc và thác nước tuyệt đẹp, gọi là gì?', correct:'九寨沟'},
-      {q:'Thành cổ ở Vân Nam với kiến trúc cổ kính, kênh nước len lỏi, là di sản văn hóa thế giới, gọi là gì?', correct:'丽江古城'},
-      {q:'Quảng trường trung tâm thủ đô Bắc Kinh, một trong những quảng trường lớn nhất thế giới, gọi là gì?', correct:'天安门'},
-      {q:'Khu vườn hoàng gia lớn nhất còn được bảo tồn ở Bắc Kinh, từng là nơi nghỉ dưỡng của Từ Hi Thái hậu, gọi là gì?', correct:'颐和园'},
-      {q:'Ngọn núi được coi là linh thiêng nhất trong Ngũ nhạc danh sơn, nơi các hoàng đế xưa lên tế trời, gọi là gì?', correct:'泰山'},
-      {q:'Tượng Phật bằng đá khắc vào vách núi lớn nhất thế giới, tọa lạc tại Tứ Xuyên, gọi là gì?', correct:'乐山大佛'},
-      {q:'Khu phố ven sông nổi tiếng của Thượng Hải, nơi giao thoa kiến trúc cổ điển châu Âu và hiện đại, gọi là gì?', correct:'外滩'},
-      {q:'故宫 (Tử Cấm Thành) ngày nay được sử dụng với chức năng gì?', correct:'故宫'},
-      {q:'兵马俑 (đội quân đất nung) được tạo ra để phục vụ mục đích gì cho vị hoàng đế Tần Thủy Hoàng?', correct:'兵马俑'},
-      {q:'长城 (Vạn Lý Trường Thành) được xây dựng chủ yếu với mục đích gì trong lịch sử?', correct:'长城'},
-      {q:'黄河 (Hoàng Hà) và 长江 (Trường Giang) là hai con sông có vai trò như thế nào đối với văn minh Trung Hoa?', correct:'黄河'},
-      {q:'泰山 (Thái Sơn) thuộc nhóm danh sơn nào được coi là linh thiêng bậc nhất Trung Quốc?', correct:'泰山'}
-    ]
-  },
-  t_comm: {
-    label: 'Văn hóa giao tiếp',
-    pool: [
-      {h:'面子', p:'Miànzi', m:'Thể diện', desc:'Khái niệm quan trọng trong giao tiếp, chỉ danh dự và uy tín cá nhân, người Trung Quốc rất coi trọng "giữ thể diện".'},
-      {h:'关系', p:'Guānxi', m:'Quan hệ', desc:'Mạng lưới quan hệ xã hội, được xem là yếu tố quan trọng trong công việc và đời sống ở Trung Quốc.'},
-      {h:'客气', p:'Kèqi', m:'Khách sáo', desc:'Cách nói/hành xử lịch sự, nhún nhường, thường từ chối nhẹ trước khi nhận quà hoặc lời mời.'},
-      {h:'谦虚', p:'Qiānxū', m:'Khiêm tốn', desc:'Đức tính được coi trọng trong giao tiếp, người Trung Quốc thường hạ thấp bản thân khi được khen ngợi.'},
-      {h:'敬酒', p:'Jìngjiǔ', m:'Mời rượu/Chúc rượu', desc:'Nghi thức nâng ly mời rượu trong bữa tiệc, thường người nhỏ tuổi/cấp dưới chủ động mời trước.'},
-      {h:'称呼', p:'Chēnghu', m:'Cách xưng hô', desc:'Hệ thống xưng hô phức tạp theo vai vế, tuổi tác, chức vụ, thể hiện tôn ti trật tự trong giao tiếp.'},
-      {h:'寒暄', p:'Hánxuān', m:'Lời chào xã giao', desc:'Những câu hỏi thăm quen thuộc khi gặp mặt như "ăn cơm chưa?" (吃饭了吗) thay cho lời chào thông thường.'},
-      {h:'送客', p:'Sòngkè', m:'Tiễn khách', desc:'Phong tục chủ nhà tiễn khách ra tận cửa hoặc xa hơn để thể hiện sự hiếu khách, tôn trọng.'},
-      {h:'长幼有序', p:'Zhǎngyòu yǒuxù', m:'Trên kính dưới nhường', desc:'Nguyên tắc đạo đức Nho giáo về trật tự tôn ti giữa người lớn tuổi và người trẻ tuổi trong gia đình, xã hội.'},
-      {h:'礼尚往来', p:'Lǐshàng wǎnglái', m:'Có đi có lại', desc:'Quan niệm trong giao tiếp: nhận ân huệ/quà tặng thì phải đáp lễ tương xứng.'},
-      {h:'婉转表达', p:'Wǎnzhuǎn biǎodá', m:'Cách nói vòng vo, tế nhị', desc:'Phong cách giao tiếp gián tiếp, tránh nói thẳng "không" để giữ hòa khí và thể diện cho đối phương.'},
-      {h:'鞠躬', p:'Jūgōng', m:'Cúi chào', desc:'Cử chỉ cúi người thể hiện sự tôn trọng, phổ biến trong các dịp trang trọng, lễ nghi truyền thống.'},
-      {h:'拱手礼', p:'Gǒngshǒulǐ', m:'Chắp tay vái chào', desc:'Nghi thức chào truyền thống bằng cách chắp hai tay lại và cúi nhẹ, dùng trong dịp lễ Tết, võ thuật.'},
-      {h:'饭桌礼仪', p:'Fànzhuō lǐyí', m:'Lễ nghi trên bàn ăn', desc:'Quy tắc ứng xử khi dùng bữa như mời người lớn tuổi gắp thức ăn trước, không cắm đũa vào bát cơm.'},
-      {h:'低调', p:'Dīdiào', m:'Kín đáo, khiêm nhường', desc:'Phong cách sống và giao tiếp được coi trọng, tránh phô trương, khoe khoang thành tích cá nhân.'}
-    ],
-    questions: [
-      {q:'Khái niệm chỉ danh dự và uy tín cá nhân trong giao tiếp, được người Trung Quốc rất coi trọng "giữ gìn", gọi là gì?', correct:'面子'},
-      {q:'Mạng lưới quan hệ xã hội, được xem là yếu tố quan trọng trong công việc và đời sống ở Trung Quốc, gọi là gì?', correct:'关系'},
-      {q:'Cách nói/hành xử lịch sự, nhún nhường, thường từ chối nhẹ trước khi nhận quà hoặc lời mời, gọi là gì?', correct:'客气'},
-      {q:'Đức tính được coi trọng trong giao tiếp, khiến người Trung Quốc thường hạ thấp bản thân khi được khen, gọi là gì?', correct:'谦虚'},
-      {q:'Nghi thức nâng ly mời rượu trong bữa tiệc, thường người nhỏ tuổi/cấp dưới chủ động mời trước, gọi là gì?', correct:'敬酒'},
-      {q:'Hệ thống xưng hô phức tạp theo vai vế, tuổi tác, chức vụ, thể hiện tôn ti trật tự, gọi là gì?', correct:'称呼'},
-      {q:'Câu hỏi thăm quen thuộc "ăn cơm chưa?" (吃饭了吗) khi gặp mặt là một dạng của điều gì trong giao tiếp?', correct:'寒暄'},
-      {q:'Phong tục chủ nhà tiễn khách ra tận cửa hoặc xa hơn để thể hiện sự hiếu khách, gọi là gì?', correct:'送客'},
-      {q:'Nguyên tắc đạo đức Nho giáo về trật tự tôn ti giữa người lớn tuổi và người trẻ tuổi, gọi là gì?', correct:'长幼有序'},
-      {q:'Quan niệm trong giao tiếp cho rằng nhận ân huệ/quà tặng thì phải đáp lễ tương xứng, gọi là gì?', correct:'礼尚往来'},
-      {q:'Phong cách giao tiếp gián tiếp, tránh nói thẳng "không" để giữ hòa khí và thể diện, gọi là gì?', correct:'婉转表达'},
-      {q:'Cử chỉ cúi người thể hiện sự tôn trọng, phổ biến trong các dịp trang trọng, lễ nghi truyền thống, gọi là gì?', correct:'鞠躬'},
-      {q:'Nghi thức chào truyền thống bằng cách chắp hai tay lại và cúi nhẹ, dùng trong dịp lễ Tết, gọi là gì?', correct:'拱手礼'},
-      {q:'Quy tắc ứng xử khi dùng bữa như mời người lớn tuổi gắp thức ăn trước, gọi chung là gì?', correct:'饭桌礼仪'},
-      {q:'Phong cách sống và giao tiếp được coi trọng, tránh phô trương, khoe khoang thành tích cá nhân, gọi là gì?', correct:'低调'},
-      {q:'Vì sao "giữ thể diện" (面子) lại được coi là rất quan trọng trong văn hóa giao tiếp Trung Quốc?', correct:'面子'},
-      {q:'客气 (khách sáo) thường được thể hiện qua hành động nào khi được mời ăn hoặc tặng quà?', correct:'客气'},
-      {q:'礼尚往来 (có đi có lại) phản ánh nguyên tắc nào trong ứng xử xã hội truyền thống Trung Quốc?', correct:'礼尚往来'},
-      {q:'Vì sao người Trung Quốc thường tránh nói thẳng từ "không" khi từ chối một đề nghị?', correct:'婉转表达'},
-      {q:'关系 (quan hệ) có vai trò như thế nào trong môi trường kinh doanh và công việc ở Trung Quốc?', correct:'关系'}
-    ]
-  },
-  t_medicine: {
-    label: 'Y học cổ truyền',
-    pool: [
-      {h:'中医', p:'Zhōngyī', m:'Trung y (Đông y)', desc:'Nền y học cổ truyền Trung Quốc, chữa bệnh dựa trên cân bằng âm dương, khí huyết trong cơ thể.'},
-      {h:'针灸', p:'Zhēnjiǔ', m:'Châm cứu', desc:'Phương pháp chữa bệnh bằng cách châm kim vào các huyệt đạo để điều hòa khí huyết, giảm đau.'},
-      {h:'推拿', p:'Tuīná', m:'Xoa bóp bấm huyệt', desc:'Phương pháp trị liệu bằng tay tác động lên huyệt đạo, cơ, khớp để chữa bệnh và thư giãn.'},
-      {h:'阴阳', p:'Yīnyáng', m:'Âm Dương', desc:'Học thuyết triết học cổ, cho rằng vạn vật gồm hai mặt đối lập nhưng thống nhất, sức khỏe là sự cân bằng âm dương.'},
-      {h:'五行', p:'Wǔxíng', m:'Ngũ hành', desc:'Kim, Mộc, Thủy, Hỏa, Thổ - học thuyết giải thích mối quan hệ tương sinh, tương khắc, ứng dụng trong chẩn đoán Đông y.'},
-      {h:'气', p:'Qì', m:'Khí', desc:'Khái niệm năng lượng sống lưu thông trong cơ thể theo kinh lạc, là nền tảng của y học cổ truyền Trung Quốc.'},
-      {h:'经络', p:'Jīngluò', m:'Kinh lạc', desc:'Hệ thống đường dẫn khí huyết trong cơ thể theo quan niệm Đông y, là cơ sở của châm cứu, bấm huyệt.'},
-      {h:'中药', p:'Zhōngyào', m:'Thuốc Đông y', desc:'Thuốc bào chế từ thảo dược, khoáng vật, động vật theo bài thuốc cổ truyền Trung Quốc.'},
-      {h:'人参', p:'Rénshēn', m:'Nhân sâm', desc:'Vị thuốc quý trong Đông y, được coi là "vua của các loại thảo dược", bồi bổ nguyên khí.'},
-      {h:'把脉', p:'Bǎmài', m:'Bắt mạch', desc:'Phương pháp chẩn đoán truyền thống bằng cách bắt mạch cổ tay để đánh giá tình trạng sức khỏe.'},
-      {h:'拔罐', p:'Báguàn', m:'Giác hơi', desc:'Phương pháp trị liệu dùng ống giác tạo áp suất âm hút lên da để lưu thông khí huyết, giảm đau nhức.'},
-      {h:'食疗', p:'Shíliáo', m:'Ăn uống trị liệu', desc:'Quan niệm dùng thực phẩm phù hợp theo mùa và thể trạng để phòng và hỗ trợ chữa bệnh.'},
-      {h:'望闻问切', p:'Wàng wén wèn qiè', m:'Tứ chẩn', desc:'Bốn phương pháp chẩn đoán cổ truyền: nhìn (望), nghe/ngửi (闻), hỏi (问), bắt mạch (切).'},
-      {h:'养生', p:'Yǎngshēng', m:'Dưỡng sinh', desc:'Phương pháp chăm sóc, bồi dưỡng sức khỏe lâu dài bằng lối sống điều độ, hài hòa với tự nhiên.'},
-      {h:'艾灸', p:'Àijiǔ', m:'Cứu ngải', desc:'Phương pháp dùng nhiệt từ lá ngải cứu đốt để làm ấm và kích thích huyệt đạo, hỗ trợ lưu thông khí huyết.'}
-    ],
-    questions: [
-      {q:'Nền y học cổ truyền Trung Quốc, chữa bệnh dựa trên cân bằng âm dương, khí huyết trong cơ thể, gọi là gì?', correct:'中医'},
-      {q:'Phương pháp chữa bệnh bằng cách châm kim vào các huyệt đạo để điều hòa khí huyết, gọi là gì?', correct:'针灸'},
-      {q:'Phương pháp trị liệu bằng tay tác động lên huyệt đạo, cơ, khớp để chữa bệnh và thư giãn, gọi là gì?', correct:'推拿'},
-      {q:'Học thuyết triết học cổ cho rằng sức khỏe là sự cân bằng giữa hai mặt đối lập nhưng thống nhất, gọi là gì?', correct:'阴阳'},
-      {q:'Kim, Mộc, Thủy, Hỏa, Thổ - học thuyết giải thích mối quan hệ tương sinh, tương khắc trong Đông y, gọi là gì?', correct:'五行'},
-      {q:'Khái niệm năng lượng sống lưu thông trong cơ thể theo kinh lạc, nền tảng của y học cổ truyền, gọi là gì?', correct:'气'},
-      {q:'Hệ thống đường dẫn khí huyết trong cơ thể, là cơ sở của châm cứu, bấm huyệt, gọi là gì?', correct:'经络'},
-      {q:'Thuốc bào chế từ thảo dược, khoáng vật, động vật theo bài thuốc cổ truyền Trung Quốc, gọi là gì?', correct:'中药'},
-      {q:'Vị thuốc quý trong Đông y, được coi là "vua của các loại thảo dược", bồi bổ nguyên khí, gọi là gì?', correct:'人参'},
-      {q:'Phương pháp chẩn đoán truyền thống bằng cách kiểm tra mạch ở cổ tay để đánh giá sức khỏe, gọi là gì?', correct:'把脉'},
-      {q:'Phương pháp trị liệu dùng ống tạo áp suất âm hút lên da để lưu thông khí huyết, giảm đau nhức, gọi là gì?', correct:'拔罐'},
-      {q:'Quan niệm dùng thực phẩm phù hợp theo mùa và thể trạng để phòng và hỗ trợ chữa bệnh, gọi là gì?', correct:'食疗'},
-      {q:'Bốn phương pháp chẩn đoán cổ truyền: nhìn, nghe/ngửi, hỏi, bắt mạch, được gọi chung là gì?', correct:'望闻问切'},
-      {q:'Phương pháp chăm sóc, bồi dưỡng sức khỏe lâu dài bằng lối sống điều độ, hài hòa với tự nhiên, gọi là gì?', correct:'养生'},
-      {q:'Phương pháp dùng nhiệt từ lá ngải cứu đốt để làm ấm và kích thích huyệt đạo, gọi là gì?', correct:'艾灸'},
-      {q:'针灸 (châm cứu) tác động lên bộ phận nào của cơ thể để điều hòa khí huyết?', correct:'针灸'},
-      {q:'阴阳 (Âm Dương) là học thuyết nền tảng chi phối quan niệm gì trong Đông y?', correct:'阴阳'},
-      {q:'望闻问切 (Tứ chẩn) là phương pháp chẩn đoán bệnh không cần dùng đến công cụ nào hiện đại?', correct:'望闻问切'},
-      {q:'人参 (nhân sâm) được Đông y đánh giá có công dụng chính là gì?', correct:'人参'},
-      {q:'养生 (dưỡng sinh) chú trọng điều gì để duy trì sức khỏe lâu dài?', correct:'养生'}
-    ]
-  },
-  t_idiom: {
-    label: 'Điển tích & Thành ngữ',
-    pool: [
-      {h:'画蛇添足', p:'Huà shé tiān zú', m:'Vẽ rắn thêm chân', desc:'Chỉ việc làm thừa thãi, không cần thiết, phản tác dụng, xuất phát từ câu chuyện người vẽ rắn nhanh nhất lại thêm chân cho rắn nên thua cuộc.'},
-      {h:'守株待兔', p:'Shǒu zhū dài tù', m:'Ôm cây đợi thỏ', desc:'Chỉ sự ỷ lại, trông chờ may rủi mà không chịu nỗ lực, từ chuyện người nông dân nhặt được thỏ va vào gốc cây liền bỏ việc cày để chờ thỏ khác.'},
-      {h:'刻舟求剑', p:'Kè zhōu qiú jiàn', m:'Khắc thuyền tìm gươm', desc:'Chỉ sự máy móc, cố chấp không biết tùy cơ ứng biến, từ chuyện người đánh rơi gươm xuống sông rồi khắc dấu lên thuyền để tìm.'},
-      {h:'狐假虎威', p:'Hú jiǎ hǔ wēi', m:'Cáo mượn oai hùm', desc:'Chỉ kẻ dựa vào thế lực của người khác để hù dọa, ra oai với người khác.'},
-      {h:'画龙点睛', p:'Huà lóng diǎn jīng', m:'Vẽ rồng điểm mắt', desc:'Chỉ chi tiết nhỏ nhưng quan trọng, làm nổi bật và hoàn thiện toàn bộ tác phẩm hay vấn đề.'},
-      {h:'井底之蛙', p:'Jǐngdǐ zhī wā', m:'Ếch ngồi đáy giếng', desc:'Chỉ người có tầm nhìn hạn hẹp, tự mãn với hiểu biết nông cạn của mình.'},
-      {h:'对牛弹琴', p:'Duì niú tán qín', m:'Đàn gảy tai trâu', desc:'Chỉ việc nói chuyện, giảng giải với người không có khả năng hiểu hoặc không quan tâm, phí công vô ích.'},
-      {h:'愚公移山', p:'Yúgōng yí shān', m:'Ngu Công dời núi', desc:'Ca ngợi ý chí kiên trì, bền bỉ, tin rằng nỗ lực không ngừng cuối cùng sẽ vượt qua mọi khó khăn lớn lao.'},
-      {h:'叶公好龙', p:'Yègōng hào lóng', m:'Diệp Công thích rồng', desc:'Chỉ kẻ nói thích một điều gì đó nhưng khi gặp thực tế lại sợ hãi, chỉ là giả vờ yêu thích bề ngoài.'},
-      {h:'亡羊补牢', p:'Wáng yáng bǔ láo', m:'Mất cừu sửa chuồng', desc:'Khuyên rằng khi xảy ra sai lầm, kịp thời sửa chữa thì vẫn còn chưa muộn.'},
-      {h:'滥竽充数', p:'Làn yú chōng shù', m:'Kẻ bất tài trà trộn', desc:'Chỉ người không có thực tài nhưng trà trộn vào tập thể để hưởng lợi giả danh.'},
-      {h:'卧薪尝胆', p:'Wò xīn cháng dǎn', m:'Nằm gai nếm mật', desc:'Chỉ tinh thần chịu đựng gian khổ, nuôi chí lớn để phục thù hoặc đạt được mục tiêu lớn.'},
-      {h:'杯弓蛇影', p:'Bēi gōng shé yǐng', m:'Bóng cung trong chén thành rắn', desc:'Chỉ sự đa nghi, tự dọa mình vì những điều tưởng tượng không có thật.'},
-      {h:'塞翁失马', p:'Sàiwēng shī mǎ', m:'Tái Ông mất ngựa', desc:'Triết lý trong họa có phúc, trong phúc có họa, không nên vội vàng đánh giá may rủi của một sự việc.'},
-      {h:'三顾茅庐', p:'Sān gù máolú', m:'Ba lần đến lều tranh', desc:'Chỉ sự chân thành, kiên nhẫn cầu hiền tài, xuất phát từ việc Lưu Bị ba lần đến mời Gia Cát Lượng.'}
-    ],
-    questions: [
-      {q:'Thành ngữ nào chỉ việc làm thừa thãi, không cần thiết, phản tác dụng, xuất phát từ chuyện vẽ rắn thêm chân?', correct:'画蛇添足'},
-      {q:'Thành ngữ nào chỉ sự ỷ lại, trông chờ may rủi mà không chịu nỗ lực, từ chuyện ôm gốc cây đợi thỏ?', correct:'守株待兔'},
-      {q:'Thành ngữ nào chỉ sự máy móc, cố chấp không biết tùy cơ ứng biến, từ chuyện khắc thuyền tìm gươm?', correct:'刻舟求剑'},
-      {q:'Thành ngữ nào chỉ kẻ dựa vào thế lực của người khác để hù dọa, ra oai với người khác?', correct:'狐假虎威'},
-      {q:'Thành ngữ nào chỉ một chi tiết nhỏ nhưng quan trọng, làm nổi bật và hoàn thiện toàn bộ tác phẩm?', correct:'画龙点睛'},
-      {q:'Thành ngữ nào chỉ người có tầm nhìn hạn hẹp, tự mãn với hiểu biết nông cạn của mình?', correct:'井底之蛙'},
-      {q:'Thành ngữ nào chỉ việc nói chuyện với người không có khả năng hiểu, phí công vô ích, ví như đàn cho ai nghe?', correct:'对牛弹琴'},
-      {q:'Câu chuyện nào ca ngợi ý chí kiên trì, bền bỉ, tin rằng nỗ lực không ngừng sẽ vượt qua khó khăn lớn lao?', correct:'愚公移山'},
-      {q:'Thành ngữ nào chỉ kẻ nói thích một điều gì đó nhưng khi gặp thực tế lại sợ hãi, chỉ giả vờ yêu thích?', correct:'叶公好龙'},
-      {q:'Thành ngữ nào khuyên rằng khi xảy ra sai lầm, kịp thời sửa chữa thì vẫn còn chưa muộn?', correct:'亡羊补牢'},
-      {q:'Thành ngữ nào chỉ người không có thực tài nhưng trà trộn vào tập thể để hưởng lợi giả danh?', correct:'滥竽充数'},
-      {q:'Thành ngữ nào chỉ tinh thần chịu đựng gian khổ, nuôi chí lớn để phục thù hoặc đạt mục tiêu lớn?', correct:'卧薪尝胆'},
-      {q:'Thành ngữ nào chỉ sự đa nghi, tự dọa mình vì những điều tưởng tượng không có thật?', correct:'杯弓蛇影'},
-      {q:'Thành ngữ nào mang triết lý "trong họa có phúc, trong phúc có họa", không nên vội đánh giá may rủi?', correct:'塞翁失马'},
-      {q:'Điển tích nào chỉ sự chân thành, kiên nhẫn cầu hiền tài, xuất phát từ việc Lưu Bị ba lần mời Gia Cát Lượng?', correct:'三顾茅庐'},
-      {q:'画蛇添足 (vẽ rắn thêm chân) bắt nguồn từ một cuộc thi giữa những người làm công việc gì?', correct:'画蛇添足'},
-      {q:'井底之蛙 (ếch ngồi đáy giếng) thường được dùng để phê phán kiểu người có đặc điểm gì?', correct:'井底之蛙'},
-      {q:'愚公移山 (Ngu Công dời núi) là câu chuyện về một ông lão quyết tâm làm việc gì tưởng chừng bất khả thi?', correct:'愚公移山'},
-      {q:'三顾茅庐 (ba lần đến lều tranh) gắn liền với hai nhân vật lịch sử nổi tiếng thời Tam Quốc nào?', correct:'三顾茅庐'},
-      {q:'塞翁失马 (Tái Ông mất ngựa) dạy con người thái độ nào khi đối diện với được - mất trong cuộc sống?', correct:'塞翁失马'}
-    ]
-  },
-};
+/* ===================== CULTURE MODULE: 7 phần trắc nghiệm Văn hóa Trung Quốc trích nguyên vẹn từ file CONTENT ===================== */
+const CULTURE_PARTS = [
+  {part:'I', title:'CHỦ ĐỀ DÂN TỘC', questions:[
+    {num:1, q:'Trung Quốc hiện nay chính thức công nhận bao nhiêu dân tộc?', options:{A:'50 dân tộc', B:'54 dân tộc', C:'56 dân tộc', D:'60 dân tộc'}, correct:'C', explain:'Chính phủ Trung Quốc công nhận chính thức 56 dân tộc, trong đó gồm 1 dân tộc Hán và 55 dân tộc thiểu số.'},
+    {num:2, q:'Dân tộc nào chiếm đa số tuyệt đối (khoảng 91-92%) trong tổng dân số Trung Quốc?', options:{A:'Dân tộc Tạng', B:'Dân tộc Hán', C:'Dân tộc Mãn', D:'Dân tộc Choang'}, correct:'B', explain:'Người Hán chiếm hơn 91% dân số toàn quốc, do đó 55 dân tộc còn lại được gọi chung là các "dân tộc thiểu số" (chiếm khoảng 8-9%).'},
+    {num:3, q:'Dân tộc thiểu số nào có dân số đông nhất tại Trung Quốc hiện nay?', options:{A:'Dân tộc Choang (Zhuang)', B:'Dân tộc Hồi (Hui)', C:'Dân tộc Mông Cổ (Mongolian)', D:'Dân tộc Uy Ngô Nhĩ (Uyghur)'}, correct:'A', explain:'Dân tộc Choang (sống tập trung chủ yếu ở Quảng Tây) là dân tộc thiểu số đông dân nhất Trung Quốc với hơn 18 triệu người.'},
+    {num:4, q:'Trung Quốc có bao nhiêu "Khu tự trị" cấp tỉnh dành cho các dân tộc thiểu số?', options:{A:'3 khu tự trị', B:'4 khu tự trị', C:'5 khu tự trị', D:'6 khu tự trị'}, correct:'C', explain:'5 Khu tự trị cấp tỉnh của Trung Quốc gồm: Quảng Tây (dân tộc Choang), Nội Mông (dân tộc Mông Cổ), Ninh Hạ (dân tộc Hồi), Tân Cương (dân tộc Uy Ngô Nhĩ) và Tây Tạng (dân tộc Tạng).'},
+    {num:5, q:'Dân tộc thiểu số nào ở Trung Quốc theo Đạo Hồi và có nét sinh hoạt văn hóa gần gũi nhất với người Hán (sử dụng tiếng Hán làm ngôn ngữ chính)?', options:{A:'Dân tộc Uy Ngô Nhĩ', B:'Dân tộc Hồi', C:'Dân tộc Đông Hương', D:'Dân tộc Tát Cáp Khắc (Kazakh)'}, correct:'B', explain:'Người Hồi chủ yếu theo Đạo Hồi nhưng do lịch sử hội nhập lâu đời, họ sử dụng tiếng Hán và có diện mạo, sinh hoạt rất đồng điệu với người Hán (khác với người Uy Ngô Nhĩ theo Hồi giáo nhưng thuộc nhóm tiếng Đột Quyết/Turkic).'},
+    {num:6, q:'Lễ hội "Tạt nước" là lễ hội đón năm mới truyền thống độc đáo của dân tộc thiểu số nào ở tỉnh Vân Nam, Trung Quốc?', options:{A:'Dân tộc Thái (Dai)', B:'Dân tộc Miêu (Miao)', C:'Dân tộc Di (Yi)', D:'Dân tộc Bạch (Bai)'}, correct:'A', explain:'Lễ hội Tạt nước là nét văn hóa đặc trưng của người Thái (Dai) ở vùng Tây Song Bản Nạp (Vân Nam), thường diễn ra vào giữa tháng 4 hàng năm để xua đuổi rủi ro và cầu may mắn.'},
+    {num:7, q:'Trang phục truyền thống sườn xám (Cheongsam/Qipao) nổi tiếng của Trung Quốc có nguồn gốc ban đầu từ trang phục của dân tộc nào?', options:{A:'Dân tộc Hán', B:'Dân tộc Mãn', C:'Dân tộc Triều Tiên', D:'Dân tộc Thổ Gia'}, correct:'B', explain:'Sườn xám xuất thân từ áo dài Kỳ Pao của người Mãn (Kỳ nhân) thời nhà Thanh, sau đó được cách tân hiện đại tại Thượng Hải vào những năm 1920.'}
+  ]},
+  {part:'II', title:'CHỦ ĐỀ TỨ ĐẠI & VĂN HÓA CỔ ĐẠI', questions:[
+    {num:1, q:'"Tứ đại danh tác" (4 kiệt tác văn học cổ điển Trung Quốc) không bao gồm tác phẩm nào sau đây?', options:{A:'Tam Quốc Diễn Nghĩa', B:'Thủy Hủ', C:'Kim Bình Mai', D:'Hồng Lâu Mộng'}, correct:'C', explain:'"Tứ đại danh tác" gồm Tam Quốc Diễn Nghĩa, Thủy Hủ, Tây Du Ký và Hồng Lâu Mộng. Kim Bình Mai từng nằm trong nhóm "Tứ đại kỳ thư" thời Minh (cùng với Tam Quốc, Thủy Hủ, Tây Du Ký), nhưng sang thời Thanh đã bị thay thế bởi Hồng Lâu Mộng.'},
+    {num:2, q:'Tác giả của tiểu thuyết "Hồng Lâu Mộng" – một trong Tứ đại danh tác – là ai?', options:{A:'Tào Tuyết Cần', B:'La Quán Trung', C:'Thi Nại Am', D:'Ngô Thừa Ân'}, correct:'A', explain:'Hồng Lâu Mộng do Tào Tuyết Cần sáng tác. La Quán Trung là tác giả của Tam Quốc Diễn Nghĩa, Thi Nại Am viết Thủy Hủ, còn Ngô Thừa Ân sáng tác Tây Du Ký.'},
+    {num:3, q:'"Tứ đại phát minh" nổi tiếng của Trung Quốc cổ đại bao gồm những phát minh nào?', options:{A:'Kỹ thuật in, Thuốc súng, La bàn, Giấy', B:'Kỹ thuật in, Lụa, Bàn tính, Đồ gốm', C:'Thuốc súng, La bàn, Thủy lợi, Y học', D:'Giấy, Bàn tính, La bàn, Thuốc súng'}, correct:'A', explain:'Đây là 4 phát minh kĩ thuật có tầm ảnh hưởng to lớn đến lịch sử phát triển của văn minh thế giới, gồm: Kỹ thuật làm giấy (Thái Luân cải tiến), Kỹ thuật in (Tất Thăng phát minh in chữ rời), Thuốc súng và La bàn chỉ hướng.'},
+    {num:4, q:'Mỹ nhân nào trong "Tứ đại mỹ nhân" Trung Quốc gắn liền với điển tích "Bế nguyệt" (Trăng trốn/Trăng thẹn)?', options:{A:'Tây Thi', B:'Vương Chiêu Quân', C:'Điêu Thuyền', D:'Dương Quý Phi'}, correct:'C', explain:'Thành ngữ "Trầm ngư Lạc nhạn, Bế nguyệt Tu hoa" tương ứng với: Tây Thi - Trầm ngư (cá lặn), Vương Chiêu Quân - Lạc nhạn (chim rơi), Điêu Thuyền - Bế nguyệt (trăng thẹn giấu mình sau mây) và Dương Quý Phi - Tu hoa (hoa khép lá thẹn thùng).'},
+    {num:5, q:'Mỹ nhân Dương Quý Phi (Dương Ngọc Hoàn) nổi tiếng là phi tần được vị hoàng đế nào thời nhà Đường sủng ái tột đỉnh?', options:{A:'Đường Thái Tông', B:'Đường Cao Tông', C:'Đường Huyền Tông', D:'Đường Trung Tông'}, correct:'C', explain:'Đường Huyền Tông (Đường Minh Hoàng) sủng ái Dương Quý Phi tột đỉnh, vì nàng mà xây cung Hoa Thanh, vận chuyển vải tươi từ phương Nam về kinh thành, dẫn đến việc lơ là triều chính và châm ngòi cho Loạn An Lộc Sơn.'},
+    {num:6, q:'Tứ đại mỹ nhân của Trung Quốc bao gồm?', options:{A:'Tây Thi, Vương Chiêu Quân, Điêu Thuyền, Dương Quý Phi', B:'Tây Thi, Trắc Thiên, Vương Chiêu Quân, Dương Quý Phi', C:'Điêu Thuyền, Dương Quý Phi, Triệu Phi Yến, Ngu Cơ', D:'Vương Chiêu Quân, Tây Thi, Lý Hương Quân, Điêu Thuyền'}, correct:'A', explain:'Đây là 4 mỹ nhân chuẩn xác đại diện cho câu thành ngữ "Trầm ngư Lạc nhạn, Bế nguyệt Tu hoa". Các phương án khác đều gài thêm các nhân vật không thuộc nhóm này như Võ Tắc Thiên (nữ hoàng), Triệu Phi Yến, Ngu Cơ hay Lý Hương Quân.'},
+    {num:7, q:'"Tứ đại danh sơn" của Phật giáo Trung Quốc bao gồm 4 ngọn núi nào?', options:{A:'Thái Sơn, Hằng Sơn, Tùng Sơn, Hoa Sơn', B:'Ngũ Đài Sơn, Nga Mi Sơn, Cửu Hoa Sơn, Phổ Đà Sơn', C:'Võ Đang Sơn, Ngũ Đài Sơn, Hoàng Sơn, Cửu Hoa Sơn', D:'Thái Sơn, Nga Mi Sơn, Phổ Đà Sơn, Võ Đang Sơn'}, correct:'B', explain:'Đây là 4 ngọn núi linh thiêng bậc nhất của Phật giáo Trung Quốc, gắn liền với đạo tràng của 4 vị Đại Bồ Tát (Văn Thù, Phổ Hiền, Địa Tạng, Quán Thế Âm). Các đáp án khác chứa núi thuộc Đạo giáo hoặc Ngũ NhạcDanh Sơn.'},
+    {num:8, q:'Ngọn núi nào trong "Tứ đại danh sơn" Phật giáo được coi là đạo tràng thờ Quán Thế Âm Bồ Tát?', options:{A:'Ngũ Đài Sơn (Sơn Tây)', B:'Nga Mi Sơn (Tứ Xuyên)', C:'Phổ Đà Sơn (Chiết Giang)', D:'Cửu Hoa Sơn (An Huy)'}, correct:'C', explain:'Phổ Đà Sơn là đạo tràng của Quán Thế Âm Bồ Tát. Trong khi đó, Ngũ Đài Sơn thờ Văn Thù Bồ Tát, Nga Mi Sơn thờ Phổ Hiền Bồ Tát, và Cửu Hoa Sơn thờ Địa Tạng Vương Bồ Tát.'},
+    {num:9, q:'"Tứ đại cố đô" (4 thủ đô cổ đại lớn nhất) trong lịch sử Trung Quốc gồm những thành phố nào?', options:{A:'Bắc Kinh, Nam Kinh, Tây An, Lạc Dương', B:'Bắc Kinh, Thượng Hải, Quảng Châu, Tây An', C:'Nam Kinh, Lạc Dương, Khai Phong, Hàng Châu', D:'Tây An, 成都 (Thành Đô), Bắc Kinh, Trùng Khánh'}, correct:'A', explain:'Đây là 4 kinh đô gắn liền với nhiều triều đại thịnh vượng nhất trong lịch sử Trung Hoa. Tây An (Trường An) và Lạc Dương nổi tiếng thời Hán - Đường; Nam Kinh và Bắc Kinh gắn liền với thời Minh - Thanh.'}
+  ]},
+  {part:'III', title:'CHỦ ĐỀ ĐỊA LÝ TRUNG QUỐC', questions:[
+    {num:1, q:'Về diện tích lãnh thổ, Trung Quốc là quốc gia rộng lớn thứ mấy trên thế giới?', options:{A:'Thứ 2', B:'Thứ 3 (hoặc thứ 4 tùy cách tính vùng lãnh thổ)', C:'Thứ 5', D:'Thứ 6'}, correct:'B', explain:'Trung Quốc có diện tích khoảng 9,6 triệu km², xếp thứ 3 thế giới (sau Nga, Canada) hoặc thứ 4 (nếu tính cả các lãnh thổ phụ thuộc của Mỹ).'},
+    {num:2, q:'Địa hình Trung Quốc có xu hướng thấp dần từ phía nào sang phía nào?', options:{A:'Từ Đông sang Tây', B:'Từ Tây sang Đông', C:'Từ Bắc vào Nam', D:'Từ Nam ra Bắc'}, correct:'B', explain:'Địa hình Trung Quốc được mô tả như "3 bậc thang" thấp dần từ Tây sang Đông. Phía Tây là cao nguyên, núi cao; phía Đông là các đồng bằng hạ lưu và vùng duyên hải. Điều này làm cho hầu hết các sông lớn đều chảy từ Tây sang Đông ra Thái Bình Dương.'},
+    {num:3, q:'Cao nguyên nào rộng lớn nhất Trung Quốc, đồng thời là cao nguyên cao nhất thế giới (được mệnh danh là "Mái nhà của thế giới")?', options:{A:'Cao nguyên Hoàng Thổ', B:'Cao nguyên Vân Quý', C:'Cao nguyên Tây Tạng (Thanh Tạng)', D:'Cao nguyên Nội Mông'}, correct:'C', explain:'Cao nguyên Thanh Tạng có diện tích khoảng 2,5 triệu km², độ cao trung bình trên 4.000m so với mực nước biển, được gọi là "Mái nhà của thế giới" hay "Cực thứ 3 của Trái Đất".'},
+    {num:4, q:'Dãy núi nào đóng vai trò là ranh giới tự nhiên giữa Trung Quốc và Nepal, sở hữu đỉnh Everest - đỉnh núi cao nhất thế giới?', options:{A:'Dãy Côn Lôn', B:'Dãy Thiên Sơn', C:'Dãy Himalaya', D:'Dãy Thái Hàng'}, correct:'C', explain:'Dãy Himalaya nằm ở biên giới phía Tây Nam Trung Quốc (Tây Tạng) giáp Nepal và Ấn Độ, sở hữu đỉnh Everest (8.848m).'},
+    {num:5, q:'Ngọn núi nào cao nhất Trung Quốc (và cũng là cao nhất thế giới) nằm trên biên giới giữa Tây Tạng (Trung Quốc) và Nepal?', options:{A:'Đỉnh K2 (Kiều Cách Lý)', B:'Đỉnh Everest (Chomolungma / Châu Mục Lãng Mã)', C:'Đỉnh Lhotse', D:'Đỉnh Cống Cát (Gongga)'}, correct:'B', explain:'Đỉnh Everest (tiếng Trung gọi là Châu Mục Lãng Mã - Qomolangma) cao 8.848,86 m, nằm ở biên giới Tây Tạng và Nepal, là đỉnh núi cao nhất Trung Quốc và thế giới.'},
+    {num:6, q:'Ranh giới tự nhiên quan trọng chia cắt Trung Quốc thành hai vùng miền Bắc và miền Nam về mặt địa lý, khí hậu và nông nghiệp là hệ thống nào?', options:{A:'Dãy Côn Lôn - Sông Trường Giang', B:'Dãy Tần Lĩnh - Sông Hoài Hà', C:'Dãy Thiên Sơn - Sông Hoàng Hà', D:'Dãy Thái Hàng - Sông Châu Giang'}, correct:'B', explain:'Đường Tần Lĩnh - Hoài Hà là ranh giới khí hậu cốt lõi: Phía Bắc khí hậu khô lạnh hơn, trồng lúa mì; Phía Nam khí hậu nóng ẩm, nhiều sông rạch, trồng lúa nước.'},
+    {num:7, q:'Dòng sông nào dài nhất Trung Quốc (và cũng là dài nhất châu Á)?', options:{A:'Sông Hoàng Hà (Yellow River)', B:'Sông Trường Giang (Dương Tử / Yangtze)', C:'Sông Châu Giang (Pearl River)', D:'Sông Hắc Long Giang (Amur)'}, correct:'B', explain:'Trường Giang (Dương Tử) dài khoảng 6.300 km, là con sông dài nhất châu Á và dài thứ 3 thế giới (sau sông Nile và sông Amazon). Sông Hoàng Hà dài thứ hai ở Trung Quốc (khoảng 5.464 km).'},
+    {num:8, q:'Sông Hoàng Hà còn được gọi là "dòng sông Mẹ" của văn minh Trung Hoa, nhưng cũng nổi tiếng với đặc điểm tự nhiên nào sau đây?', options:{A:'Là con sông chảy qua nhiều quốc gia nhất', B:'Có lượng phù sa khổng lồ làm lòng sông bị nâng cao', C:'Là con sông duy nhất không chảy ra biển', D:'Là con sông đóng băng quanh năm'}, correct:'B', explain:'Sông Hoàng Hà chảy qua cao nguyên Đất Đỏ (Hoàng Thổ), cuốn theo lượng phù sa màu vàng khổng lồ. Do lắng đọng phù sa qua hàng ngàn năm, lòng sông ở hạ lưu nhiều nơi bị nâng cao hơn cả mặt đất xung quanh.'},
+    {num:9, q:'Hồ nước ngọt lớn nhất Trung Quốc hiện nay là hồ nào?', options:{A:'Hồ Động Đình (Hồ Nam)', B:'Hồ Phàn Dương (Giang Tây)', C:'Hồ Thái Hồ (Giang Tô)', D:'Hồ Thanh Hải (Thanh Hải)'}, correct:'B', explain:'Hồ Phàn Dương (Poyang Lake) ở tỉnh Giang Tây là hồ nước ngọt lớn nhất Trung Quốc. Dù diện tích co giãn theo mùa mưa/khô, nó vẫn duy trì vị trí số 1. (Hồ Động Đình lớn thứ 2).'},
+    {num:10, q:'Hồ nước mặn (đồng thời là hồ tự nhiên rộng nhất) Trung Quốc là hồ nào?', options:{A:'Hồ Thanh Hải', B:'Hồ Nam Túc (Namtso)', C:'Hồ Khả Khả Tây Lý', D:'Hồ Bác Tư Đằng'}, correct:'A', explain:'Hồ Thanh Hải (Qinghai Lake) nằm ở tỉnh Thanh Hải là hồ nước mặn lớn nhất, đồng thời là hồ tự nhiên có diện tích rộng nhất Trung Quốc (rộng khoảng 4.500 km²).'},
+    {num:11, q:'Hoang mạc (sa mạc) nào lớn nhất Trung Quốc, nằm ở Khu tự trị Tân Cương?', options:{A:'Sa mạc Gobi', B:'Sa mạc Taklamakan (Tháp Khắc La Mã Can)', C:'Sa mạc Badain Jaran', D:'Sa mạc Tengger'}, correct:'B', explain:'Taklamakan là sa mạc cát lớn nhất Trung Quốc nằm trọn trong bồn địa Tarim (Tân Cương). Trong khi đó, sa mạc Gobi trải dài qua cả Trung Quốc và Mông Cổ.'},
+    {num:12, q:'Bồn địa (thung lũng/trũng địa) nào rộng nhất Trung Quốc, chứa sa mạc Taklamakan bên trong?', options:{A:'Bồn địa Tứ Xuyên', B:'Bồn địa Tarim (Tháp Lý Mộc)', C:'Bồn địa Junggar (Chuẩn Cát Nhĩ)', D:'Bồn địa Qaidam (Sài Đạt Mộc)'}, correct:'B', explain:'Bồn địa Tarim ở Tân Cương rộng khoảng 400.000 km², là bồn địa nội địa lớn nhất Trung Quốc.'},
+    {num:13, q:'Hai đại dương/biển lớn tiếp giáp với toàn bộ đường bờ biển phía Đông và Nam của Trung Quốc thuộc về đại dương nào?', options:{A:'Ấn Độ Dương', B:'Thái Bình Dương', C:'Đại Tây Dương', D:'Bắc Băng Dương'}, correct:'B', explain:'Toàn bộ bờ biển phía Đông và Nam Trung Quốc giáp với các biển (Biển Bột Hải, Hoàng Hải, Đông Hải, Biển Đông), tất cả đều thuộc Thái Bình Dương.'}
+  ]},
+  {part:'IV', title:'CHỦ ĐỀ ĐỊA LÝ – CÔNG TRÌNH & KỶ LỤC TRUNG QUỐC', questions:[
+    {num:1, q:'Công trình phòng thủ quân sự cổ đại dài nhất thế giới nằm ở Trung Quốc là gì?', options:{A:'Đại Lý Thành', B:'Vạn Lý Trường Thành', C:'Tử Cấm Thành', D:'Kinh Hang Cung'}, correct:'B', explain:'Vạn Lý Trường Thành trải dài hơn 21.000 km (bao gồm cả các đoạn tường tự nhiên và nhân tạo qua nhiều triều đại), là công trình nhân tạo dài nhất thế giới.'},
+    {num:2, q:'Quần thể kiến trúc hoàng cung cổ bằng gỗ lớn nhất và được bảo tồn nguyên vẹn nhất thế giới hiện nay là công trình nào?', options:{A:'Cố Cung Huế', B:'Di Hòa Viên', C:'Tử Cấm Thành (Cố Cung Bắc Kinh)', D:'Cung điện Potala'}, correct:'C', explain:'Tử Cấm Thành (Cố Cung Bắc Kinh) được xây dựng từ thời nhà Minh (1406–1420), rộng 72 ha với 980 tòa nhà và hơn 8.700 căn phòng bằng gỗ.'},
+    {num:3, q:'Kênh đào nhân tạo cổ đại dài nhất và lâu đời nhất thế giới nối liền miền Bắc và miền Nam Trung Quốc có tên là gì?', options:{A:'Kinh Hang Đại Vận Hà (Grand Canal)', B:'Trịnh Quốc Cừ', C:'Linh Cừ', D:'Đô Giang Yến'}, correct:'A', explain:'Kinh Hang Đại Vận Hà dài hơn 1.700 km, nối từ Bắc Kinh đến Hàng Châu, bắt đầu đào từ thời Tùy Dạng Đế (thế kỷ VII) và là kênh đào nhân tạo dài nhất thế giới.'},
+    {num:4, q:'Đập thủy điện nào lớn nhất Trung Quốc và cũng là đập thủy điện có công suất phát điện lớn nhất thế giới?', options:{A:'Đập Tam Hiệp (Three Gorges Dam)', B:'Đập Hướng Gia Bả', C:'Đập Bạch Hạc Than', D:'Đập Ô Đông Đức'}, correct:'A', explain:'Đập Tam Hiệp chặn dòng sông Trường Giang (tỉnh Hồ Bắc) là đập thủy điện có công suất lắp đặt lớn nhất thế giới (22.500 MW).'},
+    {num:5, q:'Hang động Phật giáo cổ đại nào ở tỉnh Cam Túc được coi là kho tàng nghệ thuật vách đá/bích họa Phật giáo lớn nhất và giàu có nhất thế giới?', options:{A:'Hang đá Long Môn', B:'Hang đá Vân Môn', C:'Hang Mạc Cao (Đôn Hoàng)', D:'Hang đá Mạch Tích Sơn'}, correct:'C', explain:'Hang Mạc Cao ở Đôn Hoàng chứa hàng nghìn tượng Phật và hơn 45.000 m² tranh bích họa trải dài qua nhiều triều đại trên Con đường Tơ lụa.'},
+    {num:6, q:'Tỉnh nào của Trung Quốc có dân số đông nhất hiện nay (với hơn 120 triệu dân)?', options:{A:'Tứ Xuyên', B:'Quảng Đông', C:'Hà Nam', D:'Sơn Đông'}, correct:'B', explain:'Quảng Đông là tỉnh đông dân nhất Trung Quốc (hơn 126 triệu người), đồng thời cũng là tỉnh có quy mô kinh tế (GDP) lớn nhất Trung Quốc.'},
+    {num:7, q:'Trực hạt thị (thành phố trực thuộc trung ương) nào có diện tích rộng nhất và đông dân nhất Trung Quốc?', options:{A:'Thượng Hải', B:'Bắc Kinh', C:'Trùng Khánh', D:'Thiên Tân'}, correct:'C', explain:'Trùng Khánh có diện tích hơn 82.000 km² (rộng bằng cả một quốc gia nhỏ như Áo) và dân số hơn 32 triệu người.'},
+    {num:8, q:'Trung Quốc hiện nay có bao nhiêu đơn vị hành chính cấp tỉnh là "Khu tự trị"?', options:{A:'3', B:'4', C:'5', D:'6'}, correct:'C', explain:'5 Khu tự trị gồm: Nội Mông, Quảng Tây, Ninh Hạ, Tân Cương và Tây Tạng.'},
+    {num:9, q:'Vị hoàng đế sống thọ nhất và nắm quyền thực tế lâu nhất trong lịch sử Trung Quốc là ai?', options:{A:'Hán Vũ Đế', B:'Khang Hi', C:'Càn Long', D:'Đường Thái Tông'}, correct:'C', explain:'Vua Càn Long sống thọ 88 tuổi. Ông làm Hoàng đế 60 năm, sau đó làm Thái thượng hoàng 3 năm (tổng cộng nắm quyền 63 năm), là vị vua cai trị thực tế lâu nhất và thọ nhất lịch sử Trung Quốc. (Khang Hi làm vua 61 năm nhưng mất ở tuổi 68).'}
+  ]},
+  {part:'V', title:'CHỦ ĐỀ CÁC TỈNH THÀNH & THÀNH PHỐ TRUNG QUỐC', questions:[
+    {num:1, q:'Thành phố nào của Trung Quốc được mệnh danh là "Thành phố Băng" (Ice City) nhờ Lễ hội Băng đăng quốc tế quy mô bậc nhất thế giới diễn ra hằng năm?', options:{A:'Cáp Nhĩ Tân (Tỉnh Hắc Long Giang)', B:'Thẩm Dương (Tỉnh Liêu Ninh)', C:'Trường Xuân (Tỉnh Cát Lâm)', D:'Ô Lỗ Mộc Tề (Khu tự trị Tân Cương)'}, correct:'A', explain:'Cáp Nhĩ Tân (Harbin) thuộc tỉnh Hắc Long Giang ở cực Bắc Trung Quốc, có mùa đông kéo dài với nhiệt độ xuống rất thấp. Lễ hội Băng đăng Cáp Nhĩ Tân thu hút triệu du khách nhờ các lâu đài, điêu khắc làm hoàn toàn từ băng đá khổng lồ.'},
+    {num:2, q:'Tỉnh thành nào được mệnh danh là "Thiên phủ chi quốc" (Vùng đất của sự trù phú), nổi tiếng với quê hương của gấu trúc và văn hóa ăn cay, lẩu cay?', options:{A:'Tỉnh Vân Nam', B:'Tỉnh Tứ Xuyên', C:'Tỉnh Quý Châu', D:'Tỉnh Hồ Nam'}, correct:'B', explain:'Tứ Xuyên nằm ở bồn địa cùng tên với đất đai màu mỡ do hệ thống thủy lợi Đô Giang Yến tưới tiêu từ cổ đại nên có biệt danh "Thiên phủ chi quốc". Đây cũng là nơi tập trung các trung tâm bảo tồn Gấu trúc lớn nhất và nổi tiếng với ẩm thực ớt cay, hạt tiêu hoa (xuyên tiêu).'},
+    {num:3, q:'Trực hạt thị nào được gọi là "Sơn thành" (Thành phố trên núi) hay "Thủ phủ lẩu cay", nổi tiếng với địa hình tầng tầng lớp lớp và các công trình giao thông siêu thực (như tàu điện xuyên qua chung cư)?', options:{A:'Bắc Kinh', B:'Thượng Hải', C:'Trùng Khánh', D:'Thiên Tân'}, correct:'C', explain:'Trùng Khánh xây dựng hoàn toàn trên vùng núi đồi trập trùng. Địa hình này tạo ra cấu trúc đô thị 3D độc đáo: đường đi trên mái nhà, ga tàu điện ngầm đường sắt đô thị đâm xuyên qua tòa nhà chung cư 19 tầng (Ga Lý Tử Bá).'},
+    {num:4, q:'Thành phố Quảng Châu (thủ phủ tỉnh Quảng Đông) – trung tâm thương mại và sản xuất hàng đầu Trung Quốc – còn có tên gọi truyền thống đáng yêu nào sau đây?', options:{A:'Dương Thành (Thành phố Dê)', B:'Xuân Thành (Thành phố Mùa Xuân)', C:'Băng Thành (Thành phố Băng)', D:'Dung Thành (Thành phố Cây Cừa)'}, correct:'A', explain:'Quảng Châu có biệt danh là Dương Thành (Thành phố Dê) hay Ngũ Dương Thành xuất phát từ truyền thuyết 5 vị tiên cưỡi 5 con dê mang theo bông lúa đến ban sự ấm no cho người dân địa phương.'},
+    {num:5, q:'Côn Minh (thủ phủ tỉnh Vân Nam) nổi tiếng khắp cả nước với biệt danh gì nhờ khí hậu ôn hòa quanh năm mát mẻ và hoa nở bốn mùa?', options:{A:'Xuân Thành (Thành phố Mùa Xuân)', B:'Giang Thành (Thành phố Sông Ngòi)', C:'Hàng Thành (Thành phố Hàng Hải)', D:'Sương Thành (Thành phố Sương Mù)'}, correct:'A', explain:'Nhờ nằm trên cao nguyên Vân Quý với độ cao thích hợp, Côn Minh có nhiệt độ trung bình năm quanh mức 15–20°C, mùa đông không quá lạnh, mùa hè không quá nóng, hoa nở quanh năm nên được gọi là Xuân Thành.'},
+    {num:6, q:'Tỉnh thành nào của Trung Quốc được xem là "Thủ phủ gốm sứ" của thế giới với lịch sử sản xuất gốm sứ hoàng gia hàng ngàn năm (đặc biệt là Cảnh Đức Trấn)?', options:{A:'Tỉnh Phúc Kiến', B:'Tỉnh Giang Tây', C:'Tỉnh Chiết Giang', D:'Tỉnh An Huy'}, correct:'B', explain:'Cảnh Đức Trấn (Jingdezhen) thuộc tỉnh Giang Tây là thủ phủ gốm sứ nổi tiếng nhất Trung Quốc. Ngay cả từ "China" trong tiếng Anh vừa có nghĩa là Trung Quốc vừa có nghĩa là đồ sứ, bắt nguồn từ danh tiếng gốm sứ nơi đây.'},
+    {num:7, q:'Thành phố Tây An (thủ phủ tỉnh Thiểm Tây), kinh đô cổ nổi tiếng thời Hán - Đường, là điểm khởi đầu phía Đông của con đường lịch sử nào?', options:{A:'Con đường Trà Mã (Tea Horse Road)', B:'Con đường Tơ lụa (Silk Road)', C:'Con đường Muối cổ', D:'Con đường Gia vị'}, correct:'B', explain:'Tây An (thời cổ gọi là Trường An) là kinh đô của 13 triều đại. Đây là điểm xuất phát chính của Con đường Tơ lụa trên đất liền nối Trung Hoa với vùng Tây Vực, Trung Á và Châu Âu.'},
+    {num:8, q:'Thành phố Hàng Châu (thủ phủ tỉnh Chiết Giang) cùng với Tô Châu (tỉnh Giang Tô) từ xưa đã được người Trung Quốc ví von qua câu nói nổi tiếng nào?', options:{A:'"Đông Tứ Xuyên, Tây Quảng Đông"', B:'"Thượng hữu thiên đàng, hạ hữu Tô Hàng"', C:'"Bắc Bắc Kinh, Nam Thượng Hải"', D:'"Sơn thủy Quế Lâm, phong cảnh Tô Hàng"'}, correct:'B', explain:'Câu "Trên có thiên đàng, dưới có Tô Hàng" (Thượng hữu thiên đàng, hạ hữu Tô Hàng) ngợi ca vẻ đẹp thơ mộng, trù phú như cõi tiên của Tô Châu (nổi tiếng với vườn cổ kiến trúc Karst, kênh rạch) và Hàng Châu (nổi tiếng với danh thắng Tây Hồ).'},
+    {num:9, q:'Tỉnh Quảng Đông nổi tiếng là "đầu tàu kinh tế" của Trung Quốc, sở hữu Đặc khu kinh tế đầu tiên được thành lập từ thời Đặng Tiểu Bình năm 1980 là thành phố nào?', options:{A:'Châu Hải', B:'Thâm Quyến', C:'Sạn Đầu', D:'Trạm Giang'}, correct:'B', explain:'Thâm Quyến (Shenzhen) từ một làng chài nhỏ đã bứt phá thành "Thung lũng Silicon của châu Á" sau khi được chọn làm Đặc khu Kinh tế đầu tiên của Trung Quốc vào năm 1980.'},
+    {num:10, q:'Tỉnh nào được mệnh danh là "Vương quốc của các dân tộc thiểu số" ở Trung Quốc, nơi tập trung đông đảo các dân tộc như Thái, Miêu, Hani, Nạp Tây...?', options:{A:'Tỉnh Vân Nam', B:'Tỉnh Quảng Tây', C:'Tỉnh Quý Châu', D:'Tỉnh Thanh Hải'}, correct:'A', explain:'Vân Nam có đến 25 dân tộc thiểu số sinh sống (chiếm hơn 1/3 dân số toàn tỉnh), là tỉnh có sự đa dạng sắc tộc, ngôn ngữ và lễ hội văn hóa phong phú nhất Trung Quốc.'}
+  ]},
+  {part:'VI', title:'CHỦ ĐỀ VĂN HÓA MẠNG & GEN Z TRUNG QUỐC', questions:[
+    {num:1, q:'Thuật ngữ 内卷 - Nèijuǎn mô tả hiện tượng xã hội nào trong giới trẻ và môi trường làm việc/học tập tại Trung Quốc?', options:{A:'Sự cạnh tranh khốc liệt, mù quáng dẫn đến kiệt sức nhưng không tạo ra thêm giá trị thực tế', B:'Trào lưu nghỉ việc để về quê làm nông nghiệp sạch', C:'Phong trào học tập các môn nghệ thuật cổ truyền trong nhà trường', D:'Xu hướng chi tiêu phung phí vào các mặt hàng xa xỉ phẩm'}, correct:'A', explain:'Nội cuốn (内卷 - Involution) ban đầu là khái niệm xã hội học, dùng để chỉ trạng thái phát triển đến một mức độ nhất định rồi dừng lại, các bên lao vào cạnh tranh triệt hạ lẫn nhau mà không tạo ra bước tiến mới (ví dụ: học sinh thức đến 2h sáng chỉ để không bị thua điểm bạn bè).'},
+    {num:2, q:'996 - Jiǔjiǔliù là thuật ngữ nổi tiếng dùng để chỉ văn hóa làm việc khắc nghiệt tại các công ty công nghệ Trung Quốc. "996" có nghĩa là gì?', options:{A:'Làm việc từ 9 giờ sáng đến 9 giờ tối, 6 ngày một tuần', B:'Làm việc 9 tiếng một ngày, 9 tháng một năm, nghỉ 6 tháng', C:'Mức lương 996 Nhân dân tệ một ngày cho nhân viên mới', D:'Độ tuổi nghỉ hưu bắt đầu từ 99 tuổi đến 60 tuổi'}, correct:'A', explain:'996 chỉ lịch làm việc từ 9 giờ sáng (9am) đến 9 giờ tối (9pm), 6 ngày một tuần. Lịch làm việc này từng gây tranh cãi gay gắt trong ngành công nghệ Trung Quốc.'},
+    {num:3, q:'Trào lưu 躺平 - Tǎngpíng - nổi lên như một phản ứng đáp trả lại áp lực "内卷". Ý nghĩa cốt lõi của "Nằm phẳng" là gì?', options:{A:'Nằm ngủ đủ 8 tiếng mỗi ngày để bảo vệ sức khỏe', B:'Từ bỏ việc chạy theo tiêu chuẩn xã hội (mua nhà, kết hôn, thăng tiến), chỉ làm việc vừa đủ sống và giảm thiểu ham muốn', C:'Nằm ngửa tập thể dục để giảm đau lưng cho dân văn phòng', D:'Tẩy chay hoàn toàn việc sử dụng internet và mạng xã hội'}, correct:'B', explain:'Nằm phẳng (Tang ping) là thái độ sống tối giản ham muốn: không mua nhà, không mua xe, không kết hôn, không sinh con, không tiêu xài phung phí và từ bỏ guồng quay chốn công sở để đạt được sự tự do tâm trí.'},
+    {num:4, q:'Từ lóng mạng "YYDS" (viết tắt bằng chữ cái Pinyin của 永远的神 - Yǒngyuǎn de shén) được dùng trong ngữ cảnh nào?', options:{A:'Khen ngợi ai đó/cái gì đó quá tuyệt vời, đỉnh cao ("Mãi mãi là thần")', B:'Than thở về một thất bại cay đắng', C:'Giễu cợt một hành động ngốc nghếch', D:'Từ chối một lời đề nghị'}, correct:'A', explain:'YYDS là viết tắt của Yǒngyuǎn de shén (永远的神 - Mãi mãi là thần), dùng để ca ngợi idol, món ăn hay kĩ năng của ai đó đạt đến trình độ xuất sắc, hoàn hảo.'},
+    {num:5, q:'Thuật ngữ mạng "E nhân" (E人) và "I nhân" (I人) rất phổ biến trên Douyin/Xiaohongshu dùng để chỉ điều gì ở một người?', options:{A:'Người giàu (E) và Người nghèo (I)', B:'Người hướng ngoại (Extrovert - E) và Người hướng nội (Introvert - I) theo trắc nghiệm MBTI', C:'Người giỏi công nghệ (E) và Người dốt công nghệ (I)', D:'Người đi làm (E) và Học sinh (I)'}, correct:'B', explain:'Trào lưu MBTI khiến giới trẻ Trung Quốc chia ra làm E人 (Người hướng ngoại, năng động) và I人 (Người hướng nội, thích ở một mình).'},
+    {num:6, q:'Khi nói một người là "Đá ngầm" (吃瓜群众 - Chī guā qúnzhòng / Dân ăn dưa), giới trẻ Trung Quốc muốn ám chỉ nhóm người nào?', options:{A:'Những người thích ăn trái cây', B:'Những người hóng hớt, xem drama/sự kiện hot mà không can thiệp vào', C:'Những người nông dân trồng dưa', D:'Những người thích bình luận tiêu cực (Anti-fan)'}, correct:'B', explain:'"Chī guā qúnzhòng" (Quần chúng ăn dưa) chỉ những người đứng ngoài hóng hớt tin tức giải trí, drama trên mạng xã hội mà không tham gia tranh luận gay gắt.'},
+    {num:7, q:'Trào lưu 打卡 - Dǎkǎ vốn bắt nguồn từ việc điểm danh công sở, nhưng hiện nay giới trẻ dùng trên Xiaohongshu / Douyin với nghĩa phổ biến là gì?', options:{A:'Rút tiền tại cây ATM', B:'Ghé thăm, chụp ảnh check-in tại các địa điểm hot (quán ăn, khu du lịch, triển lãm)', C:'Quẹt thẻ xe buýt khi đi làm', D:'Đánh bài ăn tiền cùng bạn bè'}, correct:'B', explain:'Đả卡 (Check-in) là hành động ghé thăm các quán cà phê, nhà hàng hoặc danh lam thắng cảnh đẹp để chụp ảnh đăng lên mạng xã hội chứng minh mình đã tới đó.'},
+    {num:8, q:'Thuật ngữ 社恐 - Shèkǒng và 社牛 - Shèníu dùng để phân loại hai nhóm người nào trong giao tiếp xã hội?', options:{A:'Người sợ giao tiếp xã hội và Người cực kỳ tự tin, không ngại đám đông', B:'Người giàu có và Người nghèo khó', C:'Người sống ở nông thôn và Người sống ở thành thị', D:'Người giỏi toán và Người giỏi văn'}, correct:'A', explain:'Xã khủng (社恐) là viết tắt của Xã hội phobia (Hội chứng sợ giao tiếp), còn Xã ngưu (社牛 - "Bò xã hội") dùng chỉ những người có năng lượng cực cao, tự tin giao lưu với bất kỳ ai mà không biết ngại.'},
+    {num:9, q:'Dãy số "1314" (yī sān yī sì) khi đi liền với "520" tạo thành "5201314" mang thông điệp tình yêu nào?', options:{A:'Anh yêu em một đời một kiếp', B:'Anh yêu em ba năm bốn tháng', C:'Anh yêu em từ sáng đến tối', D:'Anh yêu em trọn năm trọn tháng'}, correct:'A', explain:'1314 (yī sān yī sì) phát âm gần giống "一生一世" (yī shēng yī shì - Một đời một kiếp). Ghép với 520 (Wǒ ài nǐ) thành "Anh yêu em trọn đời trọn kiếp".'}
+  ]},
+  {part:'VII', title:'CHỦ ĐỀ VĂN HÓA GIAO TIẾP & NHỮNG ĐIỀU KIÊNG KỴ', questions:[
+    {num:1, q:'Trong văn hóa giao tiếp Trung Hoa, khi tặng quà cho đối tác hoặc bạn bè, người ta kiêng tuyệt đối tặng "Đồng hồ treo tường" (送钟 - Sòng zhōng) vì lý do gì?', options:{A:'Đồng hồ ở Trung Quốc có giá rất rẻ', B:'Từ "Sòng zhōng" (送钟) đồng âm hoàn toàn với "Sòng zhōng" (送终), nghĩa là tiễn đưa người chết/an táng', C:'Người Trung Quốc không thích quản lý thời gian', D:'Đồng hồ đại diện cho sự chậm trễ'}, correct:'B', explain:'"Tống chung" (送钟 - tặng đồng hồ) đồng âm với "Tống chung" (送终 - làm lễ chung thất/tiễn đưa người quá cố). Đồng hồ đeo tay (Mã biểu) thì ít bị kiêng hơn đồng hồ treo tường/để bàn.'},
+    {num:2, q:'Khi tặng hoa quả cho bạn bè hoặc cặp đôi đang yêu nhau, người Trung Quốc thường tránh tặng quả "Lê" (梨 - Lí) hoặc không chia đôi quả lê ra ăn chung vì từ "Lê" đồng âm với từ nào?', options:{A:'Lợi (利 - Lì) - Lợi ích', B:'Ly (离 - Lí) - Chia ly, ly tán', C:'Lực (力 - Lì) - Sức lực', D:'Lễ (礼 - Lǐ) - Quà tặng'}, correct:'B', explain:'"Phân lê" (分梨 - chia quả lê) đồng âm với "Phân ly" (分离 - chia rẽ, xa cách).'},
+    {num:3, q:'Trong tiệc cá của người Trung Quốc (đặc biệt là vùng ven biển), sau khi ăn xong một mặt của con cá, vì sao nhiều người kiêng hành động "Lật con cá" (Lật ngư - 翻鱼) lại?', options:{A:'Trông không đẹp mắt', B:'Nguy cơ làm gãy xương cá', C:'Mang điềm gở về việc "Lật thuyền/Lật ghe" đối với ngư dân và người làm kinh doanh', D:'Cá sẽ bị nguội nhanh'}, correct:'C', explain:'Từ "Lật" (翻 - Fān) ám chỉ sự lật úp. Dân đi biển và làm ăn rất kỵ từ này vì sợ lật thuyền hoặc kinh doanh thua lỗ lật kèo.'}
+  ]}
+];
+
 
 /* ===================== STATE / STORAGE HELPERS ===================== */
 let currentUser = null;
@@ -2746,6 +2467,14 @@ function showSection(id){
   if (id === 'admin') renderAdmin();
 }
 function toggleMobileNav(){ document.getElementById('mobile-nav').classList.toggle('hidden'); }
+
+/* Quick-jump helpers cho menu dropdown khi rê chuột (hover): mở thẳng đúng mục con bên trong section,
+   thay vì chỉ chuyển section chung chung. */
+function gotoVocabTab(key){ showSection('vocab'); selectVocabTab(key); }
+function gotoShadowLevel(lvl){ showSection('shadowing'); selectShadowLevel(lvl); }
+function gotoReflexLevel(lvl){ showSection('reflex'); selectReflexLevel(lvl); }
+function gotoGame(tab){ showSection('games'); selectGameTab(tab); }
+function gotoCulturePart(idx){ showSection('culture'); selectCultureTopic(idx); }
 
 /* ===================== THEME ===================== */
 function toggleThemeMenu(){ document.getElementById('theme-menu').classList.toggle('hidden'); }
@@ -3535,29 +3264,16 @@ function initCultureSection(){
   renderCultureTopics();
 }
 function renderCultureTopics(){
-  const keys = Object.keys(CULTURE_TOPICS);
-  document.getElementById('culture-topic-grid').innerHTML = keys.map(k => {
-    const t = CULTURE_TOPICS[k];
-    return `<button onclick="selectCultureTopic('${k}')" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">${t.label}<div class="text-xs font-normal opacity-80 mt-1">${t.questions.length} câu hỏi trắc nghiệm</div></button>`;
+  document.getElementById('culture-topic-grid').innerHTML = CULTURE_PARTS.map((p, idx) => {
+    return `<button onclick="selectCultureTopic(${idx})" class="p-4 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm text-left">PHẦN ${p.part}: ${p.title}<div class="text-xs font-normal opacity-80 mt-1">${p.questions.length} câu hỏi trắc nghiệm</div></button>`;
   }).join('');
 }
 function shuffleArr(arr){ return arr.map(v=>[Math.random(),v]).sort((a,b)=>a[0]-b[0]).map(v=>v[1]); }
-function buildCultureQuestions(topicKey){
-  const topic = CULTURE_TOPICS[topicKey];
-  const poolByHanzi = {};
-  topic.pool.forEach(item => { poolByHanzi[item.h] = item; });
-  const shuffledQs = shuffleArr(topic.questions);
-  return shuffledQs.map(qdef => {
-    const correctItem = poolByHanzi[qdef.correct];
-    const distractorPool = topic.pool.filter(item => item.h !== correctItem.h);
-    const distractors = shuffleArr(distractorPool).slice(0, 3);
-    const options = shuffleArr([correctItem, ...distractors]);
-    const correctIndex = options.findIndex(o => o.h === correctItem.h);
-    return { q: qdef.q, options, correctIndex };
-  });
+function buildCultureQuestions(partIdx){
+  return shuffleArr(CULTURE_PARTS[partIdx].questions);
 }
-function selectCultureTopic(topicKey){
-  cultureState = { topicKey, questions: buildCultureQuestions(topicKey), index: 0, answered: false, correctCount: 0 };
+function selectCultureTopic(partIdx){
+  cultureState = { partIdx, questions: buildCultureQuestions(partIdx), index: 0, answered: false, correctCount: 0 };
   document.getElementById('culture-menu').classList.add('hidden');
   document.getElementById('culture-quiz').classList.remove('hidden');
   renderCultureQuestion();
@@ -3567,6 +3283,7 @@ function backToCultureMenu(){
   document.getElementById('culture-menu').classList.remove('hidden');
   cultureState = null;
 }
+const CULTURE_LETTERS = ['A','B','C','D'];
 function renderCultureQuestion(){
   const st = cultureState;
   const q = st.questions[st.index];
@@ -3576,45 +3293,40 @@ function renderCultureQuestion(){
   document.getElementById('culture-quiz-explanation').classList.add('hidden');
   document.getElementById('culture-quiz-body').innerHTML = `
     <div class="text-center mb-4">
-      <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 text-xs font-bold rounded-full mb-3">${CULTURE_TOPICS[st.topicKey].label}</span>
+      <span class="inline-block px-3 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 text-xs font-bold rounded-full mb-3">PHẦN ${CULTURE_PARTS[st.partIdx].part}: ${escapeHtmlCulture(CULTURE_PARTS[st.partIdx].title)}</span>
       <p class="text-lg font-bold">${escapeHtmlCulture(q.q)}</p>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-      ${q.options.map((o,i) => `<button data-idx="${i}" onclick="answerCulture(${i})" class="culture-opt-btn py-3 px-3 rounded-xl bg-gray-50 dark:bg-gray-900/50 border-2 border-gray-200 dark:border-gray-700 font-bold text-sm text-center">${o.h}<div class="text-xs font-normal text-amber-600 mt-0.5">${o.p}</div></button>`).join('')}
+    <div class="grid grid-cols-1 gap-3">
+      ${CULTURE_LETTERS.map(letter => q.options[letter] !== undefined ? `<button data-letter="${letter}" onclick="answerCulture('${letter}')" class="culture-opt-btn py-3 px-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border-2 border-gray-200 dark:border-gray-700 font-semibold text-sm text-left"><b>${letter}.</b> ${escapeHtmlCulture(q.options[letter])}</button>` : '').join('')}
     </div>`;
 }
 function escapeHtmlCulture(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function answerCulture(i){
+function answerCulture(letter){
   if (gateInteraction()) return;
   const st = cultureState;
   if (st.answered) return;
   st.answered = true;
   const q = st.questions[st.index];
-  const isCorrect = i === q.correctIndex;
+  const isCorrect = letter === q.correct;
   if (isCorrect) { st.correctCount++; playCorrectSound(); } else { playWrongSound(); }
-  document.querySelectorAll('.culture-opt-btn').forEach((btn, idx) => {
-    if (idx === q.correctIndex) btn.classList.add('border-green-500','bg-green-50','dark:bg-green-900/20');
-    else if (idx === i) btn.classList.add('border-red-500','bg-red-50','dark:bg-red-900/20');
+  document.querySelectorAll('.culture-opt-btn').forEach(btn => {
+    const l = btn.dataset.letter;
+    if (l === q.correct) btn.classList.add('border-green-500','bg-green-50','dark:bg-green-900/20');
+    else if (l === letter) btn.classList.add('border-red-500','bg-red-50','dark:bg-red-900/20');
   });
-  const correctItem = q.options[q.correctIndex];
-  document.getElementById('culture-correct-line').textContent = `✅ Đáp án đúng: ${correctItem.h} (${correctItem.p}) — ${correctItem.m}`;
-  const wrongLines = q.options.filter((o,idx) => idx !== q.correctIndex)
-    .map(o => `<li><b>${o.h}</b> (${o.p}) — ${o.m}: <span class="text-gray-500">${o.desc}</span></li>`).join('');
-  document.getElementById('culture-explain-body').innerHTML = `
-    <p><span class="font-bold">Giải thích văn hóa:</span> ${correctItem.desc}</p>
-    <p class="mt-2 font-bold">Tìm hiểu thêm về các đáp án còn lại:</p>
-    <ul class="list-disc pl-5 space-y-1">${wrongLines}</ul>`;
+  document.getElementById('culture-correct-line').textContent = `✅ Đáp án đúng: ${q.correct}. ${q.options[q.correct]}`;
+  document.getElementById('culture-explain-body').innerHTML = `<p><span class="font-bold">Giải thích:</span> ${escapeHtmlCulture(q.explain)}</p>`;
   document.getElementById('culture-quiz-explanation').classList.remove('hidden');
   touchDailyActivity();
   recordQuizAnswer('culture', isCorrect);
-  pushHistory({type:'Trắc nghiệm Văn hóa Trung Quốc', detail:`${CULTURE_TOPICS[st.topicKey].label} · ${correctItem.h}`, score: isCorrect ? 'Đúng' : 'Sai'});
+  pushHistory({type:'Trắc nghiệm Văn hóa Trung Quốc', detail:`PHẦN ${CULTURE_PARTS[st.partIdx].part} · Câu ${q.num}`, score: isCorrect ? 'Đúng' : 'Sai'});
 }
 function cultureNext(){
   const st = cultureState;
   if (st.index < st.questions.length - 1) { st.index++; renderCultureQuestion(); return; }
   const pct = Math.round((st.correctCount / st.questions.length) * 100);
-  alert(`🎉 Bạn đã hoàn thành 20 câu hỏi văn hóa chủ đề "${CULTURE_TOPICS[st.topicKey].label}"! Kết quả: ${st.correctCount}/${st.questions.length} câu đúng (${pct}%). Vòng câu hỏi mới (đã xáo trộn) sẽ bắt đầu lại.`);
-  st.questions = buildCultureQuestions(st.topicKey);
+  alert(`🎉 Bạn đã hoàn thành toàn bộ ${st.questions.length} câu hỏi của PHẦN ${CULTURE_PARTS[st.partIdx].part}! Kết quả: ${st.correctCount}/${st.questions.length} câu đúng (${pct}%). Vòng câu hỏi mới (đã xáo trộn) sẽ bắt đầu lại.`);
+  st.questions = buildCultureQuestions(st.partIdx);
   st.index = 0;
   st.correctCount = 0;
   renderCultureQuestion();
