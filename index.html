@@ -294,7 +294,7 @@
               <div class="text-xs text-gray-500 mt-1">Trả lời câu hỏi bằng giọng nói, rèn phản xạ tự nhiên</div>
             </button>
             <button onclick="showSection('practice')" class="text-left p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
-              <div class="text-2xl mb-1">📝</div><div class="font-bold text-sm">Bài tập theo Sơ - Trung - Cao cấp</div>
+              <div class="text-2xl mb-1">📝</div><div class="font-bold text-sm">Bài tập theo cấp độ HSK</div>
               <div class="text-xs text-gray-500 mt-1">Sắp xếp câu, điền từ, đồng/trái nghĩa, đặt câu có chấm chữa</div>
             </button>
             <button onclick="showSection('games')" class="text-left p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 hover:bg-red-50 dark:hover:bg-red-900/20 transition">
@@ -472,9 +472,9 @@
   <!-- ============ 5. PRACTICE ============ -->
   <section id="sec-practice" class="hidden space-y-8">
     <div id="practice-menu" class="max-w-2xl mx-auto space-y-4">
-      <h2 class="text-2xl font-bold text-center">Bài tập theo Sơ - Trung - Cao cấp</h2>
+      <h2 class="text-2xl font-bold text-center">Bài tập theo cấp độ HSK</h2>
       <p class="text-sm text-gray-500 text-center">Chọn cấp độ để bắt đầu luyện tập</p>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="practice-level-grid"></div>
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-2" id="practice-level-grid"></div>
     </div>
 
     <div id="practice-type-menu" class="hidden max-w-2xl mx-auto space-y-4">
@@ -1871,73 +1871,67 @@ const HSK_LEVELS = ['hsk1','hsk2','hsk3','hsk4','hsk5','hsk6'];
 /* Mỗi mẫu câu mang theo danh sách TỪ RIÊNG ĐÃ DUYỆT THỦ CÔNG (không lấy theo "loại từ" tự động
    phân loại từ từ điển lớn, vì việc phân loại tự động có thể sai và tạo câu vô nghĩa kiểu
    "他很先生"). Nhờ vậy mọi câu sinh ra đều đúng ngữ pháp lẫn ngữ nghĩa, không gây tranh cãi. */
+// Sơ cấp/Trung cấp/Cao cấp: dùng riêng cho Shadowing và Phản xạ Nghe - Nói (không dùng cho Bài tập
+// từ vựng — phần đó vẫn phân theo HSK 1-6 như dữ liệu từ điển gốc).
 const PRACTICE_LEVELS = ['socap','trungcap','caocap'];
 const PRACTICE_LEVEL_LABELS = {socap:'Sơ cấp', trungcap:'Trung cấp', caocap:'Cao cấp'};
-const PRACTICE_LEVEL_TO_HSK = {socap:['hsk1','hsk2'], trungcap:['hsk3','hsk4'], caocap:['hsk5','hsk6']};
 
-/* ===================== MẪU CÂU (Sơ cấp / Trung cấp / Cao cấp) — dùng cho Sắp xếp câu, Điền từ, Gõ chữ Hán (câu) ===================== */
+/* ===================== MẪU CÂU theo HSK 1-6 — dùng cho Bài tập Sắp xếp câu, Điền từ, Gõ chữ Hán (câu) ===================== */
 const SENTENCE_TEMPLATES = {
-  socap: [
+  hsk1: [
     { parts:['我','喜欢','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 喜欢 + Tân ngữ (danh từ hoặc động từ) + 。', trans:m=>`Tôi thích ${m}.`,
       words:[['苹果','quả táo'],['水','nước'],['看书','đọc sách'],['唱歌','hát'],['跳舞','nhảy múa'],['游泳','bơi lội'],['踢足球','đá bóng'],['画画','vẽ tranh'],['旅游','du lịch'],['音乐','âm nhạc'],['猫','mèo'],['狗','chó']] },
     { parts:['他','是','我','的','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 是 + 我的 + Danh từ chỉ quan hệ + 。', trans:m=>`Anh ấy là ${m} của tôi.`,
       words:[['朋友','bạn'],['老师','thầy/cô giáo'],['同学','bạn học'],['哥哥','anh trai'],['弟弟','em trai'],['姐姐','chị gái'],['妹妹','em gái'],['邻居','hàng xóm'],['同事','đồng nghiệp'],['亲戚','họ hàng'],['客人','khách'],['爸爸','bố']] },
     { parts:['这个','东西','很','{s}','。'], grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Thứ này rất ${m}.`,
-      words:[['大','to'],['小','nhỏ'],['好','tốt'],['漂亮','đẹp'],['贵','đắt'],['便宜','rẻ'],['新','mới'],['旧','cũ'],['干净','sạch sẽ'],['有趣','thú vị'],['重要','quan trọng'],['方便','tiện lợi']] },
+      words:[['大','to'],['小','nhỏ'],['好','tốt'],['漂亮','đẹp'],['贵','đắt'],['便宜','rẻ'],['新','mới'],['旧','cũ'],['干净','sạch sẽ'],['有趣','thú vị'],['重要','quan trọng'],['方便','tiện lợi']] }
+  ],
+  hsk2: [
     { parts:['我','已经','{s}','了','。'], grammar:'Cấu trúc 已经...了: diễn tả hành động đã hoàn thành.', trans:m=>`Tôi đã ${m} rồi.`,
       words:[['吃饭','ăn cơm'],['睡觉','đi ngủ'],['回家','về nhà'],['毕业','tốt nghiệp'],['结婚','kết hôn'],['下班','tan làm'],['起床','thức dậy'],['洗澡','tắm rửa'],['完成','hoàn thành'],['休息','nghỉ ngơi'],['出发','xuất phát'],['准备好','chuẩn bị xong']] },
     { parts:['这个','{s}','很','有意思','。'], grammar:'Cấu trúc: 这个 + Danh từ + 很 + Tính từ + 。', trans:m=>`${cap(m)} này rất thú vị.`,
       words:[['电影','bộ phim'],['故事','câu chuyện'],['游戏','trò chơi'],['问题','câu hỏi'],['想法','ý tưởng'],['经历','trải nghiệm'],['新闻','tin tức'],['话题','chủ đề'],['小说','tiểu thuyết'],['节目','chương trình'],['活动','hoạt động'],['爱好','sở thích']] },
     { parts:['他','对','{s}','很','感兴趣','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 很感兴趣 (rất hứng thú với).', trans:m=>`Anh ấy rất hứng thú với ${m}.`,
-      words:[['音乐','âm nhạc'],['历史','lịch sử'],['运动','thể thao'],['科学','khoa học'],['艺术','nghệ thuật'],['旅游','du lịch'],['摄影','nhiếp ảnh'],['烹饪','nấu ăn'],['文学','văn học'],['电影','điện ảnh'],['心理学','tâm lý học'],['写作','viết lách']] },
-    { parts:["我","每天","都","{s}","。"], grammar:"Cấu trúc: 每天都 (mỗi ngày đều) + Cụm động từ.", trans:m=>`Tôi mỗi ngày đều ${m}.`,
-      words:[["喝牛奶","uống sữa"],["做作业","làm bài tập"],["看电视","xem tivi"],["听音乐","nghe nhạc"],["打篮球","chơi bóng rổ"],["骑自行车","đi xe đạp"],["浇花","tưới hoa"],["遛狗","dắt chó đi dạo"],["写日记","viết nhật ký"],["背单词","học từ vựng"],["整理房间","dọn phòng"],["出去散步","ra ngoài đi dạo"]] },
-    { parts:["{s}","的","时候","，","要","小心","。"], grammar:"Cấu trúc: 的时候 (khi...) + mệnh đề chính.", trans:m=>`Khi ${m}, phải cẩn thận.`,
-      words:[["过马路","qua đường"],["骑车","đi xe đạp"],["爬山","leo núi"],["做饭","nấu ăn"],["开车","lái xe"],["游泳","bơi lội"],["用刀","dùng dao"],["下雨","trời mưa"],["走夜路","đi đường đêm"],["滑冰","trượt băng"],["爬梯子","leo thang"],["坐船","đi thuyền"]] }
+      words:[['音乐','âm nhạc'],['历史','lịch sử'],['运动','thể thao'],['科学','khoa học'],['艺术','nghệ thuật'],['旅游','du lịch'],['摄影','nhiếp ảnh'],['烹饪','nấu ăn'],['文学','văn học'],['电影','điện ảnh'],['心理学','tâm lý học'],['写作','viết lách']] }
   ],
-  trungcap: [
+  hsk3: [
     { parts:['我们','应该','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + động từ năng nguyện 应该 + Cụm động từ + 。', trans:m=>`Chúng ta nên ${m}.`,
       words:[['保护环境','bảo vệ môi trường'],['互相帮助','giúp đỡ lẫn nhau'],['遵守规定','tuân thủ quy định'],['节约用水','tiết kiệm nước'],['按时完成','hoàn thành đúng giờ'],['多锻炼身体','rèn luyện thân thể nhiều hơn'],['尊重别人','tôn trọng người khác'],['提前预订','đặt trước'],['认真学习','học tập nghiêm túc'],['诚实守信','thành thật giữ chữ tín'],['合理安排时间','sắp xếp thời gian hợp lý'],['坚持锻炼','kiên trì rèn luyện']] },
     { parts:['这','件','事','很','{s}','。'], grammar:'Cấu trúc: Chủ ngữ (cụm danh từ) + 很 + Tính từ + 。', trans:m=>`Việc này rất ${m}.`,
       words:[['重要','quan trọng'],['麻烦','phiền phức'],['简单','đơn giản'],['复杂','phức tạp'],['有趣','thú vị'],['奇怪','kỳ lạ'],['危险','nguy hiểm'],['困难','khó khăn'],['特别','đặc biệt'],['严重','nghiêm trọng'],['紧急','khẩn cấp'],['普通','bình thường']] },
     { parts:['你','有','什么','{s}','吗','？'], grammar:'Câu hỏi với 吗 luôn đứng cuối câu.', trans:m=>`Bạn có ${m} gì không?`,
-      words:[['问题','câu hỏi'],['建议','đề nghị'],['爱好','sở thích'],['计划','kế hoạch'],['要求','yêu cầu'],['经验','kinh nghiệm'],['想法','ý tưởng'],['意见','ý kiến'],['困难','khó khăn'],['目标','mục tiêu'],['兴趣','hứng thú'],['打算','dự định']] },
+      words:[['问题','câu hỏi'],['建议','đề nghị'],['爱好','sở thích'],['计划','kế hoạch'],['要求','yêu cầu'],['经验','kinh nghiệm'],['想法','ý tưởng'],['意见','ý kiến'],['困难','khó khăn'],['目标','mục tiêu'],['兴趣','hứng thú'],['打算','dự định']] }
+  ],
+  hsk4: [
     { parts:['尽管','很','难','，','他','还是','{s}','。'], grammar:'Cấu trúc nhượng bộ 尽管...还是...: dù A nhưng vẫn B.', trans:m=>`Mặc dù rất khó, anh ấy vẫn ${m}.`,
       words:[['坚持完成任务','kiên trì hoàn thành nhiệm vụ'],['努力克服困难','nỗ lực vượt qua khó khăn'],['决定继续尝试','quyết định tiếp tục thử'],['选择相信自己','chọn tin tưởng bản thân'],['愿意承担责任','sẵn lòng gánh vác trách nhiệm'],['努力提高成绩','nỗ lực nâng cao thành tích'],['坚持自己的原则','kiên trì nguyên tắc của mình'],['努力寻找办法','nỗ lực tìm cách giải quyết'],['决定重新开始','quyết định bắt đầu lại'],['努力适应环境','nỗ lực thích nghi với môi trường'],['坚持每天锻炼','kiên trì tập luyện mỗi ngày'],['努力实现目标','nỗ lực thực hiện mục tiêu']] },
     { parts:['这个','{s}','对','公司','非常','重要','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 非常 + Tính từ.', trans:m=>`${cap(m)} này vô cùng quan trọng đối với công ty.`,
       words:[['决定','quyết định'],['项目','dự án'],['客户','khách hàng'],['计划','kế hoạch'],['政策','chính sách'],['战略','chiến lược'],['合同','hợp đồng'],['产品','sản phẩm'],['团队','đội nhóm'],['市场','thị trường'],['投资','khoản đầu tư'],['制度','chế độ']] },
     { parts:['她','始终','保持','{s}','的','态度','。'], grammar:'Cấu trúc: 始终 (luôn luôn) + 保持 + Định ngữ + 态度.', trans:m=>`Cô ấy luôn giữ thái độ ${m}.`,
-      words:[['谦虚','khiêm tốn'],['乐观','lạc quan'],['冷静','bình tĩnh'],['认真','nghiêm túc'],['积极','tích cực'],['友好','thân thiện'],['耐心','kiên nhẫn'],['诚恳','chân thành'],['开放','cởi mở'],['客观','khách quan'],['自信','tự tin'],['谨慎','thận trọng']] },
-    { parts:["只有","{s}","，","才能","取得","成功","。"], grammar:"Cấu trúc 只有...才能...: chỉ có...mới có thể... (điều kiện cần).", trans:m=>`Chỉ có ${m} mới có thể đạt được thành công.`,
-      words:[["坚持不懈","kiên trì không ngừng"],["认真准备","chuẩn bị kỹ càng"],["不断学习","không ngừng học hỏi"],["勇于创新","dám đổi mới"],["团结合作","đoàn kết hợp tác"],["脚踏实地","làm việc thực tế"],["善于沟通","giỏi giao tiếp"],["敢于冒险","dám mạo hiểm"],["保持耐心","giữ kiên nhẫn"],["虚心求教","khiêm tốn cầu học"],["积累经验","tích lũy kinh nghiệm"],["合理规划","lên kế hoạch hợp lý"]] },
-    { parts:["他","一","{s}","就","紧张","。"], grammar:"Cấu trúc 一...就...: vừa...thì liền... (hành động nối tiếp ngay lập tức).", trans:m=>`Anh ấy vừa ${m} là liền căng thẳng.`,
-      words:[["上台演讲","lên sân khấu diễn thuyết"],["见到老板","gặp sếp"],["考试","thi cử"],["面试","phỏng vấn"],["出差","đi công tác"],["开车上高速","lái xe lên cao tốc"],["接到电话","nhận điện thoại"],["看到成绩","nhìn thấy điểm số"],["遇到问题","gặp vấn đề"],["要发言","phải phát biểu"],["要签合同","phải ký hợp đồng"],["要做决定","phải đưa ra quyết định"]] }
+      words:[['谦虚','khiêm tốn'],['乐观','lạc quan'],['冷静','bình tĩnh'],['认真','nghiêm túc'],['积极','tích cực'],['友好','thân thiện'],['耐心','kiên nhẫn'],['诚恳','chân thành'],['开放','cởi mở'],['客观','khách quan'],['自信','tự tin'],['谨慎','thận trọng']] }
   ],
-  caocap: [
+  hsk5: [
     { parts:['在','这个','问题','上','，','我们','应该','保持','{s}','。'], grammar:'Cấu trúc: 在...上 (về vấn đề...) làm trạng ngữ, theo sau là mệnh đề chính.', trans:m=>`Về vấn đề này, chúng ta nên giữ thái độ ${m}.`,
       words:[['冷静','bình tĩnh'],['理智','sáng suốt'],['谨慎','thận trọng'],['客观','khách quan'],['耐心','kiên nhẫn'],['克制','kiềm chế'],['乐观','lạc quan'],['清醒','tỉnh táo'],['坚定','kiên định'],['灵活','linh hoạt'],['开放','cởi mở'],['独立','độc lập']] },
     { parts:['他','对','{s}','有','独特','的','看法','。'], grammar:'Cấu trúc: Chủ ngữ + 对 + Tân ngữ + 有 + Định ngữ + 看法.', trans:m=>`Anh ấy có quan điểm độc đáo về ${m}.`,
       words:[['教育','giáo dục'],['婚姻','hôn nhân'],['成功','thành công'],['人生','cuộc đời'],['艺术','nghệ thuật'],['历史','lịch sử'],['经济','kinh tế'],['社会','xã hội'],['未来','tương lai'],['爱情','tình yêu'],['文化','văn hóa'],['政治','chính trị']] },
     { parts:['这','需要','长期','的','{s}','。'], grammar:'Cấu trúc: 长期的 + Danh từ trừu tượng làm tân ngữ.', trans:m=>`Việc này cần ${m} lâu dài.`,
-      words:[['努力','sự nỗ lực'],['投资','đầu tư'],['坚持','sự kiên trì'],['训练','huấn luyện'],['积累','sự tích lũy'],['规划','quy hoạch'],['合作','sự hợp tác'],['观察','sự quan sát'],['适应','sự thích nghi'],['准备','sự chuẩn bị'],['沟通','giao tiếp'],['支持','sự hỗ trợ']] },
+      words:[['努力','sự nỗ lực'],['投资','đầu tư'],['坚持','sự kiên trì'],['训练','huấn luyện'],['积累','sự tích lũy'],['规划','quy hoạch'],['合作','sự hợp tác'],['观察','sự quan sát'],['适应','sự thích nghi'],['准备','sự chuẩn bị'],['沟通','giao tiếp'],['支持','sự hỗ trợ']] }
+  ],
+  hsk6: [
     { parts:['这','项','政策','引发','了','广泛','的','{s}','。'], grammar:'Cấu trúc: Chủ ngữ + 引发了 + Định ngữ + Danh từ trừu tượng.', trans:m=>`Chính sách này đã gây ra ${m} rộng rãi.`,
       words:[['争议','tranh cãi'],['关注','sự quan tâm'],['讨论','thảo luận'],['质疑','sự nghi ngờ'],['批评','phê bình'],['支持','sự ủng hộ'],['反响','phản ứng'],['担忧','sự lo ngại'],['猜测','suy đoán'],['不满','sự bất mãn'],['赞誉','lời khen ngợi'],['抵制','sự tẩy chay']] },
     { parts:['他','始终','恪守','{s}','。'], grammar:'Cấu trúc: 始终 + 恪守 (tuân thủ nghiêm ngặt) + Tân ngữ.', trans:m=>`Anh ấy luôn tuân thủ nghiêm ngặt ${m}.`,
       words:[['诚信原则','nguyên tắc thành tín'],['职业道德','đạo đức nghề nghiệp'],['承诺','lời hứa'],['规定','quy định'],['底线','giới hạn cuối cùng'],['原则','nguyên tắc'],['准则','chuẩn tắc'],['纪律','kỷ luật'],['传统','truyền thống'],['法律','pháp luật'],['约定','giao ước'],['初心','tâm nguyện ban đầu']] },
     { parts:['他','的','决定','令','大家','感到','{s}','。'], grammar:'Cấu trúc 令 (khiến) + Tân ngữ + 感到 + Tính từ.', trans:m=>`Quyết định của anh ấy khiến mọi người cảm thấy ${m}.`,
-      words:[['意外','bất ngờ'],['震惊','sốc'],['欣慰','an ủi'],['失望','thất vọng'],['困惑','bối rối'],['兴奋','hào hứng'],['担忧','lo lắng'],['欣喜','vui mừng'],['不安','bất an'],['满意','hài lòng'],['惊讶','ngạc nhiên'],['感动','cảm động']] },
-    { parts:["不管","{s}","，","他","都","坚持","自己","的","原则","。"], grammar:"Cấu trúc 不管...都...: dù thế nào...đều... (nhượng bộ vô điều kiện).", trans:m=>`Dù ${m}, anh ấy đều kiên trì nguyên tắc của mình.`,
-      words:[["外界如何评价","bên ngoài đánh giá thế nào"],["压力多大","áp lực lớn đến đâu"],["结果如何","kết quả ra sao"],["形势多么复杂","tình hình phức tạp đến đâu"],["别人怎么看","người khác nhìn nhận thế nào"],["付出多少代价","phải trả giá bao nhiêu"],["遇到什么困难","gặp khó khăn gì"],["时代如何变迁","thời đại biến đổi thế nào"],["舆论如何","dư luận ra sao"],["市场如何波动","thị trường biến động thế nào"],["前路多么艰难","con đường phía trước gian nan thế nào"],["竞争多么激烈","cạnh tranh khốc liệt đến đâu"]] },
-    { parts:["这","一","现象","的","背后","，","折射","出","{s}","的","问题","。"], grammar:"Cấu trúc: 折射出 (phản ánh ra) + Định ngữ + 问题 (văn phong học thuật/báo chí).", trans:m=>`Đằng sau hiện tượng này phản ánh vấn đề ${m}.`,
-      words:[["深层次","sâu xa"],["结构性","mang tính cấu trúc"],["长期存在","tồn tại lâu dài"],["亟待解决","cần giải quyết gấp"],["值得深思","đáng để suy ngẫm sâu"],["普遍存在","tồn tại phổ biến"],["根本性","mang tính căn bản"],["不容忽视","không thể xem nhẹ"],["复杂的社会","xã hội phức tạp"],["体制内","trong thể chế"],["亟需关注","cần được quan tâm gấp"],["难以回避","khó tránh khỏi"]] }
+      words:[['意外','bất ngờ'],['震惊','sốc'],['欣慰','an ủi'],['失望','thất vọng'],['困惑','bối rối'],['兴奋','hào hứng'],['担忧','lo lắng'],['欣喜','vui mừng'],['不安','bất an'],['满意','hài lòng'],['惊讶','ngạc nhiên'],['感动','cảm động']] }
   ]
 };
+
 function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 
-/* Các cặp từ đồng nghĩa/trái nghĩa đã được kiểm chứng thủ công. */
-
 const WORD_PAIRS = {
-  socap: [
+  hsk1: [
     {type:'antonym', a:'大', am:'to, lớn', b:'小', bm:'nhỏ'},
     {type:'antonym', a:'多', am:'nhiều', b:'少', bm:'ít'},
     {type:'antonym', a:'高', am:'cao', b:'矮', bm:'thấp'},
@@ -1947,7 +1941,9 @@ const WORD_PAIRS = {
     {type:'antonym', a:'新', am:'mới', b:'旧', bm:'cũ'},
     {type:'antonym', a:'男', am:'nam', b:'女', bm:'nữ'},
     {type:'synonym', a:'喜欢', am:'thích', b:'爱', bm:'yêu, yêu thích'},
-    {type:'synonym', a:'漂亮', am:'xinh đẹp', b:'美', bm:'đẹp'},
+    {type:'synonym', a:'漂亮', am:'xinh đẹp', b:'美', bm:'đẹp'}
+  ],
+  hsk2: [
     {type:'antonym', a:'简单', am:'đơn giản', b:'复杂', bm:'phức tạp'},
     {type:'antonym', a:'早', am:'sớm', b:'晚', bm:'muộn'},
     {type:'antonym', a:'贵', am:'đắt', b:'便宜', bm:'rẻ'},
@@ -1956,14 +1952,9 @@ const WORD_PAIRS = {
     {type:'antonym', a:'安静', am:'yên tĩnh', b:'吵', bm:'ồn ào'},
     {type:'antonym', a:'胖', am:'béo', b:'瘦', bm:'gầy'},
     {type:'synonym', a:'高兴', am:'vui vẻ', b:'开心', bm:'vui vẻ'},
-    {type:'synonym', a:'马上', am:'ngay lập tức', b:'立刻', bm:'lập tức'},
-    {type:"antonym", a:"长", am:"dài", b:"短", bm:"ngắn"},
-    {type:"antonym", a:"远", am:"xa", b:"近", bm:"gần"},
-    {type:"antonym", a:"难", am:"khó", b:"容易", bm:"dễ"},
-    {type:"antonym", a:"黑", am:"đen", b:"白", bm:"trắng"},
-    {type:"synonym", a:"马路", am:"đường phố", b:"街道", bm:"phố"}
+    {type:'synonym', a:'马上', am:'ngay lập tức', b:'立刻', bm:'lập tức'}
   ],
-  trungcap: [
+  hsk3: [
     {type:'antonym', a:'保护', am:'bảo vệ', b:'破坏', bm:'phá hoại'},
     {type:'antonym', a:'成功', am:'thành công', b:'失败', bm:'thất bại'},
     {type:'antonym', a:'安全', am:'an toàn', b:'危险', bm:'nguy hiểm'},
@@ -1971,41 +1962,35 @@ const WORD_PAIRS = {
     {type:'antonym', a:'诚实', am:'thành thật', b:'虚假', bm:'giả dối'},
     {type:'synonym', a:'提高', am:'nâng cao', b:'提升', bm:'nâng lên'},
     {type:'synonym', a:'马虎', am:'cẩu thả', b:'粗心', bm:'bất cẩn'},
-    {type:'synonym', a:'突然', am:'đột nhiên', b:'忽然', bm:'bỗng nhiên'},
+    {type:'synonym', a:'突然', am:'đột nhiên', b:'忽然', bm:'bỗng nhiên'}
+  ],
+  hsk4: [
     {type:'antonym', a:'合作', am:'hợp tác', b:'竞争', bm:'cạnh tranh'},
     {type:'antonym', a:'谦虚', am:'khiêm tốn', b:'骄傲', bm:'kiêu ngạo'},
     {type:'antonym', a:'积极', am:'tích cực', b:'消极', bm:'tiêu cực'},
     {type:'antonym', a:'乐观', am:'lạc quan', b:'悲观', bm:'bi quan'},
     {type:'antonym', a:'具体', am:'cụ thể', b:'抽象', bm:'trừu tượng'},
     {type:'synonym', a:'挑战', am:'thử thách', b:'难题', bm:'vấn đề khó'},
-    {type:'synonym', a:'幽默', am:'hài hước', b:'诙谐', bm:'dí dỏm'},
-    {type:"antonym", a:"支持", am:"ủng hộ", b:"反对", bm:"phản đối"},
-    {type:"antonym", a:"扩大", am:"mở rộng", b:"缩小", bm:"thu hẹp"},
-    {type:"antonym", a:"增加", am:"tăng lên", b:"减少", bm:"giảm bớt"},
-    {type:"antonym", a:"主动", am:"chủ động", b:"被动", bm:"bị động"},
-    {type:"synonym", a:"解决", am:"giải quyết", b:"处理", bm:"xử lý"},
-    {type:"synonym", a:"重视", am:"coi trọng", b:"看重", bm:"coi trọng"}
+    {type:'synonym', a:'幽默', am:'hài hước', b:'诙谐', bm:'dí dỏm'}
   ],
-  caocap: [
+  hsk5: [
     {type:'antonym', a:'谨慎', am:'thận trọng', b:'草率', bm:'khinh suất'},
     {type:'antonym', a:'充裕', am:'dồi dào', b:'匮乏', bm:'thiếu thốn'},
     {type:'antonym', a:'坚强', am:'kiên cường', b:'脆弱', bm:'yếu đuối'},
     {type:'synonym', a:'疲惫', am:'mệt mỏi', b:'疲劳', bm:'mệt mỏi'},
     {type:'synonym', a:'谨慎', am:'thận trọng', b:'慎重', bm:'thận trọng'},
-    {type:'synonym', a:'潜力', am:'tiềm năng', b:'潜能', bm:'tiềm năng'},
+    {type:'synonym', a:'潜力', am:'tiềm năng', b:'潜能', bm:'tiềm năng'}
+  ],
+  hsk6: [
     {type:'antonym', a:'匮乏', am:'thiếu thốn', b:'充裕', bm:'dồi dào'},
     {type:'antonym', a:'颠覆', am:'lật đổ, đảo lộn', b:'巩固', bm:'củng cố'},
     {type:'antonym', a:'谦逊', am:'khiêm tốn', b:'傲慢', bm:'ngạo mạn'},
     {type:'synonym', a:'恪守', am:'tuân thủ nghiêm ngặt', b:'遵守', bm:'tuân thủ'},
     {type:'synonym', a:'沉淀', am:'lắng đọng, tích lũy', b:'积累', bm:'tích lũy'},
-    {type:'synonym', a:'韧性', am:'tính bền bỉ', b:'坚韧', bm:'kiên cường bền bỉ'},
-    {type:"antonym", a:"繁荣", am:"phồn vinh", b:"衰退", bm:"suy thoái"},
-    {type:"antonym", a:"保守", am:"bảo thủ", b:"激进", bm:"cấp tiến"},
-    {type:"antonym", a:"透明", am:"minh bạch", b:"隐蔽", bm:"che giấu"},
-    {type:"antonym", a:"集权", am:"tập quyền", b:"分权", bm:"phân quyền"},
-    {type:"synonym", a:"亟待", am:"cần gấp", b:"急需", bm:"cấp thiết cần"}
+    {type:'synonym', a:'韧性', am:'tính bền bỉ', b:'坚韧', bm:'kiên cường bền bỉ'}
   ]
-};
+};;
+;
 
 /* ===================== SHADOWING SENTENCE BANK (Sơ cấp / Trung cấp / Cao cấp) ===================== */
 const SHADOW_BANK = {
@@ -2670,8 +2655,60 @@ function extractGrammarExamples(theory){
   }
   return examples;
 }
+// Tô đậm các chuỗi Hán tự (câu ví dụ) và tô màu dòng Đúng:/Sai: để dễ quét mắt hơn — CHỈ định dạng
+// hiển thị, không đổi một chữ nào của nội dung gốc.
+function highlightGrammarLine(line){
+  let html = escapeHtmlCulture(line);
+  html = html.replace(/([一-鿿][一-鿿，。？！、]*)/g, '<span class="font-bold text-red-600 dark:text-red-400">$1</span>');
+  html = html.replace(/^(Đúng:)/, '<span class="text-green-600 dark:text-green-400 font-bold">$1</span>');
+  html = html.replace(/^(Sai:)/, '<span class="text-red-600 dark:text-red-400 font-bold">$1</span>');
+  return html;
+}
 function renderTheoryHtml(theory){
-  return theory.split('\n').map(line => `<p>${escapeHtmlCulture(line)}</p>`).join('');
+  return theory.split('\n').filter(l => l.trim() !== '').map(line => `<p class="leading-relaxed">${highlightGrammarLine(line)}</p>`).join('');
+}
+function renderTheoryBucketHtml(lines){
+  return lines.filter(l => l.trim() !== '').map(l => {
+    if (l.startsWith('§H§')) return `<p class="font-bold text-red-700 dark:text-red-400 mt-3 first:mt-0 mb-1">${escapeHtmlCulture(l.slice(3))}</p>`;
+    return `<p class="leading-relaxed">${highlightGrammarLine(l)}</p>`;
+  }).join('');
+}
+// Tách phần "Giải thích" (theory) thành các mục nhỏ (Công thức / Lưu ý / So sánh / còn lại) dựa trên
+// các dòng tiêu đề ngắn có sẵn trong chính văn bản gốc (VD "Công thức", "Lưu ý", "So sánh...") — CHỈ
+// phân loại lại vị trí hiển thị, KHÔNG cắt bớt, không viết lại hay thêm bất kỳ câu chữ nào.
+const GRAMMAR_SECTION_KEYWORDS = [
+  { re: /công thức/i, target: 'formula' },
+  { re: /(lưu ý|chú ý|cảnh báo|dễ nhầm|lỗi sai)/i, target: 'notes' },
+  { re: /(so sánh|phân biệt)/i, target: 'comparison_text' },
+];
+function isGrammarHeadingLine(line){
+  const t = line.trim();
+  if (!t || t.length > 70) return false;
+  if (/[。？！]$/.test(t)) return false;
+  return true;
+}
+function splitGrammarTheory(theory){
+  const lines = theory.split('\n');
+  const buckets = { formula: [], notes: [], comparison_text: [], explanation: [] };
+  let current = 'explanation';
+  lines.forEach(rawLine => {
+    const trimmed = rawLine.trim();
+    if (isGrammarHeadingLine(trimmed)) {
+      const match = GRAMMAR_SECTION_KEYWORDS.find(k => k.re.test(trimmed));
+      const target = match ? match.target : 'explanation';
+      current = target;
+      const colonIdx = trimmed.indexOf(':');
+      if (colonIdx > -1 && colonIdx < trimmed.length - 1) {
+        buckets[current].push('§H§' + trimmed.slice(0, colonIdx));
+        buckets[current].push(trimmed.slice(colonIdx + 1).trim());
+      } else {
+        buckets[current].push('§H§' + trimmed);
+      }
+      return;
+    }
+    buckets[current].push(rawLine);
+  });
+  return buckets;
 }
 function renderComparisonTable(rows){
   if (!rows || !rows.length) return '';
@@ -2691,24 +2728,34 @@ function openGrammarLesson(level, id){
   view.classList.remove('hidden');
 
   const explanationText = lessonData.explanation || lessonData.theory || '';
+  const parsed = explanationText ? splitGrammarTheory(explanationText) : { formula:[], notes:[], comparison_text:[], explanation:[] };
   const modules = [];
-  if (lessonData.formula) {
-    modules.push({ id:'m-formula', label:'📐 Công thức', html:`<div class="text-sm font-mono bg-red-50 dark:bg-red-900/20 p-4 rounded-xl whitespace-pre-line">${escapeHtmlCulture(lessonData.formula)}</div>` });
+
+  const formulaHtml = lessonData.formula
+    ? `<div class="text-sm font-mono bg-red-50 dark:bg-red-900/20 p-4 rounded-xl whitespace-pre-line">${escapeHtmlCulture(lessonData.formula)}</div>`
+    : (parsed.formula.length ? `<div class="text-sm bg-red-50 dark:bg-red-900/20 p-4 rounded-xl space-y-1">${renderTheoryBucketHtml(parsed.formula)}</div>` : null);
+  if (formulaHtml) modules.push({ id:'m-formula', label:'📝 Công thức', html: formulaHtml });
+
+  const notesHtml = lessonData.notes
+    ? `<div class="text-sm bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 whitespace-pre-line">${escapeHtmlCulture(lessonData.notes)}</div>`
+    : (parsed.notes.length ? `<div class="text-sm bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 space-y-1">${renderTheoryBucketHtml(parsed.notes)}</div>` : null);
+  if (notesHtml) modules.push({ id:'m-notes', label:'⚠️ Lưu ý / Cảnh báo', html: notesHtml });
+
+  const compHtml = (lessonData.comparisonTable && lessonData.comparisonTable.length)
+    ? renderComparisonTable(lessonData.comparisonTable)
+    : (parsed.comparison_text.length ? `<div class="text-sm bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-4 space-y-1">${renderTheoryBucketHtml(parsed.comparison_text)}</div>` : null);
+  if (compHtml) modules.push({ id:'m-compare', label:'📊 So sánh / Phân biệt', html: compHtml });
+
+  const explainLines = parsed.explanation.length ? parsed.explanation : explanationText.split('\n');
+  if (explainLines.some(l => l.trim() !== '')) {
+    modules.push({ id:'m-explain', label:'💡 Giải thích & Cách dùng', html:`<div class="text-sm space-y-1">${renderTheoryBucketHtml(explainLines)}</div>` });
   }
-  if (explanationText) {
-    modules.push({ id:'m-explain', label:'📖 Giải thích & Cách dùng', html:`<div class="text-sm leading-relaxed space-y-1">${renderTheoryHtml(explanationText)}</div>` });
-  }
-  if (lessonData.notes) {
-    modules.push({ id:'m-notes', label:'⚠️ Lưu ý / Cảnh báo', html:`<div class="text-sm bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 whitespace-pre-line">${escapeHtmlCulture(lessonData.notes)}</div>` });
-  }
-  if (lessonData.comparisonTable && lessonData.comparisonTable.length) {
-    modules.push({ id:'m-compare', label:'📊 Bảng so sánh', html: renderComparisonTable(lessonData.comparisonTable) });
-  }
+
   const examples = (lessonData.examples && lessonData.examples.length)
     ? lessonData.examples.map(e => ({ hanzi: e[0], pinyin: e[1]||'', vi: e[2]||'' }))
     : extractGrammarExamples(explanationText);
   if (examples.length) {
-    modules.push({ id:'m-examples', label:'🔊 Ví dụ tương tác (Audio/Shadowing)', html: examples.map(e => `
+    modules.push({ id:'m-examples', label:'📌 Ví dụ minh họa (bấm 🔊 để nghe)', html: examples.map(e => `
       <div class="flex items-start gap-2 p-2.5 bg-gray-50 dark:bg-gray-900/50 rounded-lg text-sm">
         <button onclick="speakText('${e.hanzi.replace(/'/g,"")}')" class="flex-shrink-0 text-gray-400 hover:text-red-600 mt-0.5">🔊</button>
         <div><span class="font-bold">${escapeHtmlCulture(e.hanzi)}</span>${e.pinyin?` <span class="text-amber-600">(${escapeHtmlCulture(e.pinyin)})</span>`:''}${e.vi?`<br><span class="text-gray-500">${escapeHtmlCulture(e.vi)}</span>`:''}</div>
@@ -2745,7 +2792,7 @@ function openGrammarLesson(level, id){
 function gKey(level, id, baiIdx){ return level+'|'+id+'|'+baiIdx; }
 function renderGrammarExerciseGroup(level, id, baiIdx, bai){
   const key = gKey(level, id, baiIdx);
-  if (!grammarState[key]) grammarState[key] = { type: bai.type, submitted:false, picks:{}, pools:{} };
+  if (!grammarState[key]) grammarState[key] = { type: bai.type, submitted:false, picks:{}, pools:{}, inputs:{} };
   return `<div id="gbai-${key.replace(/\|/g,'-')}" class="border-t border-gray-100 dark:border-gray-700 pt-4 first:border-0 first:pt-0">
     ${renderGrammarBaiBody(level, id, baiIdx, bai)}
   </div>`;
@@ -2835,31 +2882,51 @@ function grammarUnpickOrder(key,i,pi){
   const [level,id,baiIdx]=key.split('|'); refreshGrammarBai(level,id,Number(baiIdx));
 }
 
+function grammarNormalize(s){ return (s||'').trim().replace(/[，。？！、\s]/g,''); }
+function grammarInputMatches(val, it){
+  const n = grammarNormalize(val);
+  if (!n) return false;
+  return n === grammarNormalize(it.answer) || (it.alt && n === grammarNormalize(it.alt));
+}
+function grammarSetInput(key, i, value){
+  const st = grammarState[key];
+  if (st.submitted) return;
+  st.inputs[i] = value;
+}
+function renderAnswerInputItem(key, i, question, it, st){
+  const val = st.inputs[i] || '';
+  let borderCls = 'border-gray-300 dark:border-gray-600';
+  let feedbackHtml = '';
+  if (st.submitted) {
+    const isMatch = grammarInputMatches(val, it);
+    borderCls = isMatch ? 'border-green-500' : 'border-red-400';
+    feedbackHtml = `<p class="text-sm ${isMatch?'text-green-600':'text-gray-700 dark:text-gray-300'} font-bold mt-1.5">${isMatch?'✅ Chính xác! Đáp án: ':'📖 Đáp án đúng: '}${escapeHtmlCulture(it.answer)}${it.alt?` (hoặc: ${escapeHtmlCulture(it.alt)})`:''}</p>${it.note?`<p class="text-xs text-gray-500 mt-0.5">${escapeHtmlCulture(it.note)}</p>`:''}`;
+  }
+  return `<div class="mb-3 p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg">
+    <p class="text-sm mb-2">${escapeHtmlCulture(question)}</p>
+    <input type="text" ${st.submitted?'disabled':''} value="${escapeAttr(val)}" oninput="grammarSetInput('${key}',${i},this.value)" placeholder="Gõ câu trả lời của bạn..." class="w-full px-3 py-2 rounded-lg border ${borderCls} bg-white dark:bg-gray-800 text-sm">
+    ${feedbackHtml}
+  </div>`;
+}
 function renderRevealBai(key, bai, st){
   st.__key = key;
-  const itemsHtml = bai.items.map(it => `
-    <div class="mb-3 p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg">
-      <p class="text-sm">${escapeHtmlCulture(it.question)}</p>
-      ${st.submitted ? `<p class="text-sm text-green-600 font-bold mt-1.5">✅ ${escapeHtmlCulture(it.answer)}${it.alt?` (hoặc: ${escapeHtmlCulture(it.alt)})`:''}</p>${it.note?`<p class="text-xs text-gray-500 mt-0.5">${escapeHtmlCulture(it.note)}</p>`:''}` : ''}
-    </div>`).join('');
+  const itemsHtml = bai.items.map((it,i) => renderAnswerInputItem(key, i, it.question, it, st)).join('');
   return itemsHtml + renderGrammarSubmitBtn(st);
 }
 
 function renderFillWordbankBai(key, bai, st){
   st.__key = key;
   const bank = `<p class="text-xs font-bold text-amber-600 mb-2">Ngân hàng từ: ${escapeHtmlCulture(bai.wordbank)}</p>`;
-  const itemsHtml = bai.items.map(it => `
-    <div class="mb-3 p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg">
-      <p class="text-sm">${escapeHtmlCulture(it.question)}</p>
-      ${st.submitted ? `<p class="text-sm text-green-600 font-bold mt-1.5">✅ ${escapeHtmlCulture(it.answer)}${it.alt?` (hoặc: ${escapeHtmlCulture(it.alt)})`:''}</p>${it.note?`<p class="text-xs text-gray-500 mt-0.5">${escapeHtmlCulture(it.note)}</p>`:''}` : ''}
-    </div>`).join('');
+  const itemsHtml = bai.items.map((it,i) => renderAnswerInputItem(key, i, it.question, it, st)).join('');
   return bank + itemsHtml + renderGrammarSubmitBtn(st);
 }
 
 function renderRevealBlockBai(key, bai, st){
   st.__key = key;
+  const val = st.inputs[0] || '';
   return `<div class="p-3 bg-gray-50 dark:bg-gray-900/50 rounded-lg space-y-2">
     <p class="text-sm whitespace-pre-line">${escapeHtmlCulture(bai.questionBlock)}</p>
+    <textarea ${st.submitted?'disabled':''} oninput="grammarSetInput('${key}',0,this.value)" placeholder="Gõ đáp án của bạn cho từng chỗ trống (theo thứ tự)..." rows="2" class="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">${escapeHtmlCulture(val)}</textarea>
     ${st.submitted ? `<p class="text-sm text-green-600 font-bold border-t border-gray-200 dark:border-gray-700 pt-2 whitespace-pre-line">✅ Đáp án: ${escapeHtmlCulture(bai.answerBlock)}</p>` : ''}
   </div>` + renderGrammarSubmitBtn(st);
 }
@@ -2913,6 +2980,10 @@ function grammarSubmitBai(key){
       const ok = JSON.stringify(picked) === JSON.stringify(it.correct) || (it.alts||[]).some(a => JSON.stringify(a) === JSON.stringify(picked));
       if (ok) correct++;
     });
+    pct = total ? Math.round(correct/total*100) : 100;
+  } else if (bai.type === 'reveal' || bai.type === 'fill_wordbank') {
+    const total = bai.items.length; let correct = 0;
+    bai.items.forEach((it,i) => { if (grammarInputMatches(st.inputs[i], it)) correct++; });
     pct = total ? Math.round(correct/total*100) : 100;
   }
   playScoreSound(pct);
@@ -3797,13 +3868,13 @@ function renderPracticeMenu(){
   document.getElementById('practice-type-menu').classList.add('hidden');
   document.getElementById('practice-quiz').classList.add('hidden');
   const grid = document.getElementById('practice-level-grid');
-  grid.innerHTML = PRACTICE_LEVELS.map(l => `<button onclick="selectPracticeLevel('${l}')" class="py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">${PRACTICE_LEVEL_LABELS[l]}</button>`).join('');
+  grid.innerHTML = HSK_LEVELS.map(l => `<button onclick="selectPracticeLevel('${l}')" class="py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-sm">${VOCAB_DATA[l].label}</button>`).join('');
 }
 function selectPracticeLevel(level){
   practiceLevel = level;
   document.getElementById('practice-menu').classList.add('hidden');
   document.getElementById('practice-type-menu').classList.remove('hidden');
-  document.getElementById('practice-type-title').textContent = `Chọn dạng bài tập - ${PRACTICE_LEVEL_LABELS[level]}`;
+  document.getElementById('practice-type-title').textContent = `Chọn dạng bài tập - ${VOCAB_DATA[level].label}`;
 }
 function backToTypeMenu(){
   document.getElementById('practice-quiz').classList.add('hidden');
@@ -3811,18 +3882,15 @@ function backToTypeMenu(){
 }
 
 const QUIZ_BATCH_SIZE = 40;
-// Bài tập dùng bộ 3 cấp độ Sơ/Trung/Cao thay vì HSK 1-6; mỗi cấp gộp kho từ điển/ ví dụ biên soạn
-// của 2 cấp HSK tương ứng (xem PRACTICE_LEVEL_TO_HSK) để tận dụng toàn bộ dữ liệu đã có.
+// Bài tập từ vựng tự động sinh KHÔNG GIỚI HẠN, phân theo đúng 6 cấp độ HSK 1-6 dựa trực tiếp trên
+// kho từ điển Hán tự/Pinyin/Nghĩa/Audio của từng cấp — Admin không cần tạo thủ công từng câu hỏi.
 function getPracticeDictPool(level){
-  const hsks = PRACTICE_LEVEL_TO_HSK[level] || [level];
-  let pool = [];
-  hsks.forEach(h => { pool = pool.concat(window.DICTIONARY_DATA[h] || []); });
-  return pool;
+  return window.DICTIONARY_DATA[level] || [];
 }
 const CURATED_BY_LEVEL_HANZI = {};
-PRACTICE_LEVELS.forEach(l => {
+HSK_LEVELS.forEach(l => {
   CURATED_BY_LEVEL_HANZI[l] = {};
-  PRACTICE_LEVEL_TO_HSK[l].forEach(h => { VOCAB_DATA[h].words.forEach(w => { CURATED_BY_LEVEL_HANZI[l][w.h] = w; }); });
+  VOCAB_DATA[l].words.forEach(w => { CURATED_BY_LEVEL_HANZI[l][w.h] = w; });
 });
 
 function pickRandomDistractors(level, excludeHanzi, count){
@@ -3980,7 +4048,7 @@ function renderQuizQuestion(){
   const q = quizState.questions[quizState.index];
   quizState.answered = false;
   // Không hiển thị số đếm câu dạng "X/Y" — học viên luyện tập liên tục không giới hạn.
-  document.getElementById('quiz-progress-label').textContent = PRACTICE_LEVEL_LABELS[quizState.level] || '';
+  document.getElementById('quiz-progress-label').textContent = VOCAB_DATA[quizState.level].label || '';
   document.getElementById('quiz-prev-btn').classList.toggle('hidden', quizState.index === 0);
   document.getElementById('quiz-explanation').classList.add('hidden');
   const body = document.getElementById('quiz-body');
@@ -4056,7 +4124,7 @@ function submitOrder(){
   if (!isCorrect) bodyHtml = `<p class="mb-1"><span class="font-bold">Bạn đã sắp xếp:</span> ${quizState.picked.join(' ')} (chưa đúng)</p>` + bodyHtml;
   document.getElementById('quiz-explain-body').innerHTML = bodyHtml;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Sắp xếp câu', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Sắp xếp câu', detail:`${VOCAB_DATA[quizState.level].label}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function answerFill(i){
@@ -4078,7 +4146,7 @@ function answerFill(i){
     <p class="mt-1 font-bold">Vì sao không chọn các đáp án khác:</p>
     <ul class="list-disc pl-5">${wrongOpts.map((o,idx) => `<li><b>${o}</b>: ${q.why[idx] || 'không phù hợp về nghĩa/ngữ pháp trong câu này.'}</li>`).join('')}</ul>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Điền từ', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.sentence}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Điền từ', detail:`${VOCAB_DATA[quizState.level].label} · ${q.sentence}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function answerSynonym(i){
@@ -4098,7 +4166,7 @@ function answerSynonym(i){
   const distractorLines = (q.distractorWhy||[]).map(w => `<li>${w}</li>`).join('');
   document.getElementById('quiz-explain-body').innerHTML = `<p>${q.explain}</p>${distractorLines ? `<p class="mt-1 font-bold">Vì sao các từ còn lại không phù hợp:</p><ul class="list-disc pl-5">${distractorLines}</ul>` : ''}`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Đồng/Trái nghĩa', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.word}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Đồng/Trái nghĩa', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function answerMeaning(i){
@@ -4122,7 +4190,7 @@ function answerMeaning(i){
     <p class="mt-1 font-bold">Mở rộng vốn từ - các đáp án còn lại thực ra là nghĩa của từ nào:</p>
     <ul class="list-disc pl-5">${wrongLines}</ul>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Nghĩa từ vựng', detail:`${VOCAB_DATA[quizState.level].label} · ${q.word.h}`, score: isCorrect?'Đúng':'Sai'});
 }
 
 function submitTyping(){
@@ -4141,7 +4209,7 @@ function submitTyping(){
   document.getElementById('quiz-correct-line').textContent = `Đáp án đúng: ${q.correct}`;
   document.getElementById('quiz-explain-body').innerHTML = `<p><span class="font-bold">Bạn đã gõ:</span> ${escapeAttr(typed) || '(để trống)'}</p><p class="mt-1"><span class="font-bold">Gợi ý:</span> ${escapeAttr(q.hint)}</p>`;
   document.getElementById('quiz-explanation').classList.remove('hidden');
-  pushHistory({type:'Bài tập - Gõ chữ Hán', detail:`${PRACTICE_LEVEL_LABELS[quizState.level]} · ${q.correct}`, score: isCorrect?'Đúng':'Sai'});
+  pushHistory({type:'Bài tập - Gõ chữ Hán', detail:`${VOCAB_DATA[quizState.level].label} · ${q.correct}`, score: isCorrect?'Đúng':'Sai'});
 }
 function showBatchToast(msg){
   const t = document.getElementById('quiz-batch-toast');
