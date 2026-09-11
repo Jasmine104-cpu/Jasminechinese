@@ -464,8 +464,7 @@
         <button id="reflex-record-btn" onclick="toggleReflexRecording()" class="p-5 bg-amber-500 hover:bg-amber-600 text-gray-900 rounded-full shadow-lg mx-auto block text-2xl">🎙️</button>
       </div>
       <div id="reflex-result" class="hidden bg-gray-50 dark:bg-gray-900 p-4 rounded-xl space-y-2 border border-gray-200 dark:border-gray-700 text-left text-xs">
-        <p><span class="font-bold text-gray-500">Bạn đã nói:</span> <span id="reflex-heard"></span></p>
-        <p id="reflex-feedback" class="text-gray-600 dark:text-gray-300"></p>
+        <div id="reflex-feedback" class="text-gray-600 dark:text-gray-300 space-y-1"></div>
         <div id="reflex-actions" class="flex gap-2 pt-1"></div>
       </div>
     </div>
@@ -3306,27 +3305,6 @@ function speakText(text, rate){
 }
 const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-function levenshtein(a, b){
-  const m = a.length, n = b.length;
-  const dp = Array.from({length:m+1}, () => new Array(n+1).fill(0));
-  for (let i=0;i<=m;i++) dp[i][0]=i;
-  for (let j=0;j<=n;j++) dp[0][j]=j;
-  for (let i=1;i<=m;i++){
-    for (let j=1;j<=n;j++){
-      dp[i][j] = a[i-1]===b[j-1] ? dp[i-1][j-1] : 1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
-    }
-  }
-  return dp[m][n];
-}
-function similarityPct(target, heard){
-  const t = target.replace(/[，。？！、\s]/g,'');
-  const h = heard.replace(/[，。？！、\s]/g,'');
-  if (!h) return 0;
-  const dist = levenshtein(t, h);
-  const pct = Math.max(0, Math.round((1 - dist / Math.max(t.length,1)) * 100));
-  return Math.min(pct, 100);
-}
-
 /* ===================== CHẨN ĐOÁN PHÁT ÂM CHI TIẾT (Shadowing / Phản xạ) =====================
    Lưu ý kỹ thuật (minh bạch với người dùng): trình duyệt chỉ cung cấp giọng nói -> văn bản
    (Web Speech API), không cung cấp dữ liệu âm học (cao độ, ngữ điệu) của người nói. Vì vậy
@@ -3395,7 +3373,6 @@ function alignChineseChars(target, heard){
 function buildPronunciationFeedback(target, heard){
   const t = target.replace(/[，。？！、\s]/g,'');
   const h = (heard||'').replace(/[，。？！、\s]/g,'');
-  const pct = similarityPct(target, heard);
   const ops = alignChineseChars(t, h);
   const errors = [];
   let matchedCount = 0;
@@ -3405,6 +3382,9 @@ function buildPronunciationFeedback(target, heard){
     if (op.type === 'ins') return; // dư âm/nói thêm, không tính là lỗi phát âm của câu gốc
     if (op.type === 'sub') {
       const diff = diffPinyinType(op.t, op.h);
+      // Đồng âm thực sự (ví dụ 他/她/它 đều đọc [tā]) không phải lỗi phát âm — chỉ chấm sai khi
+      // thực sự lệch thanh mẫu, vận mẫu hoặc thanh điệu.
+      if (diff.type === 'match') { matchedCount++; return; }
       let label;
       if (diff.type === 'tone') label = `"${op.t}" (${diff.tp.plain}${diff.tp.tone}) — sai thanh điệu, nghe thành thanh ${diff.hp.tone}`;
       else if (diff.type === 'initial') label = `"${op.t}" — sai thanh mẫu (phụ âm đầu): cần "${diff.tp.initial||'∅'}", nghe thành "${diff.hp.initial||'∅'}"`;
@@ -3413,6 +3393,8 @@ function buildPronunciationFeedback(target, heard){
       errors.push({ char: op.t, kind: diff.type, label });
     }
   });
+  const totalCount = t.length || 1;
+  const pct = Math.max(0, Math.min(100, Math.round(matchedCount / totalCount * 100)));
   const passed = pct >= 90;
   return { pct, matchedCount, totalCount: t.length, errors, passed };
 }
@@ -3427,6 +3409,53 @@ function renderPronunciationFeedbackHtml(fb, heardText){
     ? `<p class="font-bold text-green-600">🎉 Đạt chuẩn! Phát âm của bạn đã chính xác.</p>`
     : `<p class="font-bold text-amber-600">⚠️ Chưa đạt chuẩn — hãy chỉnh lại các lỗi trên và thử lại.</p>`;
   return `<p class="text-xs text-gray-400 mb-1">Bạn đã nói: "${escapeHtmlCulture(heardText)}"</p>${goodPart}${errPart}${verdict}`;
+}
+
+/* ---- Phản xạ Nghe - Nói: câu hỏi mở, KHÔNG có một câu trả lời "chuẩn" duy nhất, nên hệ thống
+   không được gợi ý/so khớp với văn bản mẫu để ép học viên theo một cách trả lời cố định. Thay
+   vào đó chấm khách quan dựa trên chính những gì học viên nói: mỗi từ nhận diện được có phải là
+   từ vựng tiếng Trung hợp lệ hay không (độ rõ ràng), và câu trả lời có bám sát trọng tâm câu hỏi
+   hay không (kiểm tra linh hoạt qua các từ khóa gợi ý chủ đề, không bắt buộc đúng nguyên văn). */
+function tokenizeHanziForValidity(text){
+  const dictMap = buildReadingLookupMap();
+  const isHanzi = ch => /[一-鿿]/.test(ch);
+  const tokens = [];
+  let i = 0;
+  while (i < text.length) {
+    if (!isHanzi(text[i])) { i++; continue; }
+    let matched = false, matchLen = 1;
+    const maxL = Math.min(4, text.length - i);
+    for (let L = maxL; L >= 1; L--) {
+      if (dictMap.has(text.substr(i, L))) { matched = true; matchLen = L; break; }
+    }
+    tokens.push({ word: text.substr(i, matchLen), valid: matched });
+    i += matchLen;
+  }
+  return tokens;
+}
+function buildReflexFeedback(item, heard){
+  const h = (heard || '').trim();
+  if (!h) return { heard: h, tokens: [], clarityPct: 0, hasKeyword: false, isEmpty: true, passed: false };
+  const tokens = tokenizeHanziForValidity(h);
+  const validCount = tokens.filter(tk => tk.valid).length;
+  const clarityPct = tokens.length ? Math.round(validCount / tokens.length * 100) : 0;
+  const hasKeyword = (item.kw || []).some(k => h.includes(k));
+  const passed = clarityPct >= 80 && hasKeyword;
+  return { heard: h, tokens, validCount, totalTokens: tokens.length, clarityPct, hasKeyword, isEmpty: false, passed };
+}
+function renderReflexFeedbackHtml(fb){
+  if (fb.isEmpty) return `<p class="font-bold text-red-600">❌ Không nhận diện được giọng nói. Hãy thử nói to và rõ hơn.</p>`;
+  const parts = [`<p class="text-gray-400 mb-1">Bạn đã nói: "${escapeHtmlCulture(fb.heard)}"</p>`];
+  if (fb.clarityPct === 100) parts.push(`<p class="text-green-600 font-bold">✅ Phát âm rõ ràng — toàn bộ từ đều được hệ thống nhận diện đúng là từ vựng tiếng Trung hợp lệ.</p>`);
+  else if (fb.clarityPct >= 50) parts.push(`<p class="text-amber-600">⚠️ Một phần câu trả lời chưa được nhận diện rõ (${fb.validCount}/${fb.totalTokens} phần hợp lệ) — hãy phát âm chậm và rõ hơn.</p>`);
+  else parts.push(`<p class="text-red-600">❌ Phần lớn câu trả lời chưa được nhận diện rõ. Hãy nói to, chậm và rõ ràng hơn.</p>`);
+  parts.push(fb.hasKeyword
+    ? `<p class="text-gray-500">💡 Nội dung trả lời bám sát trọng tâm câu hỏi.</p>`
+    : `<p class="text-gray-500">💡 Hãy chú ý trả lời đúng trọng tâm câu hỏi hơn (không bắt buộc theo một mẫu câu cố định).</p>`);
+  parts.push(fb.passed
+    ? `<p class="font-bold text-green-600">🎉 Đạt chuẩn!</p>`
+    : `<p class="font-bold text-amber-600">⚠️ Chưa đạt chuẩn — hãy chỉnh lại và thử lại.</p>`);
+  return parts.join('');
 }
 
 /* ===================== VOCAB SECTION (Flashcard) ===================== */
@@ -3851,19 +3880,17 @@ function toggleReflexRecording(){
   btn.classList.add('recording');
   reflexRecognition.onresult = (e) => {
     const heard = e.results[0][0].transcript;
-    document.getElementById('reflex-heard').textContent = heard;
     const resultBox = document.getElementById('reflex-result');
-    const sugChinese = currentReflexItem.sug.split(/[（(]/)[0].trim();
-    const fb = buildPronunciationFeedback(sugChinese, heard);
+    const fb = buildReflexFeedback(currentReflexItem, heard);
     resultBox.className = `p-4 rounded-xl space-y-2 border text-left text-xs ${fb.passed ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800' : 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'}`;
-    document.getElementById('reflex-feedback').innerHTML = `<p class="text-gray-400 mb-1">Nhận xét phát âm dưới đây so với câu gợi ý tham khảo (nếu bạn trả lời khác ý câu gợi ý thì phần "lỗi" chỉ mang tính so khớp phát âm, không có nghĩa nội dung của bạn sai):</p>${renderPronunciationFeedbackHtml(fb, heard)}<p class="mt-1 text-gray-500">Câu gợi ý tham khảo: <span class="font-semibold">${escapeHtmlCulture(currentReflexItem.sug)}</span></p>`;
+    document.getElementById('reflex-feedback').innerHTML = renderReflexFeedbackHtml(fb);
     document.getElementById('reflex-actions').innerHTML = `
       <button onclick="toggleReflexRecording()" class="px-4 py-2 bg-amber-500 text-gray-900 text-xs font-bold rounded-lg">🔁 ${fb.passed ? 'Luyện lại' : 'Thử lại cho chuẩn'}</button>
       ${fb.passed ? `<button onclick="pickNewReflexQuestion()" class="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-lg">Câu tiếp theo →</button>` : ''}`;
     resultBox.classList.remove('hidden');
-    playScoreSound(fb.pct);
+    playScoreSound(fb.passed ? 95 : fb.clarityPct);
     touchDailyActivity();
-    if (fb.passed) { markDone('reflexDone', currentReflexLevel, currentReflexIndex); pushHistory({type:'Phản xạ Nghe - Nói', detail:`${PRACTICE_LEVEL_LABELS[currentReflexLevel]} · "${currentReflexItem.q}"`, score: fb.pct + '%'}); }
+    if (fb.passed) { markDone('reflexDone', currentReflexLevel, currentReflexIndex); pushHistory({type:'Phản xạ Nghe - Nói', detail:`${PRACTICE_LEVEL_LABELS[currentReflexLevel]} · "${currentReflexItem.q}"`, score: fb.clarityPct + '%'}); }
   };
   reflexRecognition.onerror = () => { reflexRecording = false; btn.classList.remove('recording'); };
   reflexRecognition.onend = () => { reflexRecording = false; btn.classList.remove('recording'); };
