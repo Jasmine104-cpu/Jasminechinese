@@ -2657,21 +2657,54 @@ function extractGrammarExamples(theory){
 }
 // Tô đậm các chuỗi Hán tự (câu ví dụ) và tô màu dòng Đúng:/Sai: để dễ quét mắt hơn — CHỈ định dạng
 // hiển thị, không đổi một chữ nào của nội dung gốc.
+// Chỉ định dạng hiển thị (bôi màu/đóng khung), KHÔNG đổi một chữ nào của nội dung gốc.
 function highlightGrammarLine(line){
   let html = escapeHtmlCulture(line);
   html = html.replace(/([一-鿿][一-鿿，。？！、]*)/g, '<span class="font-bold text-red-600 dark:text-red-400">$1</span>');
+  // Đóng khung nhẹ các trợ từ phủ định quan trọng (不 / 没) để học viên chú ý ngay.
+  html = html.replace(/(不|没)/g, '<span class="px-0.5 rounded bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300">$1</span>');
   html = html.replace(/^(Đúng:)/, '<span class="text-green-600 dark:text-green-400 font-bold">$1</span>');
   html = html.replace(/^(Sai:)/, '<span class="text-red-600 dark:text-red-400 font-bold">$1</span>');
   return html;
 }
-function renderTheoryHtml(theory){
-  return theory.split('\n').filter(l => l.trim() !== '').map(line => `<p class="leading-relaxed">${highlightGrammarLine(line)}</p>`).join('');
+// Một dòng văn bản lý thuyết thành 1 đoạn <p> — dòng "Sai:"/"Đúng:" được đóng khung màu cam/đỏ hoặc
+// xanh nhạt để nổi bật cảnh báo lỗi sai, các dòng khác hiển thị bình thường.
+function renderGrammarThoryLineP(line){
+  const t = line.trim();
+  if (/^Sai:/.test(t)) return `<p class="leading-relaxed px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-800 bg-red-50/70 dark:bg-red-900/10">${highlightGrammarLine(line)}</p>`;
+  if (/^Đúng:/.test(t)) return `<p class="leading-relaxed px-3 py-1.5 rounded-lg border border-green-200 dark:border-green-800 bg-green-50/70 dark:bg-green-900/10">${highlightGrammarLine(line)}</p>`;
+  return `<p class="leading-relaxed">${highlightGrammarLine(line)}</p>`;
 }
+// Một dòng được coi là "câu ví dụ" nếu có chữ Hán kèm phiên âm trong ngoặc — dùng để gom các câu ví
+// dụ liền kề vào khối thu gọn mặc định (accordion), tránh phần "Cách dùng" bị dài lê thê.
+function isGrammarExampleLine(line){
+  return /[一-鿿][一-鿿，。？！、\s]*[。？！]\s*\([^)]+\)/.test(line);
+}
+let grammarAccordionSeq = 0;
+// Render danh sách dòng thành HTML: các dòng "§H§..." là tiêu đề phụ (in đậm), các dòng ví dụ liền
+// kề nhau được gom vào 1 khối "👉 Xem ví dụ minh họa" ẩn mặc định, các dòng còn lại hiện bình thường.
 function renderTheoryBucketHtml(lines){
-  return lines.filter(l => l.trim() !== '').map(l => {
-    if (l.startsWith('§H§')) return `<p class="font-bold text-red-700 dark:text-red-400 mt-3 first:mt-0 mb-1">${escapeHtmlCulture(l.slice(3))}</p>`;
-    return `<p class="leading-relaxed">${highlightGrammarLine(l)}</p>`;
-  }).join('');
+  const out = [];
+  let pendingExamples = [];
+  const flush = () => {
+    if (!pendingExamples.length) return;
+    const uid = 'gex-' + (grammarAccordionSeq++);
+    out.push(`<button type="button" onclick="document.getElementById('${uid}').classList.toggle('hidden')" class="text-xs font-bold text-red-600 dark:text-red-400 hover:underline my-1">👉 Xem ví dụ minh họa (${pendingExamples.length} câu)</button>`);
+    out.push(`<div id="${uid}" class="hidden pl-3 border-l-2 border-red-200 dark:border-red-800 space-y-1 mb-2">${pendingExamples.map(renderGrammarThoryLineP).join('')}</div>`);
+    pendingExamples = [];
+  };
+  lines.filter(l => l.trim() !== '').forEach(l => {
+    if (l.startsWith('§H§')) {
+      flush();
+      out.push(`<p class="font-bold text-red-700 dark:text-red-400 mt-3 first:mt-0 mb-1">${escapeHtmlCulture(l.slice(3))}</p>`);
+      return;
+    }
+    if (isGrammarExampleLine(l)) { pendingExamples.push(l); return; }
+    flush();
+    out.push(renderGrammarThoryLineP(l));
+  });
+  flush();
+  return out.join('');
 }
 // Tách phần "Giải thích" (theory) thành các mục nhỏ (Công thức / Lưu ý / So sánh / còn lại) dựa trên
 // các dòng tiêu đề ngắn có sẵn trong chính văn bản gốc (VD "Công thức", "Lưu ý", "So sánh...") — CHỈ
