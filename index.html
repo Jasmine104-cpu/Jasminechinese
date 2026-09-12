@@ -588,11 +588,18 @@
       <h2 class="text-2xl font-bold">Lượng từ tiếng Trung</h2>
       <p class="text-sm text-gray-500">Tổng hợp các lượng từ thường dùng — cách dùng chi tiết kèm ví dụ minh họa có dịch nghĩa tiếng Việt.</p>
     </div>
-    <div class="max-w-2xl mx-auto">
+    <div class="max-w-2xl mx-auto space-y-3">
       <input id="luongtu-search" oninput="luongtuSearchInput()" type="text" placeholder="Tìm theo chữ Hán, pinyin hoặc nghĩa..." class="w-full px-4 py-2.5 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm">
-      <div id="luongtu-count" class="text-xs text-gray-400 mt-2 text-center"></div>
+      <div class="flex items-center justify-between">
+        <div id="luongtu-count" class="text-xs text-gray-400"></div>
+        <div class="flex gap-2">
+          <button onclick="expandAllLuongtu()" class="text-xs font-semibold text-red-600 hover:underline">Mở rộng tất cả</button>
+          <span class="text-xs text-gray-300">|</span>
+          <button onclick="collapseAllLuongtu()" class="text-xs font-semibold text-gray-500 hover:underline">Thu gọn tất cả</button>
+        </div>
+      </div>
     </div>
-    <div id="luongtu-list" class="max-w-4xl mx-auto grid grid-cols-1 gap-5"></div>
+    <div id="luongtu-list" class="max-w-4xl mx-auto grid grid-cols-1 gap-3"></div>
   </section>
 
   <!-- ============ 6. GAMES ============ -->
@@ -2978,9 +2985,17 @@ function luongtuSearchInput(){
   luongtuQuery = (document.getElementById('luongtu-search').value || '').trim().toLowerCase();
   renderLuongtuList();
 }
+let luongtuExpanded = new Set();
+function expandAllLuongtu(){ LUONGTU_DATA.forEach((_, i) => luongtuExpanded.add(i)); renderLuongtuList(); }
+function collapseAllLuongtu(){ luongtuExpanded.clear(); renderLuongtuList(); }
+function toggleLuongtuCard(idx){
+  if (luongtuExpanded.has(idx)) luongtuExpanded.delete(idx); else luongtuExpanded.add(idx);
+  renderLuongtuList();
+}
 function renderLuongtuList(){
   const q = luongtuQuery;
-  const items = !q ? LUONGTU_DATA : LUONGTU_DATA.filter(e =>
+  const all = LUONGTU_DATA.map((e, idx) => ({ ...e, idx }));
+  const items = !q ? all : all.filter(e =>
     e.hanzi.includes(q) || e.pinyin.toLowerCase().includes(q) ||
     e.usage.some(u => u.toLowerCase().includes(q)) ||
     e.examples.some(ex => ex.hanzi.includes(q) || ex.pinyin.toLowerCase().includes(q) || ex.meaning.toLowerCase().includes(q))
@@ -2988,28 +3003,39 @@ function renderLuongtuList(){
   document.getElementById('luongtu-count').textContent = `${items.length}/${LUONGTU_DATA.length} lượng từ`;
   const list = document.getElementById('luongtu-list');
   if (!items.length) {
-    list.innerHTML = '<p class="text-sm text-gray-400 text-center py-8 col-span-full">Không tìm thấy lượng từ phù hợp.</p>';
+    list.innerHTML = '<p class="text-sm text-gray-400 text-center py-8">Không tìm thấy lượng từ phù hợp.</p>';
     return;
   }
-  list.innerHTML = items.map(e => `
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 shadow-sm space-y-4">
-      <div class="flex items-center gap-3 pb-3 border-b border-gray-100 dark:border-gray-700">
-        <button onclick="speakText('${escapeAttr(e.hanzi)}',0.8)" class="p-2 rounded-full bg-red-50 dark:bg-red-900/30 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 transition flex-shrink-0" title="Nghe phát âm">🔊</button>
-        <h3 class="text-xl font-bold">Tên lượng từ: <span class="text-red-600">${escapeHtmlCulture(e.hanzi)}</span> <span class="text-gray-400 font-medium">(${escapeHtmlCulture(e.pinyin)})</span></h3>
+  list.innerHTML = items.map(e => {
+    const isOpen = q ? true : luongtuExpanded.has(e.idx);
+    return `
+    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden">
+      <button onclick="toggleLuongtuCard(${e.idx})" class="w-full flex items-center justify-between gap-3 p-5 text-left hover:bg-gray-50 dark:hover:bg-gray-900/40 transition">
+        <div class="flex items-center gap-3 min-w-0">
+          <span onclick="event.stopPropagation();speakText('${escapeAttr(e.hanzi)}',0.8)" class="p-2 rounded-full bg-red-50 dark:bg-red-900/30 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/50 transition flex-shrink-0 cursor-pointer" title="Nghe phát âm">🔊</span>
+          <div class="min-w-0 truncate">
+            <span class="text-2xl font-black text-red-600">${escapeHtmlCulture(e.hanzi)}</span>
+            <span class="text-base text-gray-400 font-medium ml-2">(${escapeHtmlCulture(e.pinyin)})</span>
+          </div>
+        </div>
+        <span class="text-gray-400 flex-shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}">▾</span>
+      </button>
+      <div class="${isOpen ? '' : 'hidden'} px-5 pb-5 pt-1 space-y-4 border-t border-gray-100 dark:border-gray-700">
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Cách dùng</div>
+          <ul class="list-disc list-inside space-y-1.5 text-sm text-gray-700 dark:text-gray-300">
+            ${e.usage.map(u => `<li>${escapeHtmlCulture(u)}</li>`).join('')}
+          </ul>
+        </div>
+        <div>
+          <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Ví dụ</div>
+          <ul class="space-y-1.5 text-sm">
+            ${e.examples.map(ex => `<li class="text-gray-700 dark:text-gray-300"><span class="font-semibold text-gray-900 dark:text-white">${escapeHtmlCulture(ex.hanzi)}</span> <span class="text-gray-400">(${escapeHtmlCulture(ex.pinyin)})</span> - ${escapeHtmlCulture(ex.meaning)}</li>`).join('')}
+          </ul>
+        </div>
       </div>
-      <div>
-        <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Cách dùng</div>
-        <ul class="list-disc list-inside space-y-1.5 text-sm text-gray-700 dark:text-gray-300">
-          ${e.usage.map(u => `<li>${escapeHtmlCulture(u)}</li>`).join('')}
-        </ul>
-      </div>
-      <div>
-        <div class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Ví dụ</div>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5 text-sm">
-          ${e.examples.map(ex => `<li class="text-gray-700 dark:text-gray-300"><span class="font-semibold text-gray-900 dark:text-white">${escapeHtmlCulture(ex.hanzi)}</span> <span class="text-gray-400">(${escapeHtmlCulture(ex.pinyin)})</span> - ${escapeHtmlCulture(ex.meaning)}</li>`).join('')}
-        </ul>
-      </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 /* ===================== STATE / STORAGE HELPERS ===================== */
